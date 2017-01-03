@@ -7,9 +7,9 @@ let Emblem = new function() {
     this.setUp = function() {
         image = new Image();
         image.onload = () => loaded = true;
-        image.src = "/img/emblem.png";
+        image.src = "/img/emblem.svg";
 
-        Nodes.addCallback(drawCallback, Priority.EARLY);
+        Nodes.addCallback(drawCallback);
     }
 
     let drawCallback = function(_, multiplier) {

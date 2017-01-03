@@ -1,7 +1,7 @@
 let Spectrum = new function() {
 
     this.setUp = function() {
-        Nodes.addCallback(drawCallback);
+        Nodes.addCallback(drawCallback, Priority.EARLY);
     }
 
     let drawCallback = function(spectrum) {
