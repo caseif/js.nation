@@ -11,8 +11,7 @@ let Config = new function() {
 
     // transform config
     this.startBin = 12;
-    this.keepBins = 64;
-    this.interpolatationPasses = 2;
+    this.keepBins = 48;
 
     // spectrum config
     this.smoothingPasses = 1;

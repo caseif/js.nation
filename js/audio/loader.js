@@ -2,7 +2,8 @@ let SongLoader = new function() {
 
     this.randomSong = function() {
         let songs = getAllSongs();
-        return songs[Object.keys(songs)[Math.random() * songs.length]];
+        let keys = Object.keys(songs);
+        return songs[keys[Math.floor(Math.random() * keys.length)]];
     };
 
     this.getSong = function(id) {
