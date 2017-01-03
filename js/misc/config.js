@@ -10,5 +10,5 @@ var Config = new function() {
     this.maxEmblemSizeRatio = 3;
 
     // transform config
-    this.keepBins = 128;
+    this.keepBins = 32;
 }

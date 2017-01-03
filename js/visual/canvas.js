@@ -7,6 +7,8 @@ var Canvas = new function() {
         $("#canvas").attr("width", $(window).width());
         $("#canvas").attr("height", $(window).height());
 
+        this.context.fillStyle = "#FFFFFF";
+
         Nodes.addCallback(clearCallback, 0);
     };
 
