@@ -6,5 +6,9 @@ var Config = new function() {
     this.fftSize = 16384;
     
     // emblem config
-    this.baseEmblemSizeRatio = 3;
+    this.minEmblemSizeRatio = 2;
+    this.maxEmblemSizeRatio = 3;
+
+    // transform config
+    this.keepBins = 128;
 }

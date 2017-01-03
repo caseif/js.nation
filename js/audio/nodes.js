@@ -14,13 +14,16 @@ var Nodes = new function() {
     var normalCallbacks = [];
     var lateCallbacks = [];
 
+    var spectrum;
+    var multiplier;
+
     this.setUp = function() {
         context = new AudioContext();
         bufferSource = context.createBufferSource();
         bufferSource.connect(context.destination);
 
         scriptProcessor = context.createScriptProcessor(BUFFER_INTERVAL, 1, 1);
-        scriptProcessor.onaudioprocess = handleCallbacks;
+        scriptProcessor.onaudioprocess = handleAudio;
         scriptProcessor.connect(context.destination);
 
         analyzer = context.createAnalyser();
@@ -54,6 +57,14 @@ var Nodes = new function() {
         bufferSource.start(0);
     };
 
+    var handleAudio = function() {
+        var array =  new Uint8Array(analyzer.frequencyBinCount);
+        analyzer.getByteFrequencyData(array);
+        spectrum = Transform.transform(array);
+        multiplier = Transform.multiplier(spectrum);
+        handleCallbacks();
+    }
+
     var handleCallbacks = function() {
         handleCallbackArray(earlyCallbacks);
         handleCallbackArray(normalCallbacks);
@@ -63,7 +74,7 @@ var Nodes = new function() {
     var handleCallbackArray = function(callbacks) {
         var len = callbacks.length;
         for (let i = 0; i < len; i++) {
-            callbacks[i](null, 1);
+            callbacks[i](spectrum, multiplier);
         }
     }
 
