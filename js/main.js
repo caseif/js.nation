@@ -1,7 +1,5 @@
 Nodes.setUp();
 Canvas.setUp();
+Emblem.setUp();
 
 Nodes.playSong(SongLoader.randomSong());
-
-//TODO: implement rendering loop
-Emblem.drawEmblem();

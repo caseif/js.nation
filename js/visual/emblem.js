@@ -1,16 +1,27 @@
 var Emblem = new function() {
 
-    this.drawEmblem = function() {
-        var ctx = $("#canvas").get()[0].getContext("2d");
-        var img = new Image();
-        img.onload = () => {
-            var windowDim = Math.min($(window).width(), $(window).height());
-            var dimension = windowDim / Config.baseEmblemSizeRatio;
-            var xOffset = $(window).width() / 2 - dimension / 2;
-            var yOffset = $(window).height() / 2 - dimension / 2;
-            ctx.drawImage(img, xOffset, yOffset, dimension, dimension);
+    var image;
+    var loaded = false;
+
+    this.setUp = function() {
+        Nodes.addCallback(drawCallback);
+        image = new Image();
+        image.onload = () => loaded = true;
+        image.src = "/img/emblem.png";
+    }
+
+    var drawCallback = function(_, multiplier) {
+        if (!loaded) {
+            return;
         }
-        img.src = "/img/emblem.png";
+
+        var windowDim = Math.min($(window).width(), $(window).height());
+        var dimension = windowDim / Config.baseEmblemSizeRatio;
+        var xOffset = $(window).width() / 2 - dimension / 2;
+        var yOffset = $(window).height() / 2 - dimension / 2;
+        Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
+        //TODO: make it bigger and shaky and stuff
+        
     };
 
 }

@@ -10,12 +10,17 @@ var Nodes = new function() {
     var analyzer;
     var scriptProcessor;
 
+    var earlyCallbacks = [];
+    var normalCallbacks = [];
+    var lateCallbacks = [];
+
     this.setUp = function() {
         context = new AudioContext();
         bufferSource = context.createBufferSource();
         bufferSource.connect(context.destination);
 
         scriptProcessor = context.createScriptProcessor(BUFFER_INTERVAL, 1, 1);
+        scriptProcessor.onaudioprocess = handleCallbacks;
         scriptProcessor.connect(context.destination);
 
         analyzer = context.createAnalyser();
@@ -46,7 +51,43 @@ var Nodes = new function() {
     
     var playBuffer = function(buffer) {
         bufferSource.buffer = buffer;
-        //bufferSource.start(0);
+        bufferSource.start(0);
     };
+
+    var handleCallbacks = function() {
+        handleCallbackArray(earlyCallbacks);
+        handleCallbackArray(normalCallbacks);
+        handleCallbackArray(lateCallbacks);
+    }
+
+    var handleCallbackArray = function(callbacks) {
+        var len = callbacks.length;
+        for (let i = 0; i < len; i++) {
+            callbacks[i](null, 1);
+        }
+    }
+
+    this.addCallback = function(callback, priority) {
+        if (priority == undefined) {
+            priority = 1;
+        }
+        switch (priority) {
+            case 0: {
+                earlyCallbacks.push(callback);
+                break;
+            }
+            case 1: {
+                normalCallbacks.push(callback);
+                break;
+            }
+            case 2: {
+                lateCallbacks.push(callback);
+                break;
+            }
+            default: {
+                throw "Invalid callback priority";
+            }
+        }
+    }
 
 }
