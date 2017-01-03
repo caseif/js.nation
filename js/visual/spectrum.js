@@ -1,18 +1,18 @@
-var Spectrum = new function() {
+let Spectrum = new function() {
 
     this.setUp = function() {
         Nodes.addCallback(drawCallback, 2);
     }
 
-    var drawCallback = function(spectrum) {
-        var len = spectrum.length;
-        var baseRad = Emblem.getRadius();
+    let drawCallback = function(spectrum) {
+        let len = spectrum.length;
+        let baseRad = Emblem.getRadius();
 
-        var halfWidth = $(window).width() / 2;
-        var halfHeight = $(window).height() / 2;
+        let halfWidth = $(window).width() / 2;
+        let halfHeight = $(window).height() / 2;
 
-        var xArr = [];
-        var yArr = [];
+        let xArr = [];
+        let yArr = [];
 
         Canvas.context.beginPath();
         for (let i = 0; i < len; i++) {

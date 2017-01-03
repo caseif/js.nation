@@ -1,7 +1,7 @@
-var SongLoader = new function() {
+let SongLoader = new function() {
 
     this.randomSong = function() {
-        var songs = getAllSongs();
+        let songs = getAllSongs();
         return songs[Object.keys(songs)[Math.random() * songs.length]];
     };
 
@@ -9,8 +9,8 @@ var SongLoader = new function() {
         getAllSongs()[id];
     };
 
-    var getAllSongs = function() {
-        var songs = [];
+    let getAllSongs = function() {
+        let songs = [];
         $.ajax({
             url:        Util.getCurrentUrlPrefix() + "/songs.csv",
             success:    csv => {

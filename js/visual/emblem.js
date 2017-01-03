@@ -1,8 +1,8 @@
-var Emblem = new function() {
+let Emblem = new function() {
 
-    var image;
-    var loaded = false;
-    var currentRadius;
+    let image;
+    let loaded = false;
+    let currentRadius;
 
     this.setUp = function() {
         Nodes.addCallback(drawCallback);
@@ -11,20 +11,20 @@ var Emblem = new function() {
         image.src = "/img/emblem.png";
     }
 
-    var drawCallback = function(_, multiplier) {
+    let drawCallback = function(_, multiplier) {
         if (!loaded) {
             return;
         }
 
-        var minFrac = 1 / Config.minEmblemSizeRatio;
-        var maxFrac = 1 / Config.maxEmblemSizeRatio;
-        var scalar = multiplier * (minFrac - maxFrac) + maxFrac
+        let minFrac = 1 / Config.minEmblemSizeRatio;
+        let maxFrac = 1 / Config.maxEmblemSizeRatio;
+        let scalar = multiplier * (minFrac - maxFrac) + maxFrac
 
-        var windowDim = Math.min($(window).width(), $(window).height());
-        var dimension = windowDim * scalar;
+        let windowDim = Math.min($(window).width(), $(window).height());
+        let dimension = windowDim * scalar;
         currentRadius = dimension / 2;
-        var xOffset = $(window).width() / 2 - currentRadius;
-        var yOffset = $(window).height() / 2 - currentRadius;
+        let xOffset = $(window).width() / 2 - currentRadius;
+        let yOffset = $(window).height() / 2 - currentRadius;
         Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
         //TODO: make it bigger and shaky and stuff
     };

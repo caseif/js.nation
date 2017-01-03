@@ -1,4 +1,4 @@
-var Config = new function() {
+let Config = new function() {
     // analyzer config
     this.temporalSmoothing = 0.3;
     this.minDecibels = -100;
