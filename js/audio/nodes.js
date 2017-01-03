@@ -46,8 +46,7 @@ var Nodes = new function() {
     
     var playBuffer = function(buffer) {
         bufferSource.buffer = buffer;
-        bufferSource.start(0);
-        console.log("wtf");
+        //bufferSource.start(0);
     };
 
 }

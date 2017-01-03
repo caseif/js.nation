@@ -4,4 +4,7 @@ var Config = new function() {
     this.minDecibels = -100;
     this.maxDecibels = -33;
     this.fftSize = 16384;
+    
+    // emblem config
+    this.baseEmblemSizeRatio = 3;
 }
