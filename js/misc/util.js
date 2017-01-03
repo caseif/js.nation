@@ -5,4 +5,8 @@ let Util = new function() {
                 + window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"));
     };
 
+    this.random = function(min, max) {
+        return Math.random() * (max - min) + min;
+    };
+
 }

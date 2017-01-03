@@ -10,9 +10,8 @@ let Nodes = new function() {
     let analyzer;
     let scriptProcessor;
 
-    let earlyCallbacks = [];
-    let normalCallbacks = [];
-    let lateCallbacks = [];
+    let callbacks = [];
+    const PRIORITY_LEVELS = 5;
 
     let spectrum;
     let multiplier;
@@ -42,6 +41,10 @@ let Nodes = new function() {
         }
 
         bufferSource.connect(analyzer);
+
+        for (let i = 0; i < PRIORITY_LEVELS; i++) {
+            callbacks[i] = [];
+        }
     };
 
     this.playSong = function(song) {
@@ -66,9 +69,9 @@ let Nodes = new function() {
     }
 
     let handleCallbacks = function() {
-        handleCallbackArray(earlyCallbacks);
-        handleCallbackArray(normalCallbacks);
-        handleCallbackArray(lateCallbacks);
+        for (let i = 0; i < PRIORITY_LEVELS; i++) {
+            handleCallbackArray(callbacks[i]);
+        }
     }
 
     let handleCallbackArray = function(callbacks) {
@@ -80,25 +83,12 @@ let Nodes = new function() {
 
     this.addCallback = function(callback, priority) {
         if (priority == undefined) {
-            priority = 1;
+            priority = 2;
         }
-        switch (priority) {
-            case 0: {
-                earlyCallbacks.push(callback);
-                break;
-            }
-            case 1: {
-                normalCallbacks.push(callback);
-                break;
-            }
-            case 2: {
-                lateCallbacks.push(callback);
-                break;
-            }
-            default: {
-                throw "Invalid callback priority";
-            }
+        if (priority < 0 || priority >= PRIORITY_LEVELS || !Number.isInteger(priority)) {
+            throw "Invalid priority [0-" + (PRIORITY_LEVELS - 1) + "]";
         }
+        callbacks[priority].push(callback);
     }
 
 }

@@ -5,10 +5,11 @@ let Emblem = new function() {
     let currentRadius;
 
     this.setUp = function() {
-        Nodes.addCallback(drawCallback);
         image = new Image();
         image.onload = () => loaded = true;
         image.src = "/img/emblem.png";
+
+        Nodes.addCallback(drawCallback, Priority.EARLY);
     }
 
     let drawCallback = function(_, multiplier) {
@@ -26,7 +27,6 @@ let Emblem = new function() {
         let xOffset = $(window).width() / 2 - currentRadius;
         let yOffset = $(window).height() / 2 - currentRadius;
         Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
-        //TODO: make it bigger and shaky and stuff
     };
 
     this.getRadius = function() {

@@ -8,6 +8,10 @@ let Config = new function() {
     // emblem config
     this.minEmblemSizeRatio = 2;
     this.maxEmblemSizeRatio = 3;
+    this.maxShakeIntensity = Math.PI / 2;
+    this.maxShakeDisplacement = 20;
+    this.minShakeScalar = 0.9;
+    this.maxShakeScalar = 1.1;
 
     // transform config
     this.startBin = 12;
@@ -16,4 +20,5 @@ let Config = new function() {
     // spectrum config
     this.smoothingPasses = 1;
     this.smoothingPoints = 3;
+    this.spectrumHeightScalar = 0.5;
 }
