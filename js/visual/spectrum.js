@@ -13,7 +13,7 @@ let Spectrum = new function() {
 
         let len = spectrum.length;
         for (let i = 0; i < len; i++) {
-            t = Math.PI * (i / len) - (Math.PI / 2);
+            t = Math.PI * (i / (len - 1)) - (Math.PI / 2);
             r = baseRad + spectrum[i] * Config.spectrumHeightScalar;
             x = r * Math.cos(t);
             y = r * Math.sin(t);
