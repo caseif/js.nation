@@ -4,3 +4,4 @@ Emblem.setUp();
 Spectrum.setUp();
 
 Nodes.playSong(SongLoader.randomSong());
+window.onresize = function() {Canvas.setUp();}

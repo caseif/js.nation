@@ -7,7 +7,7 @@ let Emblem = new function() {
     this.setUp = function() {
         image = new Image();
         image.onload = () => loaded = true;
-        image.src = "/img/emblem.svg";
+        image.src = "./img/emblem.svg";
 
         Nodes.addCallback(drawCallback);
     }
@@ -16,6 +16,9 @@ let Emblem = new function() {
         if (!loaded) {
             return;
         }
+		
+		Canvas.context.shadowBlur = 50;
+		Canvas.context.shadowColor = 'rgba(255, 255, 255, 0.25)';
 
         let minFrac = 1 / Config.minEmblemSizeRatio;
         let maxFrac = 1 / Config.maxEmblemSizeRatio;
@@ -26,7 +29,7 @@ let Emblem = new function() {
         currentRadius = dimension / 2;
         let xOffset = $(window).width() / 2 - currentRadius;
         let yOffset = $(window).height() / 2 - currentRadius;
-        Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
+		Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
     };
 
     this.getRadius = function() {
