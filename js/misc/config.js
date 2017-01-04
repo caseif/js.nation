@@ -2,7 +2,7 @@ let Config = new function() {
     // analyzer config
     this.temporalSmoothing = 0.1;
     this.minDecibels = -40;
-    this.maxDecibels = -33;
+    this.maxDecibels = -30;
     this.fftSize = 16384;
 
     // emblem config

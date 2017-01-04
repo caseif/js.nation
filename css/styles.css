@@ -2,11 +2,11 @@ html {
     background-color: #222;
 }
 body {
-  margin: 0;
+    margin: 0;
 }
 
 #content {
-	z-index: 1;
+    z-index: 1;
     position: fixed;
     left: 0;
     top: 0;
@@ -22,21 +22,21 @@ body {
 }
 
 #bgimg1 {
-  z-index: 0;
-  position: fixed;
-  margin-left: 50%;
-  display: block;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
+    z-index: 0;
+    position: fixed;
+    margin-left: 50%;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
 }
 
 #bgimg2 {
-  z-index: 0;
-  margin-left: -50%;
-  transform: scale(-1, 1);
-  display: block;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
+    z-index: 0;
+    margin-left: -50%;
+    transform: scale(-1, 1);
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
 }

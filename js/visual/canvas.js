@@ -14,15 +14,20 @@ let Canvas = new function() {
     let trigY = Math.round(Math.random());
 
     this.setUp = function() {
-        $("#canvas").attr("width", $(window).width());
-        $("#canvas").attr("height", $(window).height());
-
-        this.context.fillStyle = "#FFFFFF";
+        setStyling();
 
         Nodes.addCallback(clearCallback, Priority.FIRST);
         Nodes.addCallback(shakeCallback, Priority.FIRST);
         Nodes.addCallback(postCallback, Priority.LAST);
+
+        window.onresize = setStyling;
     };
+    
+    let setStyling = function() {
+        $("#canvas").attr("width", $(window).width());
+        $("#canvas").attr("height", $(window).height());
+        Canvas.context.fillStyle = "#FFFFFF";
+    }
 
     let clearCallback = function() {
         Canvas.context.clearRect(0, 0, Canvas.canvas.width, Canvas.canvas.height);

@@ -1,3 +1,11 @@
-var randomnum = Math.floor(Math.random() * 7) + 1;
-document.getElementById("bgimg1").src = "./img/backgrounds/CC" + randomnum +".jpg";
-document.getElementById("bgimg2").src = "./img/backgrounds/CC" + randomnum +".jpg";
+let Background = new function() {
+
+    let urls = ["ch2BGga", "xA01J0J", "czRL14s", "tBm4nmM", "VcKlu5n", "8ztI8Ng", "Di8c0cV"];
+
+    this.setUp = function() {
+        var index = urls[Math.floor(Math.random() * urls.length)];
+        document.getElementById("bgimg1").src = "https://i.imgur.com/" + index +".jpg";
+        document.getElementById("bgimg2").src = "https://i.imgur.com/" + index +".jpg";
+    }
+
+}
