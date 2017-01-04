@@ -43,7 +43,7 @@ let Nodes = new function() {
         bufferSource.connect(analyzer);
 
         initialized = true;
-    };
+    }
 
     this.playSong = function(song) {
         if (bufferSource.buffer != undefined) {
@@ -55,12 +55,12 @@ let Nodes = new function() {
         request.responseType = "arraybuffer";
         request.onload = () => context.decodeAudioData(request.response, playBuffer, console.log);
         request.send();
-    };
+    }
     
     let playBuffer = function(buffer) {
         bufferSource.buffer = buffer;
         bufferSource.start(0);
-    };
+    }
 
     let handleAudio = function() {
         let array =  new Uint8Array(analyzer.frequencyBinCount);

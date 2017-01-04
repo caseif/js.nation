@@ -21,7 +21,7 @@ let Canvas = new function() {
         Callbacks.addCallback(postCallback, Priority.LAST);
 
         window.onresize = setStyling;
-    };
+    }
     
     let setStyling = function() {
         $("#canvas").attr("width", $(window).width());
@@ -59,10 +59,10 @@ let Canvas = new function() {
         let dy = trigFuncY(waveFrameY) * Config.maxShakeDisplacement * waveAmplitudeY * multiplier;
 
         Canvas.context.translate(dx, dy);
-    };
+    }
 
     let postCallback = function() {
         Canvas.context.restore();
-    };
+    }
 
 }

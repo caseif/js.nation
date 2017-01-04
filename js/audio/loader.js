@@ -5,11 +5,11 @@ let SongLoader = new function() {
     this.randomSong = function() {
         let keys = Object.keys(songs);
         return songs[keys[Math.floor(Math.random() * keys.length)]];
-    };
+    }
 
     this.getSong = function(id) {
         return songs[id];
-    };
+    }
 
     this.loadSongs = function() {
         songs = {};
@@ -28,6 +28,6 @@ let SongLoader = new function() {
                         },
             async:        false
         });
-    };
+    }
 
-};
+}

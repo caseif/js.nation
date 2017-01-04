@@ -30,10 +30,10 @@ let Emblem = new function() {
         let xOffset = $(window).width() / 2 - currentRadius;
         let yOffset = $(window).height() / 2 - currentRadius;
         Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
-    };
+    }
 
     this.getRadius = function() {
         return currentRadius;
-    };
+    }
 
 }
