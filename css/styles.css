@@ -6,7 +6,7 @@ body {
 }
 
 #content {
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     left: 0;
     top: 0;
@@ -19,10 +19,11 @@ body {
 
 #background{
 	overflow: hidden;
+    position: absolute;
+    transition: opacity 0.3s;
 }
 
-#bgimg1 {
-    z-index: 0;
+#bgimg1, #limg1 {
     position: fixed;
     margin-left: 50%;
     display: block;
@@ -31,8 +32,7 @@ body {
     object-fit: cover;
 }
 
-#bgimg2 {
-    z-index: 0;
+#bgimg2, #limg2 {
     margin-left: -50%;
     transform: scale(-1, 1);
     display: block;
@@ -40,3 +40,18 @@ body {
     height: 100vh;
     object-fit: cover;
 }
+<<<<<<< HEAD
+=======
+.realbg{
+    opacity: 0;
+}
+.realbg img{
+    z-index: 1;
+}
+.lazyaf img{
+    z-index: 0;
+}
+img {
+	
+}
+>>>>>>> 5f47edadee9e3a5f78367879fb319266c1c2e10b

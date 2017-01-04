@@ -1,3 +1,3 @@
-let Gui = new Function() {
+let Gui = new function() {
     
-}
+};
