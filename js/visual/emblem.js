@@ -26,8 +26,8 @@ let Emblem = new function() {
         currentRadius = dimension / 2;
         let xOffset = $(window).width() / 2 - currentRadius;
         let yOffset = $(window).height() / 2 - currentRadius;
-        Canvas.context.fillStyle = "#000000";
         Canvas.context.save();
+        Canvas.context.fillStyle = "#000000";
         Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
         Canvas.context.restore();
     }
