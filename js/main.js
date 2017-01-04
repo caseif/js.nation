@@ -1,3 +1,5 @@
+SongLoader.loadSongs();
+
 Callbacks.setUp();
 Background.setUp();
 

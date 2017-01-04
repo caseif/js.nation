@@ -1,4 +1,4 @@
-var Callbacks = new function() {
+let Callbacks = new function() {
 
     let callbacks = [];
     const PRIORITY_LEVELS = 5;

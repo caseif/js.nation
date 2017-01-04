@@ -4,16 +4,19 @@ let Nodes = new function() {
 
     const BUFFER_INTERVAL = 1024;
 
+    let initialized = false;
+
     let context;
     let bufferSource;
     let audioBuffer;
     let analyzer;
     let scriptProcessor;
 
-    let spectrum;
-    let multiplier;
-
     this.setUp = function() {
+        if (initialized) {
+            throw "Already initialized (call destroyContext() first)";
+        }
+
         context = new AudioContext();
         bufferSource = context.createBufferSource();
         bufferSource.connect(context.destination);
@@ -38,9 +41,15 @@ let Nodes = new function() {
         }
 
         bufferSource.connect(analyzer);
+
+        initialized = true;
     };
 
     this.playSong = function(song) {
+        if (bufferSource.buffer != undefined) {
+            throw "Already playing song (must reinitialize first)";
+        }
+
         let request = new XMLHttpRequest();
         request.open("GET", Util.getCurrentUrlPrefix() + "/songs/" + song.getFileId());
         request.responseType = "arraybuffer";
@@ -56,9 +65,29 @@ let Nodes = new function() {
     let handleAudio = function() {
         let array =  new Uint8Array(analyzer.frequencyBinCount);
         analyzer.getByteFrequencyData(array);
-        spectrum = Transform.transform(array);
-        multiplier = Transform.multiplier(spectrum);
+
+        let spectrum = Transform.transform(array);
+        let multiplier = Transform.multiplier(spectrum);
         Callbacks.invokeCallbacks(spectrum, multiplier);
+    }
+
+    this.destroyContext = function() {
+        if (!initialized) {
+            throw "Not yet initialized";
+        }
+
+        bufferSource.stop();
+        context.close();
+
+        context = null;
+        bufferSource = null;
+        audioBuffer = null;
+        analyzer = null;
+        scriptProcessor = null;
+
+        Callbacks.invokeCallbacks([], 0);
+
+        initialized = false;
     }
 
 }

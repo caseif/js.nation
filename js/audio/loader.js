@@ -1,17 +1,18 @@
 let SongLoader = new function() {
 
+    let songs;
+
     this.randomSong = function() {
-        let songs = getAllSongs();
         let keys = Object.keys(songs);
         return songs[keys[Math.floor(Math.random() * keys.length)]];
     };
 
     this.getSong = function(id) {
-        getAllSongs()[id];
+        return songs[id];
     };
 
-    let getAllSongs = function() {
-        let songs = [];
+    this.loadSongs = function() {
+        songs = {};
         $.ajax({
             url:        Util.getCurrentUrlPrefix() + "/songs.csv",
             success:    csv => {
@@ -24,11 +25,9 @@ let SongLoader = new function() {
                                 } catch (ignored) {
                                 }
                             });
-                            songs.splice("undefined", 1);
                         },
             async:        false
         });
-        return songs;
     };
 
 };

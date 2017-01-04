@@ -25,6 +25,10 @@ let Spectrum = new function() {
     }
 
     let drawPoints = function(points, neg) {
+        if (points.length == 0) {
+            return;
+        }
+
         let halfWidth = $(window).width() / 2;
         let halfHeight = $(window).height() / 2;
 
