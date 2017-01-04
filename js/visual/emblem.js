@@ -9,7 +9,7 @@ let Emblem = new function() {
         image.onload = () => loaded = true;
         image.src = "./img/emblem.svg";
 
-        Nodes.addCallback(drawCallback);
+        Callbacks.addCallback(drawCallback);
     }
 
     let drawCallback = function(_, multiplier) {

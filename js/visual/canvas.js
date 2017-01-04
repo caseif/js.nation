@@ -16,9 +16,9 @@ let Canvas = new function() {
     this.setUp = function() {
         setStyling();
 
-        Nodes.addCallback(clearCallback, Priority.FIRST);
-        Nodes.addCallback(shakeCallback, Priority.FIRST);
-        Nodes.addCallback(postCallback, Priority.LAST);
+        Callbacks.addCallback(clearCallback, Priority.FIRST);
+        Callbacks.addCallback(shakeCallback, Priority.FIRST);
+        Callbacks.addCallback(postCallback, Priority.LAST);
 
         window.onresize = setStyling;
     };

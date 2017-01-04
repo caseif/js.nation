@@ -10,9 +10,6 @@ let Nodes = new function() {
     let analyzer;
     let scriptProcessor;
 
-    let callbacks = [];
-    const PRIORITY_LEVELS = 5;
-
     let spectrum;
     let multiplier;
 
@@ -41,10 +38,6 @@ let Nodes = new function() {
         }
 
         bufferSource.connect(analyzer);
-
-        for (let i = 0; i < PRIORITY_LEVELS; i++) {
-            callbacks[i] = [];
-        }
     };
 
     this.playSong = function(song) {
@@ -65,30 +58,7 @@ let Nodes = new function() {
         analyzer.getByteFrequencyData(array);
         spectrum = Transform.transform(array);
         multiplier = Transform.multiplier(spectrum);
-        handleCallbacks();
-    }
-
-    let handleCallbacks = function() {
-        for (let i = 0; i < PRIORITY_LEVELS; i++) {
-            handleCallbackArray(callbacks[i]);
-        }
-    }
-
-    let handleCallbackArray = function(callbacks) {
-        let len = callbacks.length;
-        for (let i = 0; i < len; i++) {
-            callbacks[i](spectrum, multiplier);
-        }
-    }
-
-    this.addCallback = function(callback, priority) {
-        if (priority == undefined) {
-            priority = 2;
-        }
-        if (priority < 0 || priority >= PRIORITY_LEVELS || !Number.isInteger(priority)) {
-            throw "Invalid priority [0-" + (PRIORITY_LEVELS - 1) + "]";
-        }
-        callbacks[priority].push(callback);
+        Callbacks.invokeCallbacks(spectrum, multiplier);
     }
 
 }
