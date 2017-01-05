@@ -10,5 +10,8 @@ let gui = new function() {
         Nodes.setUp();
         Nodes.playSong(SongLoader.randomSong());
     }
+    this.flipImage = function() {
+        $(".bgleft, .bgright").toggleClass("bgright bgleft");
+    }
 
 };
