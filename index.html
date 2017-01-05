@@ -3,9 +3,33 @@
     <head>
         <title>js.nation</title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+        <script type="text/javascript" src="http://incept.cc/dev/js/id3-minimized.js"></script>
         <link rel="stylesheet" type="text/css" href="./css/styles.css">
     </head>
     <body>
+    
+        <div id="view">
+          <br><button id="Stahp">Stop Playing</button>
+          <p>Local Upload:</p>
+          <input accept="audio/*" type="file" id="fileSelector">
+          <br><br>
+          <table id="display" border="1"></table>
+          <br><br><button id="viewDB">Refresh Datbase</button>
+          <br><br><button id="delDB">Delete Datbase</button>
+          <br><div id="messages"></div> 
+          <br><br><img width="300px" id="img">
+          <br><br><audio controls autoplay id="audio"></audio>
+          <br><br><label for="title">Title: </label>
+          <input type="text" id="title">
+          <br><br><label for="artist">Artist: </label>
+          <input type="text" id="artist">
+          <br><br><label for="picture">Picture: </label>
+          <input type="text" id="picture">
+          <br><br><button id="add2DB">Add To Database</button>
+          
+        </div>
+    
         <div id="content">
             <canvas id="canvas" style="display: block;"></canvas>
         </div>
@@ -16,7 +40,8 @@
             <img class="bgleft" id="bgimg1"><img class="bgright" id="bgimg2">
         </div>
         
-
+        <!-- database -->
+        <script type="text/javascript" src="./js/database/db.js"></script>
         <!-- audio -->
         <script type="text/javascript" src="./js/audio/loader.js"></script>
         <script type="text/javascript" src="./js/audio/nodes.js"></script>

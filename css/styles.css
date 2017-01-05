@@ -5,6 +5,12 @@ body {
     margin: 0;
 }
 
+/* Temporary gross af styling */
+#view {z-index: 3; position: absolute; background-color: white; padding: 15px; zoom: 0.7;}
+#view td{padding: 5px 15px;}
+#view a{color: red; font-weight: bold;}
+
+
 #content {
     z-index: 2;
     position: fixed;
