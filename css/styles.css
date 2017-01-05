@@ -23,9 +23,16 @@ body {
     transition: opacity 0.3s;
 }
 
+/* Dynamic class for flipping image */
+.bgleft{
+    margin-left: 50%;
+}
+.bgright{
+    margin-left: -50%;
+}
+
 #bgimg1, #limg1 {
     position: fixed;
-    margin-left: 50%;
     display: block;
     width: 100vw;
     height: 100vh;
@@ -33,15 +40,13 @@ body {
 }
 
 #bgimg2, #limg2 {
-    margin-left: -50%;
     transform: scale(-1, 1);
     display: block;
     width: 100vw;
     height: 100vh;
     object-fit: cover;
 }
-<<<<<<< HEAD
-=======
+
 .realbg{
     opacity: 0;
 }
@@ -54,4 +59,3 @@ body {
 img {
 	
 }
->>>>>>> 5f47edadee9e3a5f78367879fb319266c1c2e10b

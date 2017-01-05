@@ -11,7 +11,7 @@ let Config = new function() {
     this.maxShakeIntensity = Math.PI / 2;
     this.maxShakeDisplacement = 20;
     this.minShakeScalar = 0.9;
-    this.maxShakeScalar = 1.1;
+    this.maxShakeScalar = 1.2;
 
     // transform config
     this.startBin = 12;

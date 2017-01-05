@@ -19,6 +19,7 @@ let Background = new function() {
     }
     
     let handleData = function(result) {
+        //console.log(result.data);
         let index = result.data[Math.floor(Math.random() * result.data.length)].id;
         document.getElementById("bgimg1").src = "https://i.imgur.com/" + index +".jpg";
         document.getElementById("bgimg2").src = "https://i.imgur.com/" + index +".jpg";
