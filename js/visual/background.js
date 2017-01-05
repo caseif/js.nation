@@ -19,16 +19,15 @@ let Background = new function() {
     }
     
     let handleData = function(result) {
-        //console.log(result.data);
         let index = result.data[Math.floor(Math.random() * result.data.length)].id;
         document.getElementById("bgimg1").src = "https://i.imgur.com/" + index +".jpg";
         document.getElementById("bgimg2").src = "https://i.imgur.com/" + index +".jpg";
         document.getElementById("limg1").src = "https://i.imgur.com/" + index +"m.jpg";
         document.getElementById("limg2").src = "https://i.imgur.com/" + index +"m.jpg";
     }
+
+    this.flipImage = function() {
+        $(".bgleft, .bgright").toggleClass("bgright bgleft");
+    }
     
 }
-
-$(window).on("load", function() {
-    $('.realbg').css('opacity', '1');
-});

@@ -6,9 +6,24 @@ body {
 }
 
 /* Temporary gross af styling */
-#view {z-index: 3; position: absolute; background-color: white; padding: 15px; zoom: 0.7;}
-#view td{padding: 5px 15px;}
-#view a{color: red; font-weight: bold;}
+#view {
+    z-index: 3;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    padding: 15px;
+    transform: scale(0.7);
+    transform-origin: 100% 100%;
+}
+
+#view td {
+    padding: 5px 15px;
+}
+#view a {
+    color: red;
+    font-weight: bold;
+}
 
 
 #content {
@@ -23,17 +38,18 @@ body {
     height: 100%;
 }
 
-#background{
+#background {
 	overflow: hidden;
     position: absolute;
     transition: opacity 0.3s;
 }
 
 /* Dynamic class for flipping image */
-.bgleft{
+.bgleft {
     margin-left: 50%;
 }
-.bgright{
+
+.bgright {
     margin-left: -50%;
 }
 
@@ -53,18 +69,10 @@ body {
     object-fit: cover;
 }
 
-.realbg{
-    opacity: 0;
-}
-.lazyaf{
-    opacity: 0.25;
-}
-.realbg img{
+.realbg img {
     z-index: 1;
 }
-.lazyaf img{
+
+.lazyaf img {
     z-index: 0;
-}
-img {
-	
 }

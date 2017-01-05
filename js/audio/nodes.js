@@ -45,7 +45,7 @@ let Nodes = new function() {
         initialized = true;
     }
 
-    this.playSong = function(song, custom, url) {
+    this.playSong = function(song, url) {
                 
         if (bufferSource.buffer != undefined) {
             throw "Already playing song (must reinitialize first)";
@@ -53,9 +53,9 @@ let Nodes = new function() {
 
         let request = new XMLHttpRequest();
         
-        if(custom == true){
+        if (song == null || song == undefined) {
             request.open("GET", url);
-        }else{
+        } else {
             request.open("GET", "./songs/" + song.getFileId());
         }
 
@@ -95,6 +95,18 @@ let Nodes = new function() {
         Callbacks.invokeCallbacks([], 0);
 
         initialized = false;
+    }
+
+    this.resetAndPlayCustom = function(url) {
+        this.destroyContext();
+        this.setUp();
+        this.playSong(null, url);
+    }
+
+    this.resetAndPlayRandom = function() {
+        Nodes.destroyContext();
+        Nodes.setUp();
+        Nodes.playSong(SongLoader.randomSong());
     }
 
 }
