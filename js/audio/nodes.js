@@ -45,13 +45,20 @@ let Nodes = new function() {
         initialized = true;
     }
 
-    this.playSong = function(song) {
+    this.playSong = function(song, custom, url) {
+                
         if (bufferSource.buffer != undefined) {
             throw "Already playing song (must reinitialize first)";
         }
 
         let request = new XMLHttpRequest();
-        request.open("GET", Util.getCurrentUrlPrefix() + "/songs/" + song.getFileId());
+        
+        if(custom == true){
+            request.open("GET", url);
+        }else{
+            request.open("GET", "./songs/" + song.getFileId());
+        }
+
         request.responseType = "arraybuffer";
         request.onload = () => context.decodeAudioData(request.response, playBuffer, console.log);
         request.send();

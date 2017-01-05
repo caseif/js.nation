@@ -50,6 +50,9 @@ body {
 .realbg{
     opacity: 0;
 }
+.lazyaf{
+    opacity: 0.25;
+}
 .realbg img{
     z-index: 1;
 }
