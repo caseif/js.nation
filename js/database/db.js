@@ -23,7 +23,6 @@ var elmImage0 = document.getElementById('img');
 var elmImage1 = document.getElementById('bgimg1');
 var elmImage2 = document.getElementById('bgimg2');
 var elmAudio = document.getElementById('audio');
-var elmPicture = document.getElementById('picture');
 var elmTable = document.getElementById('display');
 
 // Debug Element | xalert('message');
@@ -79,7 +78,7 @@ function handleFileSelection(e) {
         dataReader: ID3.FileAPIReader(fileStore),
         tags: ["artist", "title", "picture"]
     });
-    elmAudio.src = url;
+    Nodes.playSongFromUrl(url);
     handleView();
 }
 

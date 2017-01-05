@@ -7,7 +7,7 @@ let Nodes = new function() {
     let initialized = false;
 
     let context;
-    let bufferSource;
+    let mediaSource;
     let analyzer;
     let scriptProcessor;
 
@@ -17,8 +17,11 @@ let Nodes = new function() {
         }
 
         context = new AudioContext();
-        bufferSource = context.createBufferSource();
-        bufferSource.connect(context.destination);
+
+        if (mediaSource == undefined) {
+            mediaSource = context.createMediaElementSource(document.querySelector("audio"));
+        }
+        mediaSource.connect(context.destination);
 
         scriptProcessor = context.createScriptProcessor(BUFFER_INTERVAL, 1, 1);
         scriptProcessor.onaudioprocess = handleAudio;
@@ -39,33 +42,13 @@ let Nodes = new function() {
             alert("Failed to set optimal fftSize! This may look a bit weird...");
         }
 
-        bufferSource.connect(analyzer);
+        mediaSource.connect(analyzer);
 
         initialized = true;
     }
 
     this.playSong = function(song, url) {
-                
-        if (bufferSource.buffer != undefined) {
-            throw "Already playing song (must reinitialize first)";
-        }
-
-        let request = new XMLHttpRequest();
-        
-        if (song == null || song == undefined) {
-            request.open("GET", url);
-        } else {
-            request.open("GET", "./songs/" + song.getFileId());
-        }
-
-        request.responseType = "arraybuffer";
-        request.onload = () => context.decodeAudioData(request.response, playBuffer, console.log);
-        request.send();
-    }
-    
-    let playBuffer = function(buffer) {
-        bufferSource.buffer = buffer;
-        bufferSource.start(0);
+        $("#audio").attr("src", song != null ? "./songs/" + song.getFileId() : url);
     }
 
     let handleAudio = function() {
@@ -77,33 +60,11 @@ let Nodes = new function() {
         Callbacks.invokeCallbacks(spectrum, multiplier);
     }
 
-    this.destroyContext = function() {
-        if (!initialized) {
-            throw "Not yet initialized";
-        }
-
-        bufferSource.stop();
-        context.close();
-
-        context = null;
-        bufferSource = null;
-        analyzer = null;
-        scriptProcessor = null;
-
-        Callbacks.invokeCallbacks([], 0);
-
-        initialized = false;
-    }
-
-    this.resetAndPlayCustom = function(url) {
-        this.destroyContext();
-        this.setUp();
+    this.playSongFromUrl = function(url) {
         this.playSong(null, url);
     }
 
-    this.resetAndPlayRandom = function() {
-        Nodes.destroyContext();
-        Nodes.setUp();
+    this.playRandomSong = function() {
         Nodes.playSong(SongLoader.randomSong());
     }
 
