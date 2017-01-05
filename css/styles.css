@@ -6,21 +6,23 @@ body {
 }
 
 /* Temporary gross af styling */
-#view {
+#controls {
     z-index: 3;
     position: fixed;
     right: 0;
     bottom: 0;
-    background-color: white;
     padding: 15px;
-    transform: scale(0.7);
-    transform-origin: 100% 100%;
+    background-color: rgba(34, 34, 34, 0.65);
+    color: #DBDBDB;
+    width: 200px;
+    line-height: 0.8em;
+    font-size: 10pt;
 }
 
-#view td {
+#controls td {
     padding: 5px 15px;
 }
-#view a {
+#controls a {
     color: red;
     font-weight: bold;
 }
