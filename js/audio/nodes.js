@@ -8,7 +8,6 @@ let Nodes = new function() {
 
     let context;
     let bufferSource;
-    let audioBuffer;
     let analyzer;
     let scriptProcessor;
 
@@ -88,7 +87,6 @@ let Nodes = new function() {
 
         context = null;
         bufferSource = null;
-        audioBuffer = null;
         analyzer = null;
         scriptProcessor = null;
 

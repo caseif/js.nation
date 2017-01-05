@@ -62,12 +62,8 @@ function handleFileSelection(e) {
             imgurl = "data:" + image.format + ";base64," + window.btoa(base64String);
             imgStore = imgurl;
             elmImage0.src = imgStore;
-            elmImage1.src = imgStore;
-            elmImage2.src = imgStore;
 		} else {
             elmImage0.src = "";
-            elmImage1.src = "";
-            elmImage2.src = "";
         }
         if (tags.title !== undefined) {
             elmTitle.value = tags.title;
@@ -122,8 +118,6 @@ function handlePlay(i) {
         gui.customSong(URL.createObjectURL(result.audio));
         //elmAudio.src = URL.createObjectURL(result.audio);
         elmImage0.src = result.img;
-        elmImage1.src = result.img;
-        elmImage2.src = result.img;
     })
     handleView();
 }
