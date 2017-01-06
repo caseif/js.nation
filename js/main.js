@@ -1,10 +1,10 @@
 let Main = new function() {
     this.init = function() {
+        Callbacks.setUp();
+        
         Util.setUp();
 
         SongLoader.loadSongs();
-
-        Callbacks.setUp();
         Background.setUp();
 
         Nodes.setUp();

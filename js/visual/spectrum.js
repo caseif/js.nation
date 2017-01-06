@@ -14,7 +14,7 @@ let Spectrum = new function() {
         let len = spectrum.length;
         for (let i = 0; i < len; i++) {
             t = Math.PI * (i / (len - 1)) - (Math.PI / 2);
-            r = baseRad + spectrum[i] * Config.spectrumHeightScalar;
+            r = baseRad + spectrum[i] * Config.spectrumHeightScalar * Util.getResolutionMultiplier();
             x = r * Math.cos(t);
             y = r * Math.sin(t);
             points.push({x: x, y: y});

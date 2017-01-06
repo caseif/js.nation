@@ -1,10 +1,13 @@
 let Util = new function() {
 
+    let resMult = 1;
+
     this.setUp = function() {
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
             return target.replace(new RegExp(search, 'g'), replacement);
         };
+        Callbacks.addCallback(updateResolutionMultiplier);
     }
 
     this.getCurrentUrlPrefix = function() {
@@ -28,6 +31,20 @@ let Util = new function() {
         for (let i = arr.length; i; i--) {
             let j = Math.floor(Math.random() * i);
             [arr[i - 1], arr[j]] = [arr[j], arr[i - 1]];
+        }
+    }
+
+    this.getResolutionMultiplier = function() {
+        return resMult;
+    }
+
+    let updateResolutionMultiplier = function() {
+        let width = $(window).width();
+        let height = $(window).height();
+        if (width >= height) {
+            resMult = width / 1920;
+        } else {
+            resMult = height / 1080;
         }
     }
 
