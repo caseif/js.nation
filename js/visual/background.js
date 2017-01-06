@@ -13,15 +13,15 @@ let Background = new function() {
 
     let loadImgurBackground = function() {
         $.ajax({
-            url: 'https://api.imgur.com/3/gallery/r/earthporn/0',
+            url: "https://api.imgur.com/3/gallery/r/earthporn/0",
             method: 'GET',
             headers: {
-                Authorization: 'Client-ID 0428dcb72fbc5da',
-                Accept: 'application/json'
+                Authorization: "Client-ID 0428dcb72fbc5da",
+                Accept: "application/json"
             },
             data: {
                 image: localStorage.dataBase64,
-                type: 'base64'
+                type: "base64"
             },
             success: handleImgurData
         });
