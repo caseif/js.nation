@@ -11,7 +11,7 @@ let Gui = new function() {
         }).mouseleave(() => {
             timeoutId = setTimeout(() => Gui.slideDownPanel(), PANEL_TIMEOUT);
         });
-        setTimeout(Gui.slideDownPanel, 1000);
+        setTimeout(Gui.slideDownPanel, 500);
     }
 
     function slideUpPanel() {
@@ -19,7 +19,7 @@ let Gui = new function() {
     }
 
     this.slideDownPanel = function() {
-        $("#controls").css("bottom", (-$("#controls").height() + 32) + "px");
+        $("#controls").css("bottom", (-$("#controls").height() + 30) + "px");
     }
 
 
