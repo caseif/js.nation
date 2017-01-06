@@ -52,8 +52,8 @@ body {
 
 #background {
 	overflow: hidden;
-    position: absolute;
-    transition: opacity 0.3s;
+	position: absolute;
+	transition: opacity 0.3s;
 }
 
 /* Dynamic class for flipping image */
@@ -73,6 +73,16 @@ body {
     object-fit: cover;
 }
 
+#bgimg1, #bgimg2 {
+	filter: blur(40px);
+	opacity: 0;
+	transition: opacity 0.3s linear;
+	transition: filter 1s linear;
+}
+
+#limg1, #limg2 {
+}
+
 #bgimg2, #limg2 {
     transform: scale(-1, 1);
 }
@@ -83,4 +93,5 @@ body {
 
 .lazyaf img {
     z-index: 0;
+    filter: blur(40px);
 }
