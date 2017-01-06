@@ -10,7 +10,7 @@ body {
     z-index: 3;
     position: fixed;
     right: 0;
-    bottom: -50%;
+    bottom: -100%;
     padding: 15px;
     padding-top: 0;
     background-color: rgba(34, 34, 34, 0.65);
@@ -61,7 +61,7 @@ body {
     margin-left: -50%;
 }
 
-#bgimg1, #limg1 {
+#bgimg1, #limg1, #bgimg2, #limg2 {
     position: fixed;
     display: block;
     width: 100vw;
@@ -71,10 +71,6 @@ body {
 
 #bgimg2, #limg2 {
     transform: scale(-1, 1);
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
 }
 
 .realbg img {

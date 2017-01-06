@@ -4,7 +4,9 @@ Callbacks.setUp();
 Background.setUp();
 
 Nodes.setUp();
-Db.setUp();
+
+Database.setUp();
+Gui.setUp();
 
 Canvas.setUp();
 Emblem.setUp();
