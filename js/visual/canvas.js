@@ -1,7 +1,7 @@
 let Canvas = new function() {
 
-    this.canvas = $("#canvas").get()[0];
-    this.context = canvas.getContext("2d");
+    this.canvas;
+    this.context;
 
     const WAVE_DURATION = Math.PI / 8;
     let waveFrameX = 0;
@@ -14,6 +14,9 @@ let Canvas = new function() {
     let trigY = Math.round(Math.random());
 
     this.setUp = function() {
+        this.canvas = $("#canvas").get()[0]
+        this.context = canvas.getContext("2d");
+
         setStyling();
 
         Callbacks.addCallback(clearCallback, Priority.FIRST);

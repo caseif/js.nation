@@ -3,7 +3,7 @@
 let Database = new function() {
 
     // Listen Elements
-    let elmFile = document.getElementById("fileSelector");
+    let elmFile;
     let elmAdd = document.getElementById("add2DB");
     let elmView = document.getElementById("viewDB");
     let elmDeldb = document.getElementById("delDB");
@@ -13,15 +13,28 @@ let Database = new function() {
     let imgStore;
 
     // Misc Elements
-    let elmTitle = document.getElementById("title");
-    let elmArtist = document.getElementById("artist");
-    let elmImage0 = document.getElementById("img");
-    let elmImage1 = document.getElementById("bgimg1");
-    let elmImage2 = document.getElementById("bgimg2");
-    let elmAudio = document.getElementById("audio");
-    let elmTable = document.getElementById("display");
+    let elmTitle;
+    let elmArtist;
+    let elmImage0;
+    let elmImage1;
+    let elmImage2;
+    let elmAudio;
+    let elmTable;
 
     this.setUp = function() {
+        elmFile = document.getElementById("fileSelector")
+        elmAdd = document.getElementById("add2DB");
+        elmView = document.getElementById("viewDB");
+        elmDeldb = document.getElementById("delDB");
+
+        elmTitle = document.getElementById("title");
+        elmArtist = document.getElementById("artist");
+        elmImage0 = document.getElementById("img");
+        elmImage1 = document.getElementById("bgimg1");
+        elmImage2 = document.getElementById("bgimg2");
+        elmAudio = document.getElementById("audio");
+        elmTable = document.getElementById("display");
+
         // button Listeners
         elmFile.addEventListener("change", handleFileSelection, false);
         elmAdd.addEventListener("click", addSong, false);

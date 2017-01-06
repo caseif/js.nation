@@ -19,7 +19,7 @@ let Nodes = new function() {
         context = new AudioContext();
 
         if (mediaSource == undefined) {
-            mediaSource = context.createMediaElementSource(document.querySelector("audio"));
+            mediaSource = context.createMediaElementSource(document.getElementsByTagName("audio")[0]);
         }
         mediaSource.connect(context.destination);
 
