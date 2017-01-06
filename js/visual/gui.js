@@ -21,6 +21,10 @@ let Gui = new function() {
     this.slideDownPanel = function() {
         $("#controls").css("bottom", (-$("#controls").height() + 30) + "px");
     }
+    
+    this.setTitle  = function(artist, title) {
+        $("#elmTitle").html(artist + " - " + title);
+    }
 
 
 };

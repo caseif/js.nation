@@ -140,6 +140,10 @@ let Database = new function() {
 
     this.handlePlay = function(i) {
         db.id3.where("id").equals(i).each(result => {
+            
+            
+            Gui.setTitle(result.artist, result.title);
+            
             Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
             
             document.getElementById("bgimg1").src = "";
