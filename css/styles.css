@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
 html {
     background-color: #222;
+    font-family: 'Nunito', sans-serif;
 }
 body {
     margin: 0;
@@ -15,10 +18,10 @@ body {
     padding-top: 0;
     background-color: rgba(34, 34, 34, 0.65);
     color: #DBDBDB;
-    width: 200px;
+    max-width: 100%;
     line-height: 0.8em;
     font-size: 10pt;
-    transition: 0.5s;
+    transition: 0.25s;
 }
 
 #controls td {
@@ -28,11 +31,91 @@ body {
     color: red;
     font-weight: bold;
 }
-
 #controls > .header {
     font-size: 14pt;
     text-align: center;
 }
+
+
+
+
+
+.vertCen{
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+
+
+/* ----------- */
+/* GUI Styling */
+/* ----------- */
+
+#gui_top, #gui_bottom {
+    z-index: 3;
+    position: fixed;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+}
+
+/* Only works chrome */
+audio::-webkit-media-controls-panel{
+    background: rgba(0, 0, 0, 0);
+    
+}
+
+#gui_bottom{
+    bottom: 0;
+}
+/* #gui_top div, #gui_bottom div { */
+    /* background: rgb(66, 133, 244);     */
+/* } */
+.fl{
+    width: 20%;
+    text-align: left;
+}
+.fr{
+    width: 20%;
+    text-align: right;
+}
+.fc{
+    width: 20%;
+    text-align: center;
+}
+
+/* ------------ */
+/* GUI Elements */
+/* ------------ */
+
+#audio{
+    width: 100%;
+    zoom: 1.5;
+}
+#elmTitle{
+    font-size: 40px;
+}
+#elmCredit{
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+
+
+
+
+
+
+
+
+
 
 #content {
     z-index: 2;
@@ -42,7 +125,7 @@ body {
 }
 
 #img {
-    width: 100%;
+    max-width: 300px;
 }
 
 #canvas {

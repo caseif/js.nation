@@ -15,10 +15,10 @@ let Background = new function() {
     
     this.setUp = function() {
         redditJsonpTag = document.createElement("script");
-        loadRedditBackground();
+        this.loadRedditBackground();
     }
 
-    let loadRedditBackground = function() {
+    this.loadRedditBackground = function() {
         $.ajax({
             url: "https://www.reddit.com/r/" + SUBREDDIT + "/.json",
             method: "GET",

@@ -141,8 +141,17 @@ let Database = new function() {
     this.handlePlay = function(i) {
         db.id3.where("id").equals(i).each(result => {
             Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
+            
+            document.getElementById("bgimg1").src = "";
+            document.getElementById("bgimg2").src = "";
+            document.getElementById("limg1").src = "";
+            document.getElementById("limg2").src = "";
+            
+            Background.loadRedditBackground();
+            
+
             //elmAudio.src = URL.createObjectURL(result.audio);
-            elmImage0.src = result.img;
+            //elmImage0.src = result.img;
         });
         handleView();
     }

@@ -1,7 +1,7 @@
 let Gui = new function() {
 
     let lastTouch = 0;
-    const PANEL_TIMEOUT = 1000;
+    const PANEL_TIMEOUT = 500;
     let timeoutId;
 
     this.setUp = function() {
