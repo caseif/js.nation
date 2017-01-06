@@ -8,23 +8,22 @@
         <link rel="stylesheet" type="text/css" href="./css/styles.css">
     </head>
     <body>
-    
         <div id="controls">
-          <p>Local Upload:</p>
-          <input accept="audio/*" type="file" id="fileSelector">
-          <br><br>
-          <table id="display" border="1"></table>
-          <br><br><button id="viewDB">Refresh Datbase</button>
-          <br><br><button id="delDB">Delete Datbase</button>
-          <br><div id="messages"></div> 
-          <br><br><img width="300px" id="img">
-          <br><br><audio controls autoplay id="audio"></audio>
-          <br><br><label for="title">Title: </label>
-          <input type="text" id="title">
-          <br><br><label for="artist">Artist: </label>
-          <input type="text" id="artist">
-          <br><br><button id="add2DB">Add To Database</button>
-          
+            <span class="header"><p>Controls</p></span>
+            <p>Local Upload:</p>
+            <input accept="audio/*" type="file" id="fileSelector">
+            <br><br>
+            <table id="display" border="1"></table>
+            <br><br><button id="viewDB">Refresh Datbase</button>
+            <br><br><button id="delDB">Delete Datbase</button>
+            <br><div id="messages"></div> 
+            <br><br><img width="300px" id="img">
+            <br><br><audio controls autoplay id="audio"></audio>
+            <br><br><label for="title">Title: </label>
+            <input type="text" id="title">
+            <br><br><label for="artist">Artist: </label>
+            <input type="text" id="artist">
+            <br><br><button id="add2DB">Add To Database</button>
         </div>
     
         <div id="content">
@@ -36,12 +35,11 @@
         <div id="background" class="realbg">
             <img class="bgleft" id="bgimg1"><img class="bgright" id="bgimg2">
         </div>
-        
-        <!-- database -->
-        <script type="text/javascript" src="./js/database/db.js"></script>
         <!-- audio -->
         <script type="text/javascript" src="./js/audio/loader.js"></script>
         <script type="text/javascript" src="./js/audio/nodes.js"></script>
+        <!-- database -->
+        <script type="text/javascript" src="./js/database/db.js"></script>
         <!-- math -->
         <script type="text/javascript" src="./js/math/transform.js"></script>
         <!-- misc -->

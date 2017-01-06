@@ -10,13 +10,15 @@ body {
     z-index: 3;
     position: fixed;
     right: 0;
-    bottom: 0;
+    bottom: -50%;
     padding: 15px;
+    padding-top: 0;
     background-color: rgba(34, 34, 34, 0.65);
     color: #DBDBDB;
     width: 200px;
     line-height: 0.8em;
     font-size: 10pt;
+    transition: 0.5s;
 }
 
 #controls td {
@@ -27,6 +29,10 @@ body {
     font-weight: bold;
 }
 
+#controls > .header {
+    font-size: 14pt;
+    text-align: center;
+}
 
 #content {
     z-index: 2;

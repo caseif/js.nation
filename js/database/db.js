@@ -1,6 +1,9 @@
 //TODO: some serious organization/structure improvement
 //TODO: replace var with let
 
+var lastTouch = 0;
+const SLIDE_DOWN_TIME = 1000;
+
 // Listen Elements
 var elmFile = document.getElementById('fileSelector');
 var elmAdd = document.getElementById('add2DB');
@@ -24,6 +27,20 @@ var elmImage1 = document.getElementById('bgimg1');
 var elmImage2 = document.getElementById('bgimg2');
 var elmAudio = document.getElementById('audio');
 var elmTable = document.getElementById('display');
+
+let Db = new function() {
+    let timeoutId;
+
+    this.setUp = function() {
+        slideDownPanel();
+        $("#controls").mouseenter(() => {
+            clearTimeout(timeoutId);
+            slideUpPanel();
+        }).mouseleave(() => {
+            timeoutId = setTimeout(() => slideDownPanel(), SLIDE_DOWN_TIME);
+        });
+    }
+}
 
 // Debug Element | xalert('message');
 var elmMessages = document.getElementById('messages');
@@ -49,7 +66,11 @@ function handleFileSelection(e) {
     imgStore = undefined;
     fileStore = e.target.files[0];
     
-    var url = URL.createObjectURL(fileStore);
+    try {
+        var url = URL.createObjectURL(fileStore);
+    } catch (error) {
+        return;
+    }
     ID3.loadTags(url, () => {
         var tags = ID3.getAllTags(url);
         if (tags.picture !== undefined) {
@@ -135,3 +156,11 @@ function secondsToHms(d) {
 }
 
 handleView();
+
+function slideUpPanel() {
+    $("#controls").css("bottom", 0);
+}
+
+function slideDownPanel() {
+        $("#controls").css("bottom", (-$("#controls").height() + 32) + "px");
+}
