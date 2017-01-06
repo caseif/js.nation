@@ -54,10 +54,12 @@
             <canvas id="canvas" style="display: block;"></canvas>
         </div>
         <div id="background" class="lazyaf">
-            <img class="bgleft" id="limg1"><img class="bgright" id="limg2">
+            <img src="error.src" class="bgleft" id="limg1" onerror="this.style.display='none'">
+            <img src="error.src" class="bgright" id="limg2" onerror="this.style.display='none'">
         </div>
         <div id="background" class="realbg">
-            <img class="bgleft" id="bgimg1"><img class="bgright" id="bgimg2">
+            <img src="error.src" class="bgleft" id="bgimg1" onerror="this.style.display='none'">
+            <img src="error.src" class="bgright" id="bgimg2" onerror="this.style.display='none'">
         </div>
     </body>
 </html>

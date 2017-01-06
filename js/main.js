@@ -1,5 +1,7 @@
 let Main = new function() {
     this.init = function() {
+        Util.setUp();
+
         SongLoader.loadSongs();
 
         Callbacks.setUp();
