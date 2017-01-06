@@ -17,12 +17,11 @@ let Emblem = new function() {
             return;
         }
 
-        let minFrac = 1 / Config.minEmblemSizeRatio;
-        let maxFrac = 1 / Config.maxEmblemSizeRatio;
-        let scalar = multiplier * (minFrac - maxFrac) + maxFrac
+        let minSize = Config.minEmblemSize;
+        let maxSize = Config.maxEmblemSize;
+        let scalar = multiplier * (maxSize - minSize) + minSize
 
-        let windowDim = Math.min($(window).width(), $(window).height());
-        let dimension = windowDim * scalar;
+        let dimension = Util.getResolutionMultiplier() * scalar;
         currentRadius = dimension / 2;
         let xOffset = $(window).width() / 2 - currentRadius;
         let yOffset = $(window).height() / 2 - currentRadius;

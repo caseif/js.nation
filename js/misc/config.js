@@ -6,8 +6,8 @@ let Config = new function() {
     this.fftSize = 16384;
 
     // emblem config
-    this.minEmblemSizeRatio = 2;
-    this.maxEmblemSizeRatio = 3;
+    this.minEmblemSize = 360;
+    this.maxEmblemSize = 540;
     this.maxShakeIntensity = Math.PI / 2;
     this.maxShakeDisplacement = 20;
     this.minShakeScalar = 0.9;
