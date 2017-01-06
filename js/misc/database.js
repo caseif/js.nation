@@ -46,12 +46,13 @@ let Database = new function() {
 
     // Debug Element | xalert("message");
     let elmMessages = document.getElementById("messages");
-    function xalert(message) {
+
+    letxalert = function(message) {
         elmMessages.innerHTML += message + "<br>";
     }
 
     // Delete Database
-    function handleDeleteDB() {
+    let handleDeleteDB = function() {
         db.delete();
         handleView();
         xalert("You'll need to refresh");
@@ -63,7 +64,7 @@ let Database = new function() {
     db.open().catch(e => xalert("Open failed: " + e));
 
 
-    function handleFileSelection(e) {
+    let handleFileSelection = function(e) {
         //reset globals
         imgStore = undefined;
         fileStore = e.target.files[0];
@@ -106,7 +107,7 @@ let Database = new function() {
         handleView();
     }
 
-    function addSong() {
+    let addSong = function() {
         let image = imgStore;
         let artist = elmArtist.value;
         let title = elmTitle.value;
@@ -116,7 +117,7 @@ let Database = new function() {
     }
 
     //TODO: this function needs to get merged into Gui and made less ugly
-    function handleView() {
+    let handleView = function() {
         elmTable.innerHTML = "";
         
         db.id3.each(result => {
@@ -127,17 +128,17 @@ let Database = new function() {
             } else {
                 td1 = "<td></td>";
             }
-            let td2 = "<td><a onclick=\"javascript:handlePlay(" + result.id + ")\">Play</a></td>";
+            let td2 = "<td><a onclick=\"javascript:Database.handlePlay(" + result.id + ")\">Play</a></td>";
             let td3 = "<td>" + result.title + "</td>";
             let td4 = "<td>" + result.artist + "</td>";
-            let td5 = "<td><a onclick=\"javascript:handleRemove(" + result.id + ")\">Remove</a></td>";
+            let td5 = "<td><a onclick=\"javascript:Database.handleRemove(" + result.id + ")\">Remove</a></td>";
             let td6 = "<td>" + result.duration + "</td>";
             let tr2 = "</tr></td>";
             elmTable.innerHTML = elmTable.innerHTML + tr + td1 + td2 + td3 + td4 + td5 + td6 + tr2;
         });
     }
 
-    function handlePlay(i) {
+    this.handlePlay = function(i) {
         db.id3.where("id").equals(i).each(result => {
             Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
             //elmAudio.src = URL.createObjectURL(result.audio);
@@ -146,7 +147,7 @@ let Database = new function() {
         handleView();
     }
 
-    function handleRemove(i) {
+    let handleRemove = function(i) {
         db.id3.where("id").equals(i).delete();
         handleView();
     }
