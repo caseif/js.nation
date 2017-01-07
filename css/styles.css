@@ -165,13 +165,13 @@ audio::-webkit-media-controls-panel {
     zoom: 2.5; /* yeah, we technically shouldn't be using this, but there's no alternative */
 }
 
-#elmTitle{
+#elmTitle {
     color: white;
     text-transform: uppercase;
     line-height: 90%;
 }
 
-#guiSong{
+#guiSong {
     font-size: 20px;
 }
 
@@ -181,6 +181,7 @@ audio::-webkit-media-controls-panel {
 
 #elmCredit {
     color: white;
+    text-align: center;
 }
 
 input[type="file"] {
