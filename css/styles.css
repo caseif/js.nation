@@ -1,44 +1,28 @@
+/* ----------------- */
+/* Main Page Styling */
+/* ----------------- */
+
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 html {
-    background-color: #222;
     font-family: 'Nunito', sans-serif;
 }
 body {
     margin: 0;
+    background-color: #222 !important;
 }
 
-/* Temporary gross af styling */
-#controls {
-    z-index: 3;
+#content {
+    z-index: 2;
     position: fixed;
-    right: 0;
-    bottom: -100%;
-    padding: 15px;
-    padding-top: 0;
-    background-color: rgba(34, 34, 34, 0.65);
-    color: #DBDBDB;
-    max-width: 100%;
-    line-height: 0.8em;
-    font-size: 10pt;
-    transition: 0.25s;
+    left: 0;
+    top: 0;
 }
 
-#controls td {
-    padding: 5px 15px;
+#canvas {
+    width: 100%;
+    height: 100%;
 }
-#controls a {
-    color: red;
-    font-weight: bold;
-}
-#controls > .header {
-    font-size: 14pt;
-    text-align: center;
-}
-
-
-
-
 
 .vertCen{
     position: relative;
@@ -48,35 +32,71 @@ body {
     transform: translateY(-50%);
 }
 
+/* ------------------------- */
+/* Temporary Control Styling */
+/* ------------------------- */
 
+#controls {
+    z-index: 3;
+    position: fixed;
+    padding: 15px;
+    background-color: rgba(34, 34, 34, 0.65);
+    color: #DBDBDB;
+    max-width: 100%;
+    line-height: 0.8em;
+    font-size: 10pt;
+}
 
+#controls td {
+    padding: 5px 15px;
+}
+#controls a {
+    color: rgba(66, 133, 244, 1);
+    font-weight: bold;
+}
+#controls > .header {
+    font-size: 14pt;
+    text-align: center;
+}
+#img {
+    max-width: 300px;
+}
 
 /* ----------- */
 /* GUI Styling */
 /* ----------- */
 
 #gui_top, #gui_bottom {
-    z-index: 3;
+    z-index: 5;
     position: fixed;
     width: 100%;
-    height: 75px;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     background: rgba(0, 0, 0, 0.9);
-    color: white;
-}
-
-/* Only works chrome */
-audio::-webkit-media-controls-panel{
-    background: rgba(0, 0, 0, 0);
     
 }
-
 #gui_bottom{
     bottom: 0;
 }
+
+/* Chrome Only, Edge has black/purple player though */
+audio::-webkit-media-controls-panel{
+    background: rgba(0, 0, 0, 0);
+}
+
+#gui_full{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 4;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+/* Temporary highlighting for debugging layout */
 /* #gui_top div, #gui_bottom div { */
-    /* background: rgb(66, 133, 244);     */
+    /* background: rgba(66, 133, 244, 0.1);     */
 /* } */
 .fl{
     width: 20%;
@@ -87,7 +107,7 @@ audio::-webkit-media-controls-panel{
     text-align: right;
 }
 .fc{
-    width: 20%;
+    width: 50%;
     text-align: center;
 }
 
@@ -100,38 +120,25 @@ audio::-webkit-media-controls-panel{
     zoom: 1.5;
 }
 #elmTitle{
-    font-size: 40px;
+    font-size: 25px;
+    whitespace: nowrap;
+    color: white;
+    line-height: 28px;
+    text-transform: uppercase;
 }
+#guiArtist{
+    font-size: 35px;
+}
+
 #elmCredit{
     font-size: 20px;
-    margin-left: 20px;
+    margin-right: 20px;
+    color: white;
 }
 
-
-
-
-
-
-
-
-
-
-
-#content {
-    z-index: 2;
-    position: fixed;
-    left: 0;
-    top: 0;
-}
-
-#img {
-    max-width: 300px;
-}
-
-#canvas {
-    width: 100%;
-    height: 100%;
-}
+/* ----------------- */
+/* Background Styles */
+/* ----------------- */
 
 #background {
 	overflow: hidden;
@@ -139,7 +146,6 @@ audio::-webkit-media-controls-panel{
 	transition: opacity 0.3s;
 }
 
-/* Dynamic class for flipping image */
 .bgleft {
     margin-left: 50%;
 }

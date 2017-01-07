@@ -15,7 +15,6 @@ let Database = new function() {
     // Misc Elements
     let elmTitle;
     let elmArtist;
-    let elmImage0;
     let elmImage1;
     let elmImage2;
     let elmAudio;
@@ -29,7 +28,6 @@ let Database = new function() {
 
         elmTitle = document.getElementById("title");
         elmArtist = document.getElementById("artist");
-        elmImage0 = document.getElementById("img");
         elmImage1 = document.getElementById("bgimg1");
         elmImage2 = document.getElementById("bgimg2");
         elmAudio = document.getElementById("audio");
@@ -40,7 +38,7 @@ let Database = new function() {
         elmAdd.addEventListener("click", addSong, false);
         elmView.addEventListener("click", handleView, false);
         elmDeldb.addEventListener("click", handleDeleteDB, false);
-
+        
         handleView();
     }
 
@@ -85,9 +83,6 @@ let Database = new function() {
                 }
                 imgurl = "data:" + image.format + ";base64," + window.btoa(base64String);
                 imgStore = imgurl;
-                elmImage0.src = imgStore;
-            } else {
-                elmImage0.src = "";
             }
             if (tags.title !== undefined) {
                 elmTitle.value = tags.title;
@@ -99,10 +94,14 @@ let Database = new function() {
             } else {
                 elmArtist.value = "";
             }
+            
+            Gui.setTitle(tags.artist, tags.title);
+            
         }, {
             dataReader: ID3.FileAPIReader(fileStore),
             tags: ["artist", "title", "picture"]
         });
+        
         Nodes.playSongFromUrl(url);
         handleView();
     }
@@ -140,22 +139,13 @@ let Database = new function() {
 
     this.handlePlay = function(i) {
         db.id3.where("id").equals(i).each(result => {
-            
-            
             Gui.setTitle(result.artist, result.title);
-            
             Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
-            
             document.getElementById("bgimg1").src = "";
             document.getElementById("bgimg2").src = "";
             document.getElementById("limg1").src = "";
             document.getElementById("limg2").src = "";
-            
             Background.loadRedditBackground();
-            
-
-            //elmAudio.src = URL.createObjectURL(result.audio);
-            //elmImage0.src = result.img;
         });
         handleView();
     }

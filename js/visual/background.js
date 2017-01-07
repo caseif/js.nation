@@ -101,11 +101,11 @@ let Background = new function() {
             document.getElementById("limg2").src = lowRes;
         }
     }
-
+    
     this.flipImage = function() {
         $(".bgleft, .bgright").toggleClass("bgright bgleft");
     }
-
+    
     this.fadeFullRes = function(element) {
         $("#" + element.id).css({"opacity": 1, "filter": "none"});
     }
