@@ -21,4 +21,8 @@ let Config = new function() {
     this.smoothingPasses = 1;
     this.smoothingPoints = 3;
     this.spectrumHeightScalar = 0.5;
+
+    // gui config
+    this.guiTimeout = 2000;
+    this.guiFadeTime = 350;
 }

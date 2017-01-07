@@ -7,6 +7,7 @@
 html {
     font-family: 'Nunito', sans-serif;
 }
+
 body {
     margin: 0;
     background-color: #222 !important;
@@ -24,7 +25,7 @@ body {
     height: 100%;
 }
 
-.vertCen{
+.vertCen {
     position: relative;
     top: 50%;
     -webkit-transform: translateY(-50%);
@@ -75,6 +76,8 @@ body {
 /* GUI Styling */
 /* ----------- */
 
+/* TODO: we could actually justify moving this into a new file maybe */
+
 #gui_top, #gui_bottom {
     z-index: 5;
     position: fixed;
@@ -82,19 +85,19 @@ body {
     height: 100px;
     display: flex;
     justify-content: space-between;
-    background: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.7);
     
 }
-#gui_bottom{
+#gui_bottom {
     bottom: 0;
 }
 
 /* Chrome Only, Edge has black/purple player though */
-audio::-webkit-media-controls-panel{
+audio::-webkit-media-controls-panel {
     background: rgba(0, 0, 0, 0);
 }
 
-#gui_full{
+#gui_full {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -113,39 +116,42 @@ audio::-webkit-media-controls-panel{
 }
 
 
-
 /* Temporary highlighting for debugging layout */
-/* #gui_top div, #gui_bottom div { */
-    /* background: rgba(66, 133, 244, 0.1);     */
-/* } */
+/*#gui_top div, #gui_bottom div {
+    background: rgba(66, 133, 244, 0.1);
+}
 
-/* Top-Float-Left, etc (GUI Responsivness) */
-/* .tfl{ */
-    /* width: 20%; */
-    /* text-align: left; */
-    /* padding-left: 35px; */
-/* } */
-/* .tfr{ */
-    /* width: 20%; */
-    /* text-align: right; */
-    /* padding-right: 35px; */
-/* } */
-.tfc{
+.tfl{
+    width: 20%;
+    text-align: left;
+    padding-left: 35px;
+}
+
+.tfr{
+    width: 20%;
+    text-align: right;
+    padding-right: 35px;
+}*/
+
+/* your div names are trash :P */
+.tfc {
     width: 100%;
     text-align: center;
 }
 
-.bfl{
+.bfl {
     width: 10%;
     text-align: left;
     padding-left: 35px;
 }
-.bfr{
+
+.bfr {
     width: 10%;
     text-align: right;
     padding-right: 35px;
 }
-.bfc{
+
+.bfc {
     width: 80%;
     text-align: center;
 }
@@ -154,22 +160,26 @@ audio::-webkit-media-controls-panel{
 /* GUI Elements */
 /* ------------ */
 
-#audio{
+#audio {
     width: 100%;
-    zoom: 2.5;
+    zoom: 2.5; /* yeah, we technically shouldn't be using this, but there's no alternative */
 }
+
 #elmTitle{
     color: white;
     text-transform: uppercase;
     line-height: 90%;
 }
+
 #guiSong{
     font-size: 20px;
 }
+
 #guiArtist {
     font-size: 30px;
 }
-#elmCredit{
+
+#elmCredit {
     color: white;
 }
 
@@ -180,6 +190,8 @@ input[type="file"] {
 /* ----------------- */
 /* Background Styles */
 /* ----------------- */
+
+/* TODO: same deal here with a separate file */
 
 #background {
 	overflow: hidden;
