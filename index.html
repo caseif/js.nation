@@ -5,9 +5,11 @@
         <link rel="stylesheet" type="text/css" href="./css/styles.css">
         <!-- libraries -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- Datbase Wrapper -->
         <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>        
+        <!-- Semantic Ui -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
         <!-- audio -->
         <script src="./js/audio/loader.js"></script>
         <script src="./js/audio/nodes.js"></script>
@@ -19,6 +21,7 @@
         <script src="./js/misc/database.js"></script>
         <script src="./js/misc/util.js"></script>
         <script src="./js/misc/id3-minimized.js"></script>
+        <script src="./js/misc/io.js"></script>
         <!-- model -->
         <script src="./js/model/priority.js"></script>
         <script src="./js/model/song.js"></script>
@@ -33,50 +36,56 @@
         <script src="./js/main.js"></script>
     </head>
     <body>
-        
-        <div class="" id="gui_full">
-            <div class="vertCen">
-                <div id="controls">
-                    <table id="display" border="1"></table>
-                    <br><div id="messages"></div>
+        <div id="gui_full">
+            <div class="vertCen" id="gui_full_holder">
+                <div class="absolutecenter" id="controls">
+                    <div class="ui fluid action input inverted">
+                        <input type="text" readonly Value="Select Audio File">
+                        <input accept="audio/*" type="file" id="fileSelector">
+                        <div class="ui icon button">
+                            <i class="cloud upload icon"></i>
+                        </div>
+                    </div>
+                    <table class="ui selectable inverted table" id="display" border="1"></table>
+                    <div class="ui input"><input type="text" id="artist" placeholder="Artist"></div>
+                    <div class="ui input"><input type="text" id="title" placeholder="Title"></div>
+                    <button class="ui button" id="add2DB">Add To Database</button>
+                    
+                    <button class="ui button" id="viewDB">Refresh Datbase</button>
+                    <button class="ui button" id="delDB">Delete Datbase</button>
                 </div>
             </div>
         </div>
         
         <div id="gui_top">
-            <div class="fl">
+            <div class="tfl">
                 <div class="vertCen">
-                    <button id="showGUI">showGUI</button>
-                    <button onclick="Background.flipImage();" id="flipBG">Flip Background</button>
+                    
                 </div>
             </div>
-            <div class="fc">
+            <div class="tfc">
                 <div class="vertCen">
                     <div id="elmTitle"></div>
                 </div>
             </div>
-            <div class="fr">
+            <div class="tfr">
                 <div class="vertCen">
-                    <button id="viewDB">Refresh Datbase</button>
-                    <button id="delDB">Delete Datbase</button>
+                    
                 </div>
             </div>
         </div>
         <div id="gui_bottom">
-            <div class="fl">
+            <div class="bfl">
                 <div class="vertCen">
-                    <input accept="audio/*" type="file" id="fileSelector"><br>
-                    <input type="text" id="artist" placeholder="Artist">
-                    <input type="text" id="title" placeholder="Title">
-                    <button id="add2DB">Add To Database</button>
+                    <button class="ui button" onclick="Background.flipImage();" id="flipBG">Flip Background</button>
                 </div>
             </div>
-            <div class="fc">
+            <div class="bfc">
                 <div class="vertCen">
                     <audio controls autoplay id="audio">
                 </div>
             </div>
-            <div class="fr">
+            <div class="bfr">
                 <div class="vertCen">
                     <div id="elmCredit">Caseif & Incept 2017</div>
                 </div>
@@ -87,12 +96,12 @@
             <canvas id="canvas" style="display: block;"></canvas>
         </div>
         <div id="background" class="lazyaf">
-            <img src="error.src" class="bgleft" id="limg1" onerror="this.style.display='none'">
-            <img src="error.src" class="bgright" id="limg2" onerror="this.style.display='none'">
+            <img src="" class="bgleft" id="limg1" onerror="this.style.display='none'">
+            <img src="" class="bgright" id="limg2" onerror="this.style.display='none'">
         </div>
         <div id="background" class="realbg">
-            <img src="error.src" class="bgleft" id="bgimg1" onload="javascript:Background.fadeFullRes(this)" onerror="this.style.display='none'">
-            <img src="error.src" class="bgright" id="bgimg2" onload="javascript:Background.fadeFullRes(this)" onerror="this.style.display='none'">
+            <img src="" class="bgleft" id="bgimg1" onload="javascript:Background.fadeFullRes(this)" onerror="this.style.display='none'">
+            <img src="" class="bgright" id="bgimg2" onload="javascript:Background.fadeFullRes(this)" onerror="this.style.display='none'">
         </div>
     </body>
 </html>

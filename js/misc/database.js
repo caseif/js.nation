@@ -42,24 +42,17 @@ let Database = new function() {
         handleView();
     }
 
-    // Debug Element | xalert("message");
-    let elmMessages = document.getElementById("messages");
-
-    letxalert = function(message) {
-        elmMessages.innerHTML += message + "<br>";
-    }
-
     // Delete Database
     let handleDeleteDB = function() {
         db.delete();
         handleView();
-        xalert("You'll need to refresh");
+        alert("You'll need to refresh");
     }
 
     // Create Database
     let db = new Dexie("visDB");
     db.version(1).stores({id3: "++id, artist, title, duration, img, audio"});
-    db.open().catch(e => xalert("Open failed: " + e));
+    db.open().catch(e => alert("Open failed: " + e));
 
 
     let handleFileSelection = function(e) {
@@ -94,7 +87,8 @@ let Database = new function() {
             } else {
                 elmArtist.value = "";
             }
-            
+            Background.resetBG();
+            Background.loadRedditBackground();
             Gui.setTitle(tags.artist, tags.title);
             
         }, {
@@ -141,10 +135,7 @@ let Database = new function() {
         db.id3.where("id").equals(i).each(result => {
             Gui.setTitle(result.artist, result.title);
             Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
-            document.getElementById("bgimg1").src = "";
-            document.getElementById("bgimg2").src = "";
-            document.getElementById("limg1").src = "";
-            document.getElementById("limg2").src = "";
+            Background.resetBG();
             Background.loadRedditBackground();
         });
         handleView();
@@ -154,5 +145,5 @@ let Database = new function() {
         db.id3.where("id").equals(i).delete();
         handleView();
     }
-
+    
 }

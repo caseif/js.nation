@@ -32,6 +32,14 @@ body {
     transform: translateY(-50%);
 }
 
+.absolutecenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
 /* ------------------------- */
 /* Temporary Control Styling */
 /* ------------------------- */
@@ -45,6 +53,7 @@ body {
     max-width: 100%;
     line-height: 0.8em;
     font-size: 10pt;
+    pointer-events: auto;
 }
 
 #controls td {
@@ -92,22 +101,52 @@ audio::-webkit-media-controls-panel{
     display: none;
     z-index: 4;
     background: rgba(0, 0, 0, 0.75);
+    pointer-events: none;
+    
 }
+
+#gui_full_holder {
+    height: calc(100% - 300px);
+    padding: 0px 50px;
+    pointer-events: none;
+    
+}
+
+
 
 /* Temporary highlighting for debugging layout */
 /* #gui_top div, #gui_bottom div { */
     /* background: rgba(66, 133, 244, 0.1);     */
 /* } */
-.fl{
-    width: 20%;
+
+/* Top-Float-Left, etc (GUI Responsivness) */
+/* .tfl{ */
+    /* width: 20%; */
+    /* text-align: left; */
+    /* padding-left: 35px; */
+/* } */
+/* .tfr{ */
+    /* width: 20%; */
+    /* text-align: right; */
+    /* padding-right: 35px; */
+/* } */
+.tfc{
+    width: 100%;
+    text-align: center;
+}
+
+.bfl{
+    width: 10%;
     text-align: left;
+    padding-left: 35px;
 }
-.fr{
-    width: 20%;
+.bfr{
+    width: 10%;
     text-align: right;
+    padding-right: 35px;
 }
-.fc{
-    width: 50%;
+.bfc{
+    width: 80%;
     text-align: center;
 }
 
@@ -117,23 +156,25 @@ audio::-webkit-media-controls-panel{
 
 #audio{
     width: 100%;
-    zoom: 1.5;
+    zoom: 2.5;
 }
 #elmTitle{
-    font-size: 25px;
-    whitespace: nowrap;
     color: white;
-    line-height: 28px;
     text-transform: uppercase;
+    line-height: 90%;
 }
-#guiArtist{
-    font-size: 35px;
+#guiSong{
+    font-size: 20px;
+}
+#guiArtist {
+    font-size: 30px;
+}
+#elmCredit{
+    color: white;
 }
 
-#elmCredit{
-    font-size: 20px;
-    margin-right: 20px;
-    color: white;
+input[type="file"] {
+    display: none;
 }
 
 /* ----------------- */

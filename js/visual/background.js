@@ -109,5 +109,11 @@ let Background = new function() {
     this.fadeFullRes = function(element) {
         $("#" + element.id).css({"opacity": 1, "filter": "none"});
     }
+    this.resetBG = function() {
+        document.getElementById("bgimg1").src = "";
+        document.getElementById("bgimg2").src = "";
+        document.getElementById("limg1").src = "";
+        document.getElementById("limg2").src = "";
+    }
     
 }
