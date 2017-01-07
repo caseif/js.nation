@@ -1,6 +1,6 @@
-let guiStay = false;
-
 let Gui = new function() {
+
+    let keepGui = false;
 
     let timer;
 
@@ -8,7 +8,7 @@ let Gui = new function() {
         
         $('#canvas').click(function() {
             $('#gui_full').fadeToggle(Config.guiFadeTime);
-            guiStay = !guiStay;
+            keepGui = !keepGui;
         });
         
         
@@ -16,7 +16,7 @@ let Gui = new function() {
             clearInterval(timer);
             $("#gui_top").fadeIn(Config.guiFadeTime);
             $("#gui_bottom").fadeIn(Config.guiFadeTime);
-            if (!guiStay) {
+            if (!keepGui) {
                 timer = setTimeout(() => {
                     $("#gui_top").fadeOut(Config.guiFadeTime);   
                     $("#gui_bottom").fadeOut(Config.guiFadeTime);   
