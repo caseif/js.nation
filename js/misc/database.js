@@ -141,7 +141,7 @@ let Database = new function() {
         handleView();
     }
 
-    let handleRemove = function(i) {
+    this.handleRemove = function(i) {
         db.id3.where("id").equals(i).delete();
         handleView();
     }
