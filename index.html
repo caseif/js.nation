@@ -2,14 +2,24 @@
 <html>
     <head>
         <title>js.nation</title>
-        <link rel="stylesheet" type="text/css" href="./css/styles.css">
-        <!-- libraries -->
+        <!---------------------------------------- CDN ---------------------------------------->
+        <!-- jQuery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
         <!-- Datbase Wrapper -->
         <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
-        <!-- Semantic Ui -->
+        <!-- Semantic OwO -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+        <!--------------------------------------- Local --------------------------------------->
+        <!-- Styles -->
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <link rel="stylesheet" type="text/css" href="./css/gui.css">
+        <link rel="stylesheet" type="text/css" href="./css/background.css">
         <!-- audio -->
         <script src="./js/audio/loader.js"></script>
         <script src="./js/audio/nodes.js"></script>
@@ -57,45 +67,32 @@
             </div>
         </div>
         
-        <div id="gui_top">
-            <div class="tfl">
-                <div class="vertCen">
-                    
-                </div>
-            </div>
-            <div class="tfc">
-                <div class="vertCen">
-                    <div id="elmTitle"></div>
-                </div>
-            </div>
-            <div class="tfr">
-                <div class="vertCen">
-                    
-                </div>
-            </div>
+        <div class="flex" id="gui_top">
+            <div id="elmTitle"></div>
         </div>
-        <div id="gui_bottom">
-            <div class="bfl">
-                <div class="vertCen">
-                    <button class="ui button inverted transparent" onclick="Background.flipImage();" id="flipBG">Flip Background</button>
-                </div>
+        
+        <div class="flex" id="gui_bottom">
+            <!-- Left -->
+            <button class="ui button inverted transparent" onclick="Background.flipImage();" id="flipBG">Flip BG</button>
+            <!-- Center -->
+            <div class="flex" id="audio-player">  
+              <div class="flex main_controls"><i id="previous" class="fa fa-step-backward"></i><i id="play" class="fa fa-play"></i><i id="next" class="fa fa-step-forward"></i></div>
+              <span id="time" class="time">00:00</span>
+              <progress id="progressbar" class="flex-auto" value="0" max="100"></progress>
+              <i id="mute" class="fa fa-volume-up"></i><progress id="volume" class="flex-auto" value="100" max="100"></progress>
             </div>
-            <div class="bfc">
-                <div class="vertCen">
-                    <audio controls autoplay id="audio">
-                </div>
+            <!-- Fix Me Plz -->
+            <audio autoplay id="audio"></audio>
+            <script src="./js/visual/audioWrap.js"></script>
+            <!-- Right -->
+            <div id="elmCredit">
+                <p class="love">
+                    Made with &#128153;
+                    <br>
+                    by <a href="//caseif.net" target="_blank"rel="noopener noreferrer">caseif</a> & <a href="//incept.online" target="_blank" rel="noopener noreferrer">Incept</a>
+                </p>
             </div>
-            <div class="bfr">
-                <div class="vertCen">
-                    <div id="elmCredit">
-                        <p class="love">
-                            Made with &#128153;
-                            <br>
-                            by <a href="//caseif.net" target="_blank"rel="noopener noreferrer">caseif</a> & <a href="//incept.online" target="_blank" rel="noopener noreferrer">Incept</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     
         <div id="content">

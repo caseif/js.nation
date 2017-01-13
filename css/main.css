@@ -1,0 +1,42 @@
+/* ----------------- */
+/* Main Page Styling */
+/* ----------------- */
+
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+html {
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #222 !important;
+}
+
+#content {
+    z-index: 2;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.vertCen {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.absolutecenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}

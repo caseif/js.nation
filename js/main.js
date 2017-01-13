@@ -15,6 +15,8 @@ let Main = new function() {
         Canvas.setUp();
         Emblem.setUp();
         Spectrum.setUp();
+        
+        audioWrap.setUp();
 
         Nodes.playSong(SongLoader.randomSong());
     }
