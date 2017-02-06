@@ -16,6 +16,11 @@ let Main = new function() {
         Emblem.setUp();
         Spectrum.setUp();
 
+        Scene.setUp();
+        Particles.setUp();
+        Lighting.setUp();
+        Renderer.setUp();
+
         Nodes.playSong(SongLoader.randomSong());
     }
 

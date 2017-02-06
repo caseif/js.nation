@@ -22,6 +22,10 @@ let Config = new function() {
     this.smoothingPoints = 3;
     this.spectrumHeightScalar = 0.5;
 
+    // particle config
+    this.baseParticleCount = 1000; // particle count at 1080p
+    this.particleOpacity = 0.6;
+
     // gui config
     this.guiTimeout = 2000;
     this.guiFadeTime = 350;
