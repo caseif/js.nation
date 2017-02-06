@@ -44,9 +44,9 @@ let Particles = new function() {
     }
 
     let updatePosition = function(particle) {
-        particle.x += particle.velocity.x;
-        particle.y += particle.velocity.y;
-        particle.z += 1;
+        particle.x += particle.velocity.x * 0.1;
+        particle.y += particle.velocity.y * 0.1;
+        //particle.z += 1;
     }
 
     let initializeParticles = function() {

@@ -9,6 +9,8 @@ let Renderer = new function() {
         renderer.setSize($(document).width(), $(document).height());
         renderer.domElement.id = "canvas-gl";
         $("#content").append(renderer.domElement);
+
+        startRenderLoop();
     }
 
     let startRenderLoop = function() {
@@ -17,7 +19,6 @@ let Renderer = new function() {
         };
 
         (function animLoop(){
-            updateParticles();
             requestAnimFrame(animLoop);
             renderer.render(Scene.glScene, Scene.glCamera);
         })();
