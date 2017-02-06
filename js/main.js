@@ -15,11 +15,14 @@ let Main = new function() {
         Canvas.setUp();
         Emblem.setUp();
         Spectrum.setUp();
-        
-        audioWrap.setUp();
 
         Nodes.playSong(SongLoader.randomSong());
+    }
+
+    this.postInit = function() {
+        AudioWrap.setUp();
     }
 }
 
 window.onload = Main.init;
+$(document).ready(Main.postInit);
