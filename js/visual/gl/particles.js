@@ -2,20 +2,20 @@ let Particles = new function() {
 
     let particleCount;
 
-    let particlesGeom;
+    this.particlesGeom;
     let particleTexture;
     let particleSystem;
 
     this.setUp = function() {
         particleCount = (($(document).width() * $(document).height()) / (1920 * 1080)) * Config.baseParticleCount;
 
-        particlesGeom = new THREE.Geometry();
+        this.particlesGeom = new THREE.Geometry();
         let texLoader = new THREE.TextureLoader();
         particleTexture = texLoader.load("./img/particle.png");
         particleTexture.minFilter = THREE.LinearFilter;
 
         var pMaterial = new THREE.PointsMaterial({
-            color: 0xFF0000,
+            color: 0xFFFFFF,
             opacity: Config.particleOpacity,
             size: 5,
             map: particleTexture,
@@ -23,7 +23,7 @@ let Particles = new function() {
             transparent: true
         });
 
-        particleSystem = new THREE.Points(particlesGeom, pMaterial);
+        particleSystem = new THREE.Points(this.particlesGeom, pMaterial);
         particleSystem.sortParticles = true;
         particleSystem.geometry.dynamic = true;
 
@@ -35,7 +35,7 @@ let Particles = new function() {
     }
 
     this.updateParticles = function() {
-        particlesGeom.vertices.forEach(particle => {
+        Particles.particlesGeom.vertices.forEach(particle => {
            updatePosition(particle);
         });
 
@@ -53,7 +53,7 @@ let Particles = new function() {
         for (let i = 0; i < particleCount; i++) {
             let particle = new THREE.Vector3(0, 0, 0);
             resetVelocity(particle);
-            particlesGeom.vertices.push(particle);
+            Particles.particlesGeom.vertices.push(particle);
         }
     }
 
