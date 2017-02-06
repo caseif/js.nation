@@ -25,6 +25,8 @@ let Config = new function() {
     // particle config
     this.baseParticleCount = 1000; // particle count at 1080p
     this.particleOpacity = 0.6;
+    this.cameraZPlane = 300; // the z-plane on which to place the camera
+    this.particleFinalRadius = 100; // the max radius of the particle cone at the z-plane intersecting the camera
 
     // gui config
     this.guiTimeout = 2000;
