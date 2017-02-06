@@ -59,7 +59,7 @@ let Background = new function() {
     let loadImgurBackground = function() {
         $.ajax({
             url: "https://api.imgur.com/3/gallery/r/earthporn/0",
-            method: 'GET',
+            method: "GET",
             headers: {
                 Authorization: "Client-ID 0428dcb72fbc5da",
                 Accept: "application/json"

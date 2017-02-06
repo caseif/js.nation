@@ -5,7 +5,7 @@ let Util = new function() {
     this.setUp = function() {
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
-            return target.replace(new RegExp(search, 'g'), replacement);
+            return target.replace(new RegExp(search, "g"), replacement);
         };
         Callbacks.addCallback(updateResolutionMultiplier);
     }

@@ -58,7 +58,7 @@ let AudioWrap = new function() {
         });
 
         player.onended = function() {
-            $('#play').attr("class", "fa fa-play");
+            $("#play").attr("class", "fa fa-play");
         };
     
     }
