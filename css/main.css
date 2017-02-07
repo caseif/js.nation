@@ -26,6 +26,14 @@ body {
     position: fixed;
 }
 
+#canvas {
+    z-index: 3;
+}
+
+#canvas-gl {
+    z-index: 2;
+}
+
 .vertCen {
     position: relative;
     top: 50%;
