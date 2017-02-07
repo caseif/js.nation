@@ -3,6 +3,7 @@ let Particles = new function() {
     const VERTEX_SIZE = 3;
 
     let particleCount;
+    let spawnedCount = 0;
 
     this.particlesGeom;
     let particleTexture;
@@ -45,6 +46,14 @@ let Particles = new function() {
     }
 
     this.updateParticles = function() {
+        if (spawnedCount < particleCount) {
+            let toSpawn = Math.random() * Config.particleMaxSpawnRate;
+            for (let i = spawnedCount; i < spawnedCount + toSpawn; i++) {
+                resetVelocity(i);
+                spawnedCount++;
+            }
+        }
+
         for (let i = 0; i < Particles.particlesGeom.attributes.position.array.length / VERTEX_SIZE; i++) {
            updatePosition(i);
         }
@@ -53,8 +62,12 @@ let Particles = new function() {
     }
 
     let updatePosition = function(i) {
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += velocities[i].x * 0.1; ///TODO
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += velocities[i].y * 0.1; //TODO
+        if (velocities[i] == undefined) { // no velocity set - don't move
+            return;
+        }
+
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += velocities[i].x * 0.1;
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += velocities[i].y * 0.1;
         Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += 1;
         if (Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] + Config.particleDespawnBuffer > Config.cameraZPlane) {
             respawnParticle(i);
@@ -74,7 +87,7 @@ let Particles = new function() {
             sizeArr[i] = Math.random() * (Config.particleSizeMax - Config.particleSizeMin) + Config.particleSizeMin;
             alphaArr[i] = 0.6;
 
-            resetVelocity(i);
+            //resetVelocity(i);
         }
         particleSystem.geometry.addAttribute("position", new THREE.BufferAttribute(posArr, 3));
         particleSystem.geometry.addAttribute("size", new THREE.BufferAttribute(sizeArr, 1));

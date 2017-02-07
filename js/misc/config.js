@@ -31,6 +31,7 @@ let Config = new function() {
     this.particleDespawnBuffer = 0; // distance from the camera z-plane before despawning particles
     this.particleRadiusMin = 0.3; // the minimum radius of the particle cone at the z-plane intersecting the camera
     this.particleRadiusMax = 2; // the maximum radius of the particle cone at the z-plane intersecting the camera
+    this.particleMaxSpawnRate = 10; // max particles to spawn each frame. this takes effect during particle initlzn.
 
     // gui config
     this.guiTimeout = 2000;
