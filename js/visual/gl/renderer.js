@@ -1,6 +1,7 @@
 let Renderer = new function() {
 
     const TARGET_FPS = 60;
+    const MS_DELAY = 1000 / TARGET_FPS;
 
     let renderer;
 
@@ -10,18 +11,13 @@ let Renderer = new function() {
         renderer.domElement.id = "canvas-gl";
         $("#content").append(renderer.domElement);
 
-        startRenderLoop();
+        requestAnimationFrame(render);
     }
 
-    let startRenderLoop = function() {
-        window.requestAnimFrame = () => {
-            return window.requestAnimationFrame || (callback => window.setTimeout(callback, 1000 / TARGET_FPS));
-        };
-
-        (function animLoop(){
-            requestAnimFrame(animLoop);
-            renderer.render(Scene.glScene, Scene.glCamera);
-        })();
+    let render = function() {
+        console.log("render");
+        requestAnimationFrame(render);
+        renderer.render(Scene.glScene, Scene.glCamera);
     }
 
 }

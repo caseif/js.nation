@@ -17,7 +17,7 @@ let Particles = new function() {
         var pMaterial = new THREE.PointsMaterial({
             color: 0xFFFFFF,
             opacity: Config.particleOpacity,
-            size: 5,
+            size: Config.particleSize,
             map: particleTexture,
             blending: THREE.AdditiveBlending,
             transparent: true
@@ -46,7 +46,7 @@ let Particles = new function() {
     let updatePosition = function(particle) {
         particle.x += particle.velocity.x * 0.1;
         particle.y += particle.velocity.y * 0.1;
-        //particle.z += 1;
+        particle.z += 1;
     }
 
     let initializeParticles = function() {
@@ -69,7 +69,7 @@ let Particles = new function() {
     }
 
     let resetVelocity = function(particle) {
-        let r = Config.particleFinalRadius * Math.random();
+        let r = (Config.particleRadiusMax - Config.particleRadiusMin) * Math.random() + Config.particleRadiusMin;
         let theta = MathConstants.TWO_PI * Math.random();
         particle.velocity = new THREE.Vector2(r * Math.cos(theta), r * Math.sin(theta));
     }
