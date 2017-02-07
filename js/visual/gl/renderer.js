@@ -15,7 +15,6 @@ let Renderer = new function() {
     }
 
     let render = function() {
-        console.log("render");
         requestAnimationFrame(render);
         renderer.render(Scene.glScene, Scene.glCamera);
     }

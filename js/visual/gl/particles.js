@@ -1,24 +1,34 @@
 let Particles = new function() {
 
+    const VERTEX_SIZE = 3;
+
     let particleCount;
 
     this.particlesGeom;
     let particleTexture;
     let particleSystem;
 
+    let velocities;
+
     this.setUp = function() {
         particleCount = (($(document).width() * $(document).height()) / (1920 * 1080)) * Config.baseParticleCount;
 
-        this.particlesGeom = new THREE.Geometry();
+        velocities = [];
+
+        this.particlesGeom = new THREE.BufferGeometry();
         let texLoader = new THREE.TextureLoader();
         particleTexture = texLoader.load("./img/particle.png");
         particleTexture.minFilter = THREE.LinearFilter;
 
-        var pMaterial = new THREE.PointsMaterial({
-            color: 0xFFFFFF,
-            opacity: Config.particleOpacity,
-            size: Config.particleSize,
-            map: particleTexture,
+        let uniforms = {
+            color: { type: "c", value: new THREE.Color(0xFFFFFF)},
+            texture: { type: "t", value: particleTexture }
+        };
+
+        let pMaterial = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: Shader.vertShader,
+            fragmentShader: Shader.fragShader,
             blending: THREE.AdditiveBlending,
             transparent: true
         });
@@ -35,43 +45,57 @@ let Particles = new function() {
     }
 
     this.updateParticles = function() {
-        Particles.particlesGeom.vertices.forEach(particle => {
-           updatePosition(particle);
-        });
+        for (let i = 0; i < Particles.particlesGeom.attributes.position.array.length / VERTEX_SIZE; i++) {
+           updatePosition(i);
+        }
 
-        particleSystem.geometry.__dirtyVertices = true;
-        particleSystem.geometry.verticesNeedUpdate = true;
+        particleSystem.geometry.attributes.position.needsUpdate = true;
     }
 
-    let updatePosition = function(particle) {
-        particle.x += particle.velocity.x * 0.1;
-        particle.y += particle.velocity.y * 0.1;
-        particle.z += 1;
-    }
-
-    let initializeParticles = function() {
-        for (let i = 0; i < particleCount; i++) {
-            let particle = new THREE.Vector3(0, 0, 0);
-            resetVelocity(particle);
-            Particles.particlesGeom.vertices.push(particle);
+    let updatePosition = function(i) {
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += velocities[i].x * 0.1; ///TODO
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += velocities[i].y * 0.1; //TODO
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += 1;
+        if (Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] + Config.particleDespawnBuffer > Config.cameraZPlane) {
+            respawnParticle(i);
         }
     }
 
-    let respawnParticle = function(particle) {
-        resetPosition(particle);
-        resetVelocity(particle);
+    let initializeParticles = function() {
+        let posArr = new Float32Array(particleCount * VERTEX_SIZE);
+        let sizeArr = new Float32Array(particleCount);
+        let alphaArr = new Float32Array(particleCount);
+        for (let i = 0; i < particleCount; i++) {
+            let particle = new THREE.Vector3(0, 0, 0);
+            resetVelocity(particle);
+            posArr[VERTEX_SIZE * i + 0] = particle.x;
+            posArr[VERTEX_SIZE * i + 1] = particle.y;
+            posArr[VERTEX_SIZE * i + 2] = particle.z;
+            sizeArr[i] = Math.random() * (Config.particleSizeMax - Config.particleSizeMin) + Config.particleSizeMin;
+            alphaArr[i] = 0.6;
+
+            resetVelocity(i);
+        }
+        particleSystem.geometry.addAttribute("position", new THREE.BufferAttribute(posArr, 3));
+        particleSystem.geometry.addAttribute("size", new THREE.BufferAttribute(sizeArr, 1));
+        particleSystem.geometry.addAttribute("alpha", new THREE.BufferAttribute(alphaArr, 1));
     }
 
-    let resetPosition = function(particle) {
-        particle.x = 0;
-        particle.y = 0;
-        particle.z = 0;
+    let respawnParticle = function(i) {
+        resetPosition(i);
+        resetVelocity(i);
     }
 
-    let resetVelocity = function(particle) {
+    let resetPosition = function(i) {
+        for (let j = 0; j < VERTEX_SIZE; j++) {
+            Particles.particlesGeom.attributes.position.array[i * VERTEX_SIZE + j] = 0;
+        }
+    }
+
+    let resetVelocity = function(i) {
         let r = (Config.particleRadiusMax - Config.particleRadiusMin) * Math.random() + Config.particleRadiusMin;
         let theta = MathConstants.TWO_PI * Math.random();
-        particle.velocity = new THREE.Vector2(r * Math.cos(theta), r * Math.sin(theta));
+        velocities[i] = new THREE.Vector2(r * Math.cos(theta), r * Math.sin(theta));
     }
 
 }
