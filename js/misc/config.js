@@ -23,15 +23,15 @@ let Config = new function() {
     this.spectrumHeightScalar = 0.5;
 
     // particle config
-    this.baseParticleCount = 600; // particle count at 1080p
-    this.particleOpacity = 0.6;
-    this.particleSizeMin = 0.3;
-    this.particleSizeMax = 2;
-    this.cameraZPlane = 100; // the z-plane on which to place the camera
+    this.baseParticleCount = 800; // particle count at 1080p
+    this.particleOpacity = 0.9;
+    this.particleSizeMin = 0.2;
+    this.particleSizeMax = 2.5;
+    this.cameraZPlane = 200; // the z-plane on which to place the camera
     this.particleDespawnBuffer = 0; // distance from the camera z-plane before despawning particles
-    this.particleRadiusMin = 0.3; // the minimum radius of the particle cone at the z-plane intersecting the camera
-    this.particleRadiusMax = 2; // the maximum radius of the particle cone at the z-plane intersecting the camera
-    this.particleMaxSpawnRate = 10; // max particles to spawn each frame. this takes effect during particle initlzn.
+    this.particleRadiusMin = 30; // the minimum radius of the particle cone at the z-plane intersecting the camera
+    this.particleRadiusMax = 60; // the maximum radius of the particle cone at the z-plane intersecting the camera
+    this.particleMaxSpawnRate = 3; // max particles to spawn each frame. this takes effect during particle initlzn.
 
     // gui config
     this.guiTimeout = 2000;

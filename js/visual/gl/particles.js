@@ -28,8 +28,8 @@ let Particles = new function() {
 
         let pMaterial = new THREE.ShaderMaterial({
             uniforms: uniforms,
-            vertexShader: Shader.vertShader,
-            fragmentShader: Shader.fragShader,
+            vertexShader: Shaders.vertShader,
+            fragmentShader: Shaders.fragShader,
             blending: THREE.AdditiveBlending,
             transparent: true
         });
@@ -47,8 +47,9 @@ let Particles = new function() {
 
     this.updateParticles = function() {
         if (spawnedCount < particleCount) {
-            let toSpawn = Math.random() * Config.particleMaxSpawnRate;
-            for (let i = spawnedCount; i < spawnedCount + toSpawn; i++) {
+            let toSpawn = Math.floor(Math.random() * Config.particleMaxSpawnRate);
+            let ceiling = spawnedCount + toSpawn;
+            for (let i = spawnedCount; i < ceiling; i++) {
                 resetVelocity(i);
                 spawnedCount++;
             }
@@ -62,7 +63,7 @@ let Particles = new function() {
     }
 
     let updatePosition = function(i) {
-        if (velocities[i] == undefined) { // no velocity set - don't move
+        if (i >= spawnedCount) { // no velocity set - don't move
             return;
         }
 
@@ -85,9 +86,9 @@ let Particles = new function() {
             posArr[VERTEX_SIZE * i + 1] = particle.y;
             posArr[VERTEX_SIZE * i + 2] = particle.z;
             sizeArr[i] = Math.random() * (Config.particleSizeMax - Config.particleSizeMin) + Config.particleSizeMin;
-            alphaArr[i] = 0.6;
+            alphaArr[i] = Config.particleOpacity;
 
-            //resetVelocity(i);
+            resetVelocity(i);
         }
         particleSystem.geometry.addAttribute("position", new THREE.BufferAttribute(posArr, 3));
         particleSystem.geometry.addAttribute("size", new THREE.BufferAttribute(sizeArr, 1));
@@ -108,7 +109,10 @@ let Particles = new function() {
     let resetVelocity = function(i) {
         let r = (Config.particleRadiusMax - Config.particleRadiusMin) * Math.random() + Config.particleRadiusMin;
         let theta = MathConstants.TWO_PI * Math.random();
-        velocities[i] = new THREE.Vector2(r * Math.cos(theta), r * Math.sin(theta));
+        velocities[i] = new THREE.Vector2(
+            r * Math.cos(theta) / Config.cameraZPlane,
+            r * Math.sin(theta) / Config.cameraZPlane
+        );
     }
 
 }
