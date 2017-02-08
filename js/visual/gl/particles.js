@@ -2,7 +2,6 @@ let Particles = new function() {
 
     const VERTEX_SIZE = 3;
 
-    let maxParticleCount;
     let indexStack;
 
     this.particlesGeom;
@@ -12,10 +11,9 @@ let Particles = new function() {
     let particleData = [];
 
     this.setUp = function() {
-        maxParticleCount = (($(document).width() * $(document).height()) / (1920 * 1080)) * Config.baseParticleCount;
 
         indexStack = [];
-        for (let i = maxParticleCount - 1; i >= 0; i--) {
+        for (let i = Config.maxParticleCount - 1; i >= 0; i--) {
             indexStack.push(i);
         }
 
@@ -56,7 +54,7 @@ let Particles = new function() {
             }
         }
 
-        for (let i = 0; i < maxParticleCount; i++) {
+        for (let i = 0; i < Config.maxParticleCount; i++) {
            updatePosition(i, multiplier);
         }
 
@@ -86,10 +84,10 @@ let Particles = new function() {
     }
 
     let initializeParticles = function() {
-        let posArr = new Float32Array(maxParticleCount * VERTEX_SIZE);
-        let sizeArr = new Float32Array(maxParticleCount);
-        let alphaArr = new Float32Array(maxParticleCount);
-        for (let i = 0; i < maxParticleCount; i++) {
+        let posArr = new Float32Array(Config.maxParticleCount * VERTEX_SIZE);
+        let sizeArr = new Float32Array(Config.maxParticleCount);
+        let alphaArr = new Float32Array(Config.maxParticleCount);
+        for (let i = 0; i < Config.maxParticleCount; i++) {
             posArr[VERTEX_SIZE * i + 0] = 0;
             posArr[VERTEX_SIZE * i + 1] = 0;
             posArr[VERTEX_SIZE * i + 2] = 0;
@@ -103,7 +101,7 @@ let Particles = new function() {
         particleSystem.geometry.addAttribute("size", new THREE.BufferAttribute(sizeArr, 1));
         particleSystem.geometry.addAttribute("alpha", new THREE.BufferAttribute(alphaArr, 1));
 
-        for (let i = 0; i < maxParticleCount; i++) {
+        for (let i = 0; i < Config.maxParticleCount; i++) {
             updatePosition(i, Math.random() * Config.cameraZPlane);
         }
     }

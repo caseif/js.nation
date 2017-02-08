@@ -23,7 +23,7 @@ let Config = new function() {
     this.spectrumHeightScalar = 0.5;
 
     // particle config
-    this.baseParticleCount = 1600; // particle count at 1080p
+    this.maxParticleCount = 1600; // particle count at 1080p
     this.particleMaxSpawnRate = 6; // max particles to spawn each frame. this takes effect during particle initlzn.
     this.particleOpacity = 1;
     this.particleSizeMin = 3;
