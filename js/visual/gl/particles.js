@@ -70,8 +70,18 @@ let Particles = new function() {
 
         let speed = data.getSpeed();
         adjustedSpeed = Math.max(speed * multiplier, Config.particleBaseSpeed);
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += data.getTrajectory().x * adjustedSpeed;
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += data.getTrajectory().y * adjustedSpeed;
+
+        let phaseX = Math.sin(MathConstants.TWO_PI * data.getPhase().x) * data.getPhaseAmplitude().x * multiplier;
+        let phaseY = Math.sin(MathConstants.TWO_PI * data.getPhase().y) * data.getPhaseAmplitude().y * multiplier;
+
+        let x = Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0]
+                + data.getTrajectory().x * adjustedSpeed
+                + phaseX;
+        let y = Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1]
+                + data.getTrajectory().y * adjustedSpeed
+                + phaseY;
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] = x;
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] = y;
         Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += multiplier * speed;
         if (Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] + Config.particleDespawnBuffer > Config.cameraZPlane) {
             despawnParticle(i);
@@ -81,6 +91,11 @@ let Particles = new function() {
                 Particles.particlesGeom.attributes.alpha.needsUpdate = true;
             }
         }
+
+        data.augmentPhase(
+            data.getPhaseSpeed().x * multiplier,
+            data.getPhaseSpeed().y * multiplier
+        );
     }
 
     let initializeParticles = function() {
@@ -91,7 +106,7 @@ let Particles = new function() {
             posArr[VERTEX_SIZE * i + 0] = 0;
             posArr[VERTEX_SIZE * i + 1] = 0;
             posArr[VERTEX_SIZE * i + 2] = 0;
-            sizeArr[i] = Math.random() * (Config.particleSizeMax - Config.particleSizeMin) + Config.particleSizeMin;
+            sizeArr[i] = Util.random(Config.particleSizeMin, Config.particleSizeMax);
             alphaArr[i] = 0;
 
             resetVelocity(i);
@@ -126,14 +141,26 @@ let Particles = new function() {
     }
 
     let resetVelocity = function(i) {
-        let r = (Config.particleRadiusMax - Config.particleRadiusMin) * Math.random() + Config.particleRadiusMin;
+        let r = Util.random(Config.particleRadiusMin, Config.particleRadiusMax);
         let theta = MathConstants.TWO_PI * Math.random();
         let trajectory = new THREE.Vector2(
             r * Math.cos(theta) / Config.cameraZPlane,
             r * Math.sin(theta) / Config.cameraZPlane
         );
-        let speed = Math.random() * (Config.particleSpeedMultMax - Config.particleSpeedMultMin) + Config.particleSpeedMultMin;
-        particleData[i] = new ParticleData(trajectory, speed);
+        
+        let speed = Util.random(Config.particleSpeedMultMin, Config.particleSpeedMultMax);
+
+        let phaseAmp = new THREE.Vector2(
+            Util.random(Config.particlePhaseAmplitudeMin, Config.particlePhaseAmplitudeMax),
+            Util.random(Config.particlePhaseAmplitudeMin, Config.particlePhaseAmplitudeMax)
+        );
+
+        let phaseSpeed = new THREE.Vector2(
+            Util.random(Config.particlePhaseSpeedMin, Config.particlePhaseSpeedMax),
+            Util.random(Config.particlePhaseSpeedMin, Config.particlePhaseSpeedMax)
+        );
+
+        particleData[i] = new ParticleData(trajectory, speed, phaseAmp, phaseSpeed);
     }
 
 }
