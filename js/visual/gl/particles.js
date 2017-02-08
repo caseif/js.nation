@@ -88,7 +88,8 @@ let Particles = new function() {
             despawnParticle(i);
             if (!data.isSpawned()) {
                 data.setSpawned();
-                Particles.particlesGeom.attributes.alpha.array[i] = Config.particleOpacity;
+                Particles.particlesGeom.attributes.alpha.array[i]
+                        = Math.random(Config.particleOpacityMin, Config.particleOpacityMax);
                 Particles.particlesGeom.attributes.alpha.needsUpdate = true;
             }
         }

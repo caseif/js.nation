@@ -25,7 +25,8 @@ let Config = new function() {
     // particle config
     this.maxParticleCount = 1600; // particle count at 1080p
     this.particleMaxSpawnRate = 12; // max particles to spawn each frame. this takes effect during particle initlzn.
-    this.particleOpacity = 1;
+    this.particleOpacityMin = 0.9;
+    this.particleOpacityMax = 1;
     this.particleSizeMin = 5;
     this.particleSizeMax = 14;
     this.cameraZPlane = 200; // the z-plane on which to place the camera
