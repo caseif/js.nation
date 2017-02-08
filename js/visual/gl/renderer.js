@@ -10,13 +10,17 @@ let Renderer = new function() {
         renderer.setSize($(document).width(), $(document).height());
         renderer.domElement.id = "canvas-gl";
         $("#content").append(renderer.domElement);
-
+        this.updateSize();
         requestAnimationFrame(render);
     }
 
     let render = function() {
         requestAnimationFrame(render);
         renderer.render(Scene.glScene, Scene.glCamera);
+    }
+
+    this.updateSize = function() {
+        renderer.setSize($(document).width(), $(document).height());
     }
 
 }

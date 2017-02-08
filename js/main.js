@@ -27,7 +27,13 @@ let Main = new function() {
     this.postInit = function() {
         AudioWrap.setUp();
     }
-}
 
-window.onload = Main.init;
-$(document).ready(Main.postInit);
+    this.resizeCallback = function() {
+        Canvas.setStyling();
+        Renderer.updateSize();
+    }
+
+    window.onload = this.init;
+    $(document).ready(this.postInit);
+    window.onresize = this.resizeCallback;
+}

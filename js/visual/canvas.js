@@ -17,16 +17,14 @@ let Canvas = new function() {
         this.canvas = $("#canvas").get()[0]
         this.context = canvas.getContext("2d");
 
-        setStyling();
+        this.setStyling();
 
         Callbacks.addCallback(clearCallback, Priority.FIRST);
         Callbacks.addCallback(shakeCallback, Priority.FIRST);
         Callbacks.addCallback(postCallback, Priority.LAST);
-
-        window.onresize = setStyling;
     }
     
-    let setStyling = function() {
+    this.setStyling = function() {
         $("#canvas").attr("width", $(window).width());
         $("#canvas").attr("height", $(window).height());
         Canvas.context.fillStyle = "#FFFFFF";

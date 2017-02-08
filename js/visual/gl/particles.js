@@ -9,10 +9,7 @@ let Particles = new function() {
     let particleTexture;
     let particleSystem;
 
-    //TODO: probably just move all this shit into a single object so we only have one array
-    let trajectories;
-    let speedMults;
-    let spawned;
+    let particleData = [];
 
     this.setUp = function() {
         maxParticleCount = (($(document).width() * $(document).height()) / (1920 * 1080)) * Config.baseParticleCount;
@@ -21,10 +18,6 @@ let Particles = new function() {
         for (let i = maxParticleCount - 1; i >= 0; i--) {
             indexStack.push(i);
         }
-
-        trajectories = [];
-        spawned = [];
-        speedMults = [];
 
         this.particlesGeom = new THREE.BufferGeometry();
         let texLoader = new THREE.TextureLoader();
@@ -71,19 +64,21 @@ let Particles = new function() {
     }
 
     let updatePosition = function(i, multiplier) {
-        if (trajectories[i] === undefined) {
-            return; // no trajectory set, so particle is necessarily "despawned"
+        let data = particleData[i];
+
+        if (data === undefined) {
+            return; // no data set, so particle is "despawned"
         }
 
-        let speed = speedMults[i];
+        let speed = data.getSpeed();
         adjustedSpeed = Math.max(speed * multiplier, Config.particleBaseSpeed);
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += trajectories[i].x * adjustedSpeed;
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += trajectories[i].y * adjustedSpeed;
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += data.getTrajectory().x * adjustedSpeed;
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += data.getTrajectory().y * adjustedSpeed;
         Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += multiplier * speed;
         if (Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] + Config.particleDespawnBuffer > Config.cameraZPlane) {
             despawnParticle(i);
-            if (!spawned[i]) {
-                spawned[i] = 1;
+            if (!data.isSpawned()) {
+                data.setSpawned();
                 Particles.particlesGeom.attributes.alpha.array[i] = Config.particleOpacity;
                 Particles.particlesGeom.attributes.alpha.needsUpdate = true;
             }
@@ -122,7 +117,7 @@ let Particles = new function() {
         // we can't technically despawn a discrete particle since it's part of a
         // particle system, so we just reset the position and pretend
         resetPosition(i);
-        trajectories[i] = undefined; // clear the trajectory so other functions know this particle is "despawned"
+        particleData[i] = undefined; // clear the data so other functions know this particle is "despawned"
         indexStack.push(i); // push it to the stack to mark the index as free
     }
 
@@ -135,11 +130,12 @@ let Particles = new function() {
     let resetVelocity = function(i) {
         let r = (Config.particleRadiusMax - Config.particleRadiusMin) * Math.random() + Config.particleRadiusMin;
         let theta = MathConstants.TWO_PI * Math.random();
-        trajectories[i] = new THREE.Vector2(
+        let trajectory = new THREE.Vector2(
             r * Math.cos(theta) / Config.cameraZPlane,
             r * Math.sin(theta) / Config.cameraZPlane
         );
-        speedMults[i] = Math.random() * (Config.particleSpeedMultMax - Config.particleSpeedMultMin) + Config.particleSpeedMultMin;
+        let speed = Math.random() * (Config.particleSpeedMultMax - Config.particleSpeedMultMin) + Config.particleSpeedMultMin;
+        particleData[i] = new ParticleData(trajectory, speed);
     }
 
 }
