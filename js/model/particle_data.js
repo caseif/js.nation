@@ -4,7 +4,6 @@ function ParticleData(trajectory, speed, phaseAmp, phaseSpeed) {
     this.phaseAmp = phaseAmp; // the amplitude of the particle's phase
     this.phaseSpeed = phaseSpeed; // the speed of the particle's phase
     this.phase = new THREE.Vector2(); // the current phase of the particle
-    this.spawned = false; // whether the particle has been "spawned" yet
 }
 
 ParticleData.prototype.getTrajectory = function() {
@@ -30,12 +29,4 @@ ParticleData.prototype.getPhase = function() {
 ParticleData.prototype.augmentPhase = function(stepX, stepY) {
     this.phase.x = (this.phase.x + stepX) % 1;
     this.phase.y = (this.phase.y + stepY) % 1;
-}
-
-ParticleData.prototype.isSpawned = function() {
-    return this.spawned;
-}
-
-ParticleData.prototype.setSpawned = function() {
-    this.spawned = true;
 }

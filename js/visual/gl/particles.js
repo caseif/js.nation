@@ -86,12 +86,6 @@ let Particles = new function() {
         Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += multiplier * speed;
         if (Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] + Config.particleDespawnBuffer > Config.cameraZPlane) {
             despawnParticle(i);
-            if (!data.isSpawned()) {
-                data.setSpawned();
-                Particles.particlesGeom.attributes.alpha.array[i]
-                        = Math.random(Config.particleOpacityMin, Config.particleOpacityMax);
-                Particles.particlesGeom.attributes.alpha.needsUpdate = true;
-            }
         }
 
         data.augmentPhase(
@@ -110,7 +104,7 @@ let Particles = new function() {
             posArr[VERTEX_SIZE * i + 2] = 0;
             baseSizes[i] = Util.random(Config.particleSizeMin, Config.particleSizeMax);
             sizeArr[i] = baseSizes[i] * Util.getResolutionMultiplier();
-            alphaArr[i] = 0;
+            alphaArr[i] = Math.random(Config.particleOpacityMin, Config.particleOpacityMax);
 
             resetVelocity(i);
         }
