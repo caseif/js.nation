@@ -1,17 +1,24 @@
 let Callbacks = new function() {
 
-    let callbacks = [];
     const PRIORITY_LEVELS = 5;
+
+    let callbacks = [];
+
+    let player;
 
     this.setUp = function() {
         for (let i = 0; i < PRIORITY_LEVELS; i++) {
             callbacks[i] = [];
         }
+
+        player = document.getElementById("audio");
     }
 
     this.invokeCallbacks = function(spectrum, multiplier) {
-        for (let i = 0; i < PRIORITY_LEVELS; i++) {
-            handleCallbackArray(callbacks[i], spectrum, multiplier);
+        if (!player.paused) {
+            for (let i = 0; i < PRIORITY_LEVELS; i++) {
+                handleCallbackArray(callbacks[i], spectrum, multiplier);
+            }
         }
     }
 
