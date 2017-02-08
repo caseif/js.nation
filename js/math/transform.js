@@ -13,7 +13,8 @@ let Transform = new function() {
             sum += spectrum[i];
         }
         let intermediate = sum / Config.keepBins / 256;
-        return -Math.pow(intermediate, 2) + 2 * intermediate;
+        let transformer = 1.2;
+        return (1 / (transformer - 1)) * (-Math.pow(intermediate, transformer) + transformer * intermediate);
     }
     
     let savitskyGolaySmooth = function(array) {
