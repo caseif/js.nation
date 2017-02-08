@@ -30,6 +30,7 @@ let Main = new function() {
 
     this.resizeCallback = function() {
         Canvas.setStyling();
+        Particles.updateSizes();
         Renderer.updateSize();
     }
 

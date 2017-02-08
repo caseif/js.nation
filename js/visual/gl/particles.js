@@ -9,6 +9,7 @@ let Particles = new function() {
     let particleSystem;
 
     let particleData = [];
+    let baseSizes = [];
 
     this.setUp = function() {
 
@@ -106,7 +107,8 @@ let Particles = new function() {
             posArr[VERTEX_SIZE * i + 0] = 0;
             posArr[VERTEX_SIZE * i + 1] = 0;
             posArr[VERTEX_SIZE * i + 2] = 0;
-            sizeArr[i] = Util.random(Config.particleSizeMin, Config.particleSizeMax);
+            baseSizes[i] = Util.random(Config.particleSizeMin, Config.particleSizeMax);
+            sizeArr[i] = baseSizes[i] * Util.getResolutionMultiplier();
             alphaArr[i] = 0;
 
             resetVelocity(i);
@@ -161,6 +163,13 @@ let Particles = new function() {
         );
 
         particleData[i] = new ParticleData(trajectory, speed, phaseAmp, phaseSpeed);
+    }
+
+    this.updateSizes = function() {
+        for (let i = 0; i < Config.maxParticleCount; i++) {
+            this.particlesGeom.attributes.size.array[i] = baseSizes[i] * Util.getResolutionMultiplier();
+        }
+        this.particlesGeom.attributes.size.needsUpdate = true;
     }
 
 }
