@@ -2,8 +2,8 @@ let Particles = new function() {
 
     const VERTEX_SIZE = 3;
 
-    let particleCount;
-    let spawnedCount = 0;
+    let maxParticleCount;
+    let indexStack;
 
     this.particlesGeom;
     let particleTexture;
@@ -12,7 +12,12 @@ let Particles = new function() {
     let velocities;
 
     this.setUp = function() {
-        particleCount = (($(document).width() * $(document).height()) / (1920 * 1080)) * Config.baseParticleCount;
+        maxParticleCount = (($(document).width() * $(document).height()) / (1920 * 1080)) * Config.baseParticleCount;
+
+        indexStack = [];
+        for (let i = maxParticleCount - 1; i >= 0; i--) {
+            indexStack.push(i);
+        }
 
         velocities = [];
 
@@ -45,46 +50,46 @@ let Particles = new function() {
         Callbacks.addCallback(this.updateParticles, Priority.NORMAL);
     }
 
-    this.updateParticles = function() {
-        if (spawnedCount < particleCount) {
-            let toSpawn = Math.floor(Math.random() * Config.particleMaxSpawnRate);
-            let ceiling = spawnedCount + toSpawn;
-            for (let i = spawnedCount; i < ceiling; i++) {
-                resetVelocity(i);
-                spawnedCount++;
+    this.updateParticles = function(spectrum, multiplier) {
+        mutliplier = Math.pow(multiplier, 2);
+
+        if (indexStack.length > 0 && multiplier > 0) {
+            let toSpawn = Math.min(Math.floor(Math.random() * Config.particleMaxSpawnRate), indexStack.length) * Math.pow(multiplier, 4);
+            for (let i = 0; i < toSpawn; i++) {
+                spawnParticle();
             }
         }
 
-        for (let i = 0; i < Particles.particlesGeom.attributes.position.array.length / VERTEX_SIZE; i++) {
-           updatePosition(i);
+        for (let i = 0; i < maxParticleCount; i++) {
+           updatePosition(i, multiplier);
         }
 
         particleSystem.geometry.attributes.position.needsUpdate = true;
     }
 
-    let updatePosition = function(i) {
-        if (i >= spawnedCount) { // no velocity set - don't move
+    let updatePosition = function(i, multiplier = 1) {
+        if (velocities[i] === undefined) { // no velocity set - don't move
             return;
         }
 
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += velocities[i].x * 0.1;
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += velocities[i].y * 0.1;
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += 1;
+        let speed = Math.random() * (Config.particleSpeedMax - Config.particleSpeedMin) + Config.particleSpeedMin;
+
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] += velocities[i].x * multiplier * speed;
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] += velocities[i].y * multiplier * speed;
+        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += multiplier * speed;
         if (Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] + Config.particleDespawnBuffer > Config.cameraZPlane) {
-            respawnParticle(i);
+            despawnParticle(i);
         }
     }
 
     let initializeParticles = function() {
-        let posArr = new Float32Array(particleCount * VERTEX_SIZE);
-        let sizeArr = new Float32Array(particleCount);
-        let alphaArr = new Float32Array(particleCount);
-        for (let i = 0; i < particleCount; i++) {
-            let particle = new THREE.Vector3(0, 0, 0);
-            resetVelocity(particle);
-            posArr[VERTEX_SIZE * i + 0] = particle.x;
-            posArr[VERTEX_SIZE * i + 1] = particle.y;
-            posArr[VERTEX_SIZE * i + 2] = particle.z;
+        let posArr = new Float32Array(maxParticleCount * VERTEX_SIZE);
+        let sizeArr = new Float32Array(maxParticleCount);
+        let alphaArr = new Float32Array(maxParticleCount);
+        for (let i = 0; i < maxParticleCount; i++) {
+            posArr[VERTEX_SIZE * i + 0] = 0;
+            posArr[VERTEX_SIZE * i + 1] = 0;
+            posArr[VERTEX_SIZE * i + 2] = 0;
             sizeArr[i] = Math.random() * (Config.particleSizeMax - Config.particleSizeMin) + Config.particleSizeMin;
             alphaArr[i] = Config.particleOpacity;
 
@@ -95,9 +100,17 @@ let Particles = new function() {
         particleSystem.geometry.addAttribute("alpha", new THREE.BufferAttribute(alphaArr, 1));
     }
 
-    let respawnParticle = function(i) {
+    let spawnParticle = function() {
+        let i = indexStack.pop(); // get the next available index
+        resetVelocity(i); // attach a new speed to the particle, effectively "spawning" it
+    }
+
+    let despawnParticle = function(i) {
+        // we can't technically despawn a discrete particle since it's part of a
+        // particle system, so we just reset the position and pretend
         resetPosition(i);
-        resetVelocity(i);
+        velocities[i] = undefined; // clear the velocity so other functions know this particle is "despawned"
+        indexStack.push(i); // push it to the stack to mark the index as free
     }
 
     let resetPosition = function(i) {
