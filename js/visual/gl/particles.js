@@ -104,17 +104,18 @@ let Particles = new function() {
         let alphaArr = new Float32Array(Config.maxParticleCount);
 
         particleSystem.geometry.addAttribute("position", new THREE.BufferAttribute(posArr, 3));
+        particleSystem.geometry.addAttribute("size", new THREE.BufferAttribute(sizeArr, 1));
 
         for (let i = 0; i < Config.maxParticleCount / 2; i++) {
             applyPosition(i, 0, 0, 0);
             baseSizes[i] = Util.random(Config.particleSizeMin, Config.particleSizeMax);
-            applyMirroredValue(sizeArr, i, baseSizes[i] * Util.getResolutionMultiplier());
             applyMirroredValue(alphaArr, i, Math.random(Config.particleOpacityMin, Config.particleOpacityMax));
 
             resetVelocity(i);
         }
 
-        particleSystem.geometry.addAttribute("size", new THREE.BufferAttribute(sizeArr, 1));
+        Particles.updateSizes();
+
         particleSystem.geometry.addAttribute("alpha", new THREE.BufferAttribute(alphaArr, 1));
 
         for (let i = 0; i < Config.maxParticleCount / 2; i++) {
@@ -164,7 +165,8 @@ let Particles = new function() {
 
     this.updateSizes = function() {
         for (let i = 0; i < Config.maxParticleCount / 2; i++) {
-            this.particlesGeom.attributes.size.array[i] = baseSizes[i] * Util.getResolutionMultiplier();
+            applyMirroredValue(this.particlesGeom.attributes.size.array, i,
+                    baseSizes[i] * Util.getResolutionMultiplier());
         }
         this.particlesGeom.attributes.size.needsUpdate = true;
     }
