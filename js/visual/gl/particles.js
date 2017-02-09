@@ -14,7 +14,7 @@ let Particles = new function() {
     this.setUp = function() {
 
         indexStack = [];
-        for (let i = Config.maxParticleCount - 1; i >= 0; i--) {
+        for (let i = Config.maxParticleCount / Config.maxParticleCount - 1; i >= 0; i--) {
             indexStack.push(i);
         }
 
@@ -49,13 +49,15 @@ let Particles = new function() {
 
     this.updateParticles = function(spectrum, multiplier) {
         if (indexStack.length > 0 && multiplier > 0) {
-            let toSpawn = Math.min(Math.floor(Math.random() * Config.particleMaxSpawnRate), indexStack.length) * multiplier;
+            let toSpawn = Math.min(
+                Config.particleMaxSpawnRate, indexStack.length
+            ) * multiplier;
             for (let i = 0; i < toSpawn; i++) {
                 spawnParticle();
             }
         }
 
-        for (let i = 0; i < Config.maxParticleCount; i++) {
+        for (let i = 0; i < Config.maxParticleCount / 2; i++) {
            updatePosition(i, multiplier);
         }
 
@@ -75,17 +77,19 @@ let Particles = new function() {
         let phaseX = Math.sin(MathConstants.TWO_PI * data.getPhase().x) * data.getPhaseAmplitude().x * multiplier;
         let phaseY = Math.sin(MathConstants.TWO_PI * data.getPhase().y) * data.getPhaseAmplitude().y * multiplier;
 
-        let x = Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0]
+        let baseIndex = VERTEX_SIZE * i;
+        let x = Particles.particlesGeom.attributes.position.array[baseIndex + 0]
                 + data.getTrajectory().x * adjustedSpeed
                 + phaseX;
-        let y = Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1]
+        let y = Particles.particlesGeom.attributes.position.array[baseIndex + 1]
                 + data.getTrajectory().y * adjustedSpeed
                 + phaseY;
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 0] = x;
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 1] = y;
-        Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] += multiplier * speed;
-        if (Particles.particlesGeom.attributes.position.array[VERTEX_SIZE * i + 2] + Config.particleDespawnBuffer > Config.cameraZPlane) {
+        let z = Particles.particlesGeom.attributes.position.array[baseIndex + 2] + adjustedSpeed;
+
+        if (z + Config.particleDespawnBuffer > Config.cameraZPlane) {
             despawnParticle(i);
+        } else {
+            applyPosition(i, x, y, z);
         }
 
         data.augmentPhase(
@@ -98,22 +102,22 @@ let Particles = new function() {
         let posArr = new Float32Array(Config.maxParticleCount * VERTEX_SIZE);
         let sizeArr = new Float32Array(Config.maxParticleCount);
         let alphaArr = new Float32Array(Config.maxParticleCount);
-        for (let i = 0; i < Config.maxParticleCount; i++) {
-            posArr[VERTEX_SIZE * i + 0] = 0;
-            posArr[VERTEX_SIZE * i + 1] = 0;
-            posArr[VERTEX_SIZE * i + 2] = 0;
+
+        particleSystem.geometry.addAttribute("position", new THREE.BufferAttribute(posArr, 3));
+
+        for (let i = 0; i < Config.maxParticleCount / 2; i++) {
+            applyPosition(i, 0, 0, 0);
             baseSizes[i] = Util.random(Config.particleSizeMin, Config.particleSizeMax);
-            sizeArr[i] = baseSizes[i] * Util.getResolutionMultiplier();
-            alphaArr[i] = Math.random(Config.particleOpacityMin, Config.particleOpacityMax);
+            applyMirroredValue(sizeArr, i, baseSizes[i] * Util.getResolutionMultiplier());
+            applyMirroredValue(alphaArr, i, Math.random(Config.particleOpacityMin, Config.particleOpacityMax));
 
             resetVelocity(i);
         }
 
-        particleSystem.geometry.addAttribute("position", new THREE.BufferAttribute(posArr, 3));
         particleSystem.geometry.addAttribute("size", new THREE.BufferAttribute(sizeArr, 1));
         particleSystem.geometry.addAttribute("alpha", new THREE.BufferAttribute(alphaArr, 1));
 
-        for (let i = 0; i < Config.maxParticleCount; i++) {
+        for (let i = 0; i < Config.maxParticleCount / 2; i++) {
             updatePosition(i, Math.random() * Config.cameraZPlane);
         }
     }
@@ -132,14 +136,12 @@ let Particles = new function() {
     }
 
     let resetPosition = function(i) {
-        for (let j = 0; j < VERTEX_SIZE; j++) {
-            Particles.particlesGeom.attributes.position.array[i * VERTEX_SIZE + j] = 0;
-        }
+        applyPosition(i, 0, 0, 0);
     }
 
     let resetVelocity = function(i) {
         let r = Util.random(Config.particleRadiusMin, Config.particleRadiusMax);
-        let theta = MathConstants.TWO_PI * Math.random();
+        let theta = Math.PI * Math.random() - Math.PI / 2;
         let trajectory = new THREE.Vector2(
             r * Math.cos(theta) / Config.cameraZPlane,
             r * Math.sin(theta) / Config.cameraZPlane
@@ -161,10 +163,24 @@ let Particles = new function() {
     }
 
     this.updateSizes = function() {
-        for (let i = 0; i < Config.maxParticleCount; i++) {
+        for (let i = 0; i < Config.maxParticleCount / 2; i++) {
             this.particlesGeom.attributes.size.array[i] = baseSizes[i] * Util.getResolutionMultiplier();
         }
         this.particlesGeom.attributes.size.needsUpdate = true;
+    }
+
+    let applyPosition = function(i, x, y, z) {
+        let baseIndex = VERTEX_SIZE * i;
+        let shiftedBaseIndex = baseIndex + Config.maxParticleCount / 2;
+        applyMirroredValue(Particles.particlesGeom.attributes.position.array, baseIndex + 0, x, VERTEX_SIZE);
+        applyMirroredValue(Particles.particlesGeom.attributes.position.array, baseIndex + 1, y, VERTEX_SIZE);
+        applyMirroredValue(Particles.particlesGeom.attributes.position.array, baseIndex + 2, z, VERTEX_SIZE);
+        Particles.particlesGeom.attributes.position.array[baseIndex + Config.maxParticleCount * (3 / 2)] *= -1;
+    }
+
+    let applyMirroredValue = function(array, i, value, step = 1) {
+        array[i] = value;
+        array[i + step * Config.maxParticleCount / 2] = value;
     }
 
 }
