@@ -6,6 +6,10 @@
   -ms-user-select: none;
 }
 
+.dg.ac{
+    z-index: 999 !important;
+}
+
 /* ------------------------- */
 /* Temporary Control Styling */
 /* ------------------------- */
