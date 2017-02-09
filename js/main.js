@@ -10,7 +10,7 @@ let Main = new function() {
         Nodes.setUp();
 
         Database.setUp();
-        Gui.setUp();
+        GuiWrapper.setUp();
 
         Canvas.setUp();
         Emblem.setUp();

@@ -1,4 +1,4 @@
-let Gui = new function() {
+let GuiWrapper = new function() {
 
     let keepGui = false;
 

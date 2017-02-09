@@ -89,7 +89,7 @@ let Database = new function() {
             }
             Background.resetBG();
             Background.loadRedditBackground();
-            Gui.setTitle(tags.artist, tags.title);
+            GuiWrapper.setTitle(tags.artist, tags.title);
             
         }, {
             dataReader: ID3.FileAPIReader(fileStore),
@@ -133,7 +133,7 @@ let Database = new function() {
 
     this.handlePlay = function(i) {
         db.id3.where("id").equals(i).each(result => {
-            Gui.setTitle(result.artist, result.title);
+            GuiWrapper.setTitle(result.artist, result.title);
             Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
             Background.resetBG();
             Background.loadRedditBackground();

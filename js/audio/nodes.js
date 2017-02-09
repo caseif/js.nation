@@ -48,7 +48,9 @@ let Nodes = new function() {
     }
 
     this.playSong = function(song, url) {
-        if(url == null){Gui.setTitle(song.getArtist(), song.getTitle());}
+        if(url == null){
+            GuiWrapper.setTitle(song.getArtist(), song.getTitle());
+        }
         $("#audio").attr("src", song != null ? "./songs/" + song.getFileId() : url);
     }
 
