@@ -54,14 +54,6 @@ let AudioWrap = new function() {
             $(this).toggleClass("fa-volume-off", player.volume == 0);
         });
 
-        player.addEventListener("timeupdate", () => {
-            let currentTime = player.currentTime;
-            let duration = player.duration;
-            let progression = (currentTime + .25) / duration * 100;
-            progress_bar.val(progression);
-            time.text(AudioWrap.getTime(player.currentTime));
-        });
-
         progress_bar.click(function(e) {
             player.currentTime = e.offsetX / $(this).width() * player.duration;
         });
@@ -69,7 +61,16 @@ let AudioWrap = new function() {
         player.onended = () => {
             $("#play").attr("class", "fa fa-play");
         };
-    
+
+        Callbacks.addCallback(this.updateProgress);    
+    }
+
+    this.updateProgress = function() {
+        let currentTime = player.currentTime;
+            let duration = player.duration;
+            let progression = (currentTime + .25) / duration * 100;
+            progress_bar.val(progression);
+            time.text(AudioWrap.getTime(player.currentTime));
     }
     
 }
