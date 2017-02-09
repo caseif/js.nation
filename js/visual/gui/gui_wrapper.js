@@ -16,10 +16,12 @@ let GuiWrapper = new function() {
             clearInterval(timer);
             $("#gui_top").fadeIn(Config.guiFadeTime);
             $("#gui_bottom").fadeIn(Config.guiFadeTime);
+            $("*").css("cursor", "auto");
             if (!keepGui) {
                 timer = setTimeout(() => {
                     $("#gui_top").fadeOut(Config.guiFadeTime);   
-                    $("#gui_bottom").fadeOut(Config.guiFadeTime);   
+                    $("#gui_bottom").fadeOut(Config.guiFadeTime);
+                    $("*").css("cursor", "none");
                 }, Config.guiTimeout);
             }
         });
