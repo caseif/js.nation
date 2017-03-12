@@ -5,6 +5,10 @@ let Spectrum = new function() {
     }
 
     let drawCallback = function(spectrum) {
+        if (!Config.drawSpectrum) {
+            return;
+        }
+
         let baseRad = Emblem.getRadius();
 
         let points = [];

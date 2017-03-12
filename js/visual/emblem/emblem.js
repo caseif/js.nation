@@ -13,6 +13,10 @@ let Emblem = new function() {
     }
 
     let drawCallback = function(_, multiplier) {
+        if (!Config.drawEmblem) {
+            return;
+        }
+
         if (!loaded) {
             return;
         }

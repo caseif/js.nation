@@ -2,8 +2,6 @@ let Particles = new function() {
 
     const VERTEX_SIZE = 3;
 
-    let indexStack;
-
     this.particlesGeom;
     let particleTexture;
     let particleSystem;
@@ -12,12 +10,6 @@ let Particles = new function() {
     let baseSizes = [];
 
     this.setUp = function() {
-
-        indexStack = [];
-        for (let i = Config.maxParticleCount / Config.maxParticleCount - 1; i >= 0; i--) {
-            indexStack.push(i);
-        }
-
         this.particlesGeom = new THREE.BufferGeometry();
         let texLoader = new THREE.TextureLoader();
         particleTexture = texLoader.load("./img/particle.png");
@@ -48,15 +40,6 @@ let Particles = new function() {
     }
 
     this.updateParticles = function(spectrum, multiplier) {
-        if (indexStack.length > 0 && multiplier > 0) {
-            let toSpawn = Math.min(
-                Config.particleMaxSpawnRate, indexStack.length
-            ) * multiplier;
-            for (let i = 0; i < toSpawn; i++) {
-                spawnParticle();
-            }
-        }
-
         for (let i = 0; i < Config.maxParticleCount / 2; i++) {
            updatePosition(i, multiplier);
         }
@@ -64,14 +47,14 @@ let Particles = new function() {
         particleSystem.geometry.attributes.position.needsUpdate = true;
     }
 
-    let updatePosition = function(i, multiplier) {
+    let updatePosition = function(i, multiplier, ignoreSpeed) {
         let data = particleData[i];
 
         if (data === undefined) {
             return; // no data set, so particle is "despawned"
         }
 
-        let speed = data.getSpeed();
+        let speed = ignoreSpeed ? 1 : data.getSpeed();
         adjustedSpeed = Math.max(speed * multiplier, Config.particleBaseSpeed);
 
         let phaseX = Math.sin(MathConstants.TWO_PI * data.getPhase().x) * data.getPhaseAmplitude().x * multiplier;
@@ -119,12 +102,11 @@ let Particles = new function() {
         particleSystem.geometry.addAttribute("alpha", new THREE.BufferAttribute(alphaArr, 1));
 
         for (let i = 0; i < Config.maxParticleCount / 2; i++) {
-            updatePosition(i, Math.random() * Config.cameraZPlane);
+            updatePosition(i, Math.random() * Config.cameraZPlane, true);
         }
     }
 
-    let spawnParticle = function() {
-        let i = indexStack.pop(); // get the next available index
+    let spawnParticle = function(i) {
         resetVelocity(i); // attach a new speed to the particle, effectively "spawning" it
     }
 
@@ -133,7 +115,7 @@ let Particles = new function() {
         // particle system, so we just reset the position and pretend
         resetPosition(i);
         particleData[i] = undefined; // clear the data so other functions know this particle is "despawned"
-        indexStack.push(i); // push it to the stack to mark the index as free
+        resetVelocity(i);
     }
 
     let resetPosition = function(i) {

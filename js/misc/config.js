@@ -44,4 +44,13 @@ let Config = new function() {
     // gui config
     this.guiTimeout = 2000;
     this.guiFadeTime = 350;
+
+    // debug settings
+    this.drawEmblem = true;
+    this.drawSpectrum = true;
+    this.drawParticles = true;
+    this.drawBackground = true;
+    this.forceImgurBackground = false;
+    this.forceStaticBackground = false;
+    this.keepGui = false;
 }

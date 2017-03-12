@@ -15,6 +15,10 @@ let Renderer = new function() {
     }
 
     let render = function() {
+        if (!Config.drawParticles) {
+            return;
+        }
+
         requestAnimationFrame(render);
         renderer.render(Scene.glScene, Scene.glCamera);
     }

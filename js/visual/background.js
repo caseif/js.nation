@@ -3,7 +3,7 @@ let Background = new function() {
     const SUBREDDIT = "EarthPorn";
     const WHITELISTED_DOMAINS = ["i.imgur.com", "i.redd.it", "i.reddituploads.com"];
 
-    let stockUrls = [
+    let staticUrls = [
         "u9muu7r", "elUmrNS", "TcA4IsQ", "PaMnxZn", "P7hwlaN", 
         "I5O4QWi", "fT4bxpb", "U7Bx7FQ", "Qujelxk", "KAHqXM2", 
         "laGeYSO", "HdsWnkU", "xEanEAB", "NG3moRJ", "31E8sfB",  
@@ -14,16 +14,29 @@ let Background = new function() {
     let redditData;
     
     this.setUp = function() {
-        redditJsonpTag = document.createElement("script");
+        if (!Config.drawBackground) {
+            return;
+        }
+
+        if (Config.forceImgurBackground) {
+            loadImgurBackground(false);
+            return;
+        }
+        if (Config.forceStaticBackground) {
+            loadStaticBackground(false);
+            return;
+        }
+
         this.loadRedditBackground();
     }
 
-    this.loadRedditBackground = function() {
+    this.loadRedditBackground = function(allowFallback) {
+        redditJsonpTag = document.createElement("script");
         $.ajax({
             url: "https://www.reddit.com/r/" + SUBREDDIT + "/.json",
             method: "GET",
             success: handleRedditData,
-            error: handleRedditFail
+            error: allowFallback ? handleRedditFail : null
         });
     }
     
@@ -56,7 +69,7 @@ let Background = new function() {
         loadImgurBackground();
     }
 
-    let loadImgurBackground = function() {
+    let loadImgurBackground = function(allowFallback) {
         $.ajax({
             url: "https://api.imgur.com/3/gallery/r/earthporn/0",
             method: "GET",
@@ -69,7 +82,7 @@ let Background = new function() {
                 type: "base64"
             },
             success: handleImgurData,
-            error: handleImgurFail
+            error: allowFallback ? handleImgurFail : null
         });
     }
     
@@ -79,12 +92,12 @@ let Background = new function() {
     }
 
     let handleImgurFail = function() {
-        console.log("Failed to reach Imgur API; falling back to stock photos");
-        loadStockBackground();
+        console.log("Failed to reach Imgur API; falling back to static background");
+        loadStaticBackground();
     }
     
-    let loadStockBackground = function() {
-        let id = stockUrls[Math.floor(Math.random() * stockUrls.length)];
+    let loadStaticBackground = function(allowFallback) {
+        let id = staticUrls[Math.floor(Math.random() * staticUrls.length)];
         setBackground("https://i.imgur.com/" + id + ".jpg", "https://i.imgur.com/" + id + "m.jpg");
     }
 
