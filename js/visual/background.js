@@ -12,6 +12,8 @@ let Background = new function() {
 
     let redditJsonpTag;
     let redditData;
+
+    this.poopyButthole = "ooh wee!";
     
     this.setUp = function() {
         if (!Config.drawBackground) {
@@ -23,14 +25,14 @@ let Background = new function() {
             return;
         }
         if (Config.forceStaticBackground) {
-            loadStaticBackground(false);
+            loadStaticBackground();
             return;
         }
 
         this.loadRedditBackground();
     }
 
-    this.loadRedditBackground = function(allowFallback) {
+    this.loadRedditBackground = function(allowFallback = true) {
         redditJsonpTag = document.createElement("script");
         $.ajax({
             url: "https://www.reddit.com/r/" + SUBREDDIT + "/.json",
@@ -55,7 +57,7 @@ let Background = new function() {
         }
 
         if (!found) {
-            console.log("Failed to find satisfactory Reddit post; falling back to Imgur");
+            console.error("Reddit has failed to offer an image satisfactory to the client; falling back to Imgur.");
             loadImgurBackground();
         }
 
@@ -65,11 +67,11 @@ let Background = new function() {
     }
 
     let handleRedditFail = function() {
-        console.log("Failed to reach Reddit API, falling back to Imgur...");
+        console.error("The client doesn't want to talk to the Reddit API today. Falling back to Imgur...");
         loadImgurBackground();
     }
 
-    let loadImgurBackground = function(allowFallback) {
+    let loadImgurBackground = function(allowFallback = true) {
         $.ajax({
             url: "https://api.imgur.com/3/gallery/r/earthporn/0",
             method: "GET",
@@ -87,16 +89,34 @@ let Background = new function() {
     }
     
     let handleImgurData = function(result) {
+        let posts = result.data;
+        Util.shuffle(posts);
+        let post;
+        let found = false;
+        for (let i = 0; i < posts.length; i++) {
+            post = posts[i];
+            if (post.width >= 2560) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            console.error("Imgur has failed to offer an image satisfactory to the client; falling back to static "
+                    + "background.");
+            loadImgurBackground();
+        }
+
         let id = result.data[Math.floor(Math.random() * result.data.length)].id;
         setBackground("https://i.imgur.com/" + id + ".jpg", "https://i.imgur.com/" + id + "m.jpg");
     }
 
     let handleImgurFail = function() {
-        console.log("Failed to reach Imgur API; falling back to static background");
+        console.error("The client doesn't want to talk to the Imgur API; falling back to static background.");
         loadStaticBackground();
     }
     
-    let loadStaticBackground = function(allowFallback) {
+    let loadStaticBackground = function() {
         let id = staticUrls[Math.floor(Math.random() * staticUrls.length)];
         setBackground("https://i.imgur.com/" + id + ".jpg", "https://i.imgur.com/" + id + "m.jpg");
     }
