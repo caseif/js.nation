@@ -28,10 +28,10 @@
                 {{else}}
                     <td></td>
                 {{/if}}
-                <td><a onclick="javascript:Database.handlePlay({{:id}})">Play</a></td>
+                <td><a onclick="javascript:Database.handlePlay({{:id}})" class="interactable">Play</a></td>
                 <td>{{:title}}</td>
                 <td>{{:artist}}</td>
-                <td><a onclick="javascript:Database.handleRemove({{:id}})">Remove</a></td>
+                <td><a onclick="javascript:Database.handleRemove({{:id}})" class="interactable">Remove</a></td>
                 <td>{{:duration}}</td>
             </tr>
         </script>
@@ -83,17 +83,16 @@
                     <div class="ui fluid action input inverted">
                         <input type="text" readonly Value="Select Audio File">
                         <input accept="audio/*" type="file" id="fileSelector">
-                        <div class="ui icon button">
+                        <div class="ui icon button interactable">
                             <i class="cloud upload icon"></i>
                         </div>
                     </div>
                     <table class="ui selectable inverted table" id="db-view" border="1"></table>
                     <div class="ui input"><input type="text" id="artist" placeholder="Artist"></div>
                     <div class="ui input"><input type="text" id="title" placeholder="Title"></div>
-                    <button class="ui button" id="add2DB">Add To Database</button>
-                    
-                    <button class="ui button" id="viewDB">Refresh Datbase</button>
-                    <button class="ui button" id="delDB">Delete Datbase</button>
+                    <button class="ui button interactable" id="add2DB">Add To Database</button>
+                    <button class="ui button interactable" id="viewDB">Refresh Datbase</button>
+                    <button class="ui button interactable" id="delDB">Delete Datbase</button>
                 </div>
             </div>
         </div>
@@ -104,13 +103,13 @@
         
         <div class="flex" id="gui_bottom">
             <!-- Left -->
-            <button class="ui button inverted transparent" onclick="Background.flipImage();" id="flipBG">Flip BG</button>
+            <button class="ui button inverted transparent interactable" onclick="Background.flipImage();" id="flipBG">Flip BG</button>
             <!-- Center -->
             <div class="flex" id="audio-player">  
-                <div class="flex main_controls"><i id="previous" class="fa fa-step-backward"></i><i id="play" class="fa fa-pause"></i><i id="next" class="fa fa-step-forward"></i></div>
+                <div class="flex main_controls"><i id="previous" class="fa fa-step-backward interactable"></i><i id="play" class="fa fa-pause interactable"></i><i id="next" class="fa fa-step-forward action"></i></div>
                 <span id="time" class="time">00:00</span>
-                <progress id="progressbar" class="flex-auto" value="0" max="100"></progress>
-                <i id="mute" class="fa fa-volume-up"></i><progress id="volume" class="flex-auto" value="100" max="100"></progress>
+                <progress id="progressbar" class="flex-auto interactable" value="0" max="100"></progress>
+                <i id="mute" class="fa fa-volume-up interactable"></i><progress id="volume" class="flex-auto interactable" value="100" max="100"></progress>
             </div>
             <!-- Fix Me Plz -->
             <audio autoplay id="audio"></audio>
