@@ -16,7 +16,7 @@ let Transform = new function() {
         let transformer = 1.2;
         return (1 / (transformer - 1)) * (-Math.pow(intermediate, transformer) + transformer * intermediate);
     }
-    
+
     let savitskyGolaySmooth = function(array) {
         let lastArray = array;
         let newArr = [];

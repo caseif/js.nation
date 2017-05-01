@@ -138,7 +138,6 @@ let Database = new function() {
             Background.resetBG();
             Background.loadRedditBackground();
         });
-        handleView();
     }
 
     this.handleRemove = function(i) {
