@@ -20,6 +20,8 @@ let Database = new function() {
     let elmAudio;
     let elmTable;
 
+    this.id3;
+
     this.setUp = function() {
         elmFile = document.getElementById("fileSelector")
         elmAdd = document.getElementById("add2DB");
@@ -111,24 +113,9 @@ let Database = new function() {
 
     //TODO: this function needs to get merged into Gui and made less ugly
     let handleView = function() {
-        elmTable.innerHTML = "";
-        
-        db.id3.each(result => {
-            let tr = "<tr>";
-            let td1;
-            if (result.img !== undefined) {
-                td1 = "<td><img width=\"50px\" src=\"" + result.img + "\"></td>";
-            } else {
-                td1 = "<td></td>";
-            }
-            let td2 = "<td><a onclick=\"javascript:Database.handlePlay(" + result.id + ")\">Play</a></td>";
-            let td3 = "<td>" + result.title + "</td>";
-            let td4 = "<td>" + result.artist + "</td>";
-            let td5 = "<td><a onclick=\"javascript:Database.handleRemove(" + result.id + ")\">Remove</a></td>";
-            let td6 = "<td>" + result.duration + "</td>";
-            let tr2 = "</tr></td>";
-            elmTable.innerHTML = elmTable.innerHTML + tr + td1 + td2 + td3 + td4 + td5 + td6 + tr2;
-        });
+        db.id3.toArray()
+                .then(arr => $("#db-view").html($.templates("#table-row-template").render(arr)))
+                .catch(console.err);
     }
 
     this.handlePlay = function(i) {
