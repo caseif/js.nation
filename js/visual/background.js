@@ -12,8 +12,6 @@ let Background = new function() {
 
     let redditJsonpTag;
     let redditData;
-
-    this.poopyButthole = "ooh wee!";
     
     this.setUp = function() {
         if (!Config.drawBackground) {
@@ -108,7 +106,7 @@ let Background = new function() {
         }
 
         let id = result.data[Math.floor(Math.random() * result.data.length)].id;
-        setBackground("https://i.imgur.com/" + id + ".jpg", "https://i.imgur.com/" + id + "m.jpg");
+        setBackground("http://i.imgur.com/" + id + ".jpg", "http://i.imgur.com/" + id + "m.jpg");
     }
 
     let handleImgurFail = function() {
@@ -118,7 +116,7 @@ let Background = new function() {
     
     let loadStaticBackground = function() {
         let id = staticUrls[Math.floor(Math.random() * staticUrls.length)];
-        setBackground("https://i.imgur.com/" + id + ".jpg", "https://i.imgur.com/" + id + "m.jpg");
+        setBackground("http://i.imgur.com/" + id + ".jpg", "http://i.imgur.com/" + id + "m.jpg");
     }
 
     let setBackground = function(fullRes, lowRes) {
