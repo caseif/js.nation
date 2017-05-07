@@ -5,13 +5,6 @@ let GuiWrapper = new function() {
     let timer;
 
     this.setUp = function() {
-        
-        $('#canvas').click(function() {
-            $('#gui_full').fadeToggle(Config.guiFadeTime);
-            keepGui = !keepGui;
-        });
-        
-        
         $(document).mousemove(() => {
             clearInterval(timer);
             $("#gui_top").fadeIn(Config.guiFadeTime);

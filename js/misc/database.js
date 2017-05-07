@@ -131,5 +131,15 @@ let Database = new function() {
         db.id3.where("id").equals(i).delete();
         handleView();
     }
+
+    this.openGui = function() {
+        $('#gui_full').fadeIn(Config.guiFadeTime);
+        keepGui = true;
+    }
+
+    this.closeGui = function() {
+        $('#gui_full').fadeOut(Config.guiFadeTime);
+        keepGui = false;
+    }
     
 }

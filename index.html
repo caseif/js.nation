@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>js.nation</title>
-        <!---------------------------------------- CDN ---------------------------------------->
+        <!-- CDN -->
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- jQuery -->
@@ -36,7 +36,7 @@
             </tr>
         </script>
 
-        <!--------------------------------------- Local --------------------------------------->
+        <!-- Local -->
         <!-- Styles -->
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="./css/gui.css">
@@ -50,10 +50,10 @@
         <!-- misc -->
         <script src="./js/misc/callbacks.js"></script>
         <script src="./js/misc/config.js"></script>
-        <script src="./js/misc/database.js"></script>
         <script src="./js/misc/util.js"></script>
+        <script src="./js/misc/database.js"></script>
         <script src="./js/misc/id3-minimized.js"></script>
-        <script src="./js/misc/io.js"></script>
+        <script src="./js/misc/io_handler.js"></script>
         <!-- model -->
         <script src="./js/model/particle_data.js"></script>
         <script src="./js/model/priority.js"></script>
@@ -100,10 +100,10 @@
         <div class="flex" id="gui_top">
             <div id="elmTitle"></div>
         </div>
-        
+
         <div class="flex" id="gui_bottom">
             <!-- Left -->
-            <button class="ui button inverted transparent interactable" onclick="Background.flipImage();" id="flipBG">Flip BG</button>
+            <button class="ui button inverted transparent interactable" onclick="Database.openGui();" id="view-database">View Database</button>
             <!-- Center -->
             <div class="flex" id="audio-player">  
                 <div class="flex main_controls"><i id="previous" class="fa fa-step-backward interactable"></i><i id="play" class="fa fa-pause interactable"></i><i id="next" class="fa fa-step-forward action"></i></div>

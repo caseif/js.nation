@@ -10,7 +10,6 @@ let Background = new function() {
         "XGiYXHs", "QBAbrBJ", "uclwgUc", "koPzyZ1", "8VfPY96"  
     ];
 
-    let redditJsonpTag;
     let redditData;
     
     this.setUp = function() {
@@ -31,7 +30,6 @@ let Background = new function() {
     }
 
     this.loadRedditBackground = function(allowFallback = true) {
-        redditJsonpTag = document.createElement("script");
         $.ajax({
             url: "https://www.reddit.com/r/" + SUBREDDIT + "/.json",
             method: "GET",
@@ -140,6 +138,7 @@ let Background = new function() {
     this.fadeFullRes = function(element) {
         $("#" + element.id).css({"opacity": 1, "filter": "none"});
     }
+
     this.resetBG = function() {
         document.getElementById("bgimg1").src = "";
         document.getElementById("bgimg2").src = "";
