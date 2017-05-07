@@ -4,7 +4,7 @@ let Main = new function() {
         
         Util.setUp();
 
-        IoHandler.init();
+        IoHandler.setUp();
 
         SongLoader.loadSongs();
         Background.setUp();

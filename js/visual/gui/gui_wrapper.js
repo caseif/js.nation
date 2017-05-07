@@ -27,8 +27,6 @@ let GuiWrapper = new function() {
             var name = e.target.files[0].name;
             $('input:text', $(e.target).parent()).val(name);
         });
-        
-        
     }
     
     this.setTitle  = function(artist, title) {
