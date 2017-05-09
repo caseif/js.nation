@@ -125,7 +125,6 @@ let Database = new function() {
                 .then(arr => $("#db-view").html($.templates("#table-row-template").render(arr)))
                 .catch(console.err);
         if (enableFields !== undefined) {
-            console.log(enableFields);
             $("#add2DB").attr("disabled", !enableFields);
             $("#field-artist").attr("disabled", !enableFields);
             $("#field-title").attr("disabled", !enableFields);

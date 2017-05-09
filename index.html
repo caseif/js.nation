@@ -22,15 +22,15 @@
 
         <!-- templates -->
         <script id="table-row-template" type="text/html">
-            <tr>
+            <tr class="song-row" data-songid="{{:id}}">
                 {{if img !== undefined}}
                     <td><img width="50px" src="{{:img}}"></td>
                 {{else}}
                     <td></td>
                 {{/if}}
                 <td><a onclick="javascript:Database.handlePlay({{:id}})" class="interactable">Play</a></td>
-                <td>{{:title}}</td>
-                <td>{{:artist}}</td>
+                <td class="row-title">{{:title}}</td>
+                <td class="row-artist">{{:artist}}</td>
                 <td><a onclick="javascript:Database.handleRemove({{:id}})" class="interactable">Remove</a></td>
                 <td>{{:duration}}</td>
             </tr>
