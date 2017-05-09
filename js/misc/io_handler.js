@@ -4,7 +4,7 @@ let IoHandler = new function() {
     const KEY_F_LOWER = 102;
 
     this.setUp = function() {
-        $('#canvas').click(() => {
+        $("#canvas").click(() => {
             Database.closeGui();
         });
 

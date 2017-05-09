@@ -34,7 +34,7 @@ body {
     z-index: 2;
 }
 
-.vertCen {
+.vert-cen {
     position: relative;
     top: 50%;
     -webkit-transform: translateY(-50%);
@@ -42,7 +42,7 @@ body {
     transform: translateY(-50%);
 }
 
-.absolutecenter {
+.absolute-center {
     position: absolute;
     top: 50%;
     left: 50%;

@@ -7,18 +7,18 @@ let GuiWrapper = new function() {
     this.setUp = function() {
         $(document).mousemove(() => {
             clearInterval(timer);
-            $("#gui_top").fadeIn(Config.guiFadeTime);
-            $("#gui_bottom").fadeIn(Config.guiFadeTime);
+            $("#gui-top").fadeIn(Config.guiFadeTime);
+            $("#gui-bottom").fadeIn(Config.guiFadeTime);
             $("*").css("cursor", "auto");
             if (!keepGui && !Config.keepGui) {
                 timer = setTimeout(() => {
-                    $("#gui_top").fadeOut(Config.guiFadeTime);   
-                    $("#gui_bottom").fadeOut(Config.guiFadeTime);
+                    $("#gui-top").fadeOut(Config.guiFadeTime);   
+                    $("#gui-bottom").fadeOut(Config.guiFadeTime);
                     $("*").css("cursor", "none");
                 }, Config.guiTimeout);
             }
         });
-        
+
         $('input:text, .ui.button', '.ui.action.input').on('click', function(e) {
             $('input:file', $(e.target).parents()).click();
         });
@@ -30,7 +30,7 @@ let GuiWrapper = new function() {
     }
     
     this.setTitle  = function(artist, title) {
-        $("#elmTitle").html("<h1 id='guiSong'><span id='guiArtist'>" + artist + "</span><br> " + title + "</h1>");
+        $("#elm-title").html("<h1 id='gui-song'><span id='gui-artist'>" + artist + "</span><br> " + title + "</h1>");
     }
 
 };

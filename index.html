@@ -77,9 +77,9 @@
         <script src="./js/main.js"></script>
     </head>
     <body>
-        <div id="gui_full">
-            <div class="vertCen" id="gui_full_holder">
-                <div class="absolutecenter" id="controls">
+        <div id="gui-full">
+            <div class="vert-cen" id="gui-full-holder">
+                <div class="absolute-center" id="controls">
                     <div class="ui fluid action input inverted">
                         <input type="text" readonly Value="Select Audio File">
                         <input accept="audio/*" type="file" id="fileSelector">
@@ -88,34 +88,39 @@
                         </div>
                     </div>
                     <table class="ui selectable inverted table" id="db-view" border="1"></table>
-                    <div class="ui input"><input type="text" id="artist" placeholder="Artist"></div>
-                    <div class="ui input"><input type="text" id="title" placeholder="Title"></div>
-                    <button class="ui button interactable" id="add2DB">Add To Database</button>
+                    <div class="ui input"><input type="text" id="field-artist" placeholder="Artist"></div>
+                    <div class="ui input"><input type="text" id="field-title" placeholder="Title"></div>
+                    <button class="ui button interactable" id="add2DB" disabled>Add To Database</button>
                     <button class="ui button interactable" id="viewDB">Refresh Datbase</button>
                     <button class="ui button interactable" id="delDB">Delete Datbase</button>
                 </div>
             </div>
         </div>
         
-        <div class="flex" id="gui_top">
-            <div id="elmTitle"></div>
+        <div class="flex" id="gui-top">
+            <div id="elm-title"></div>
         </div>
 
-        <div class="flex" id="gui_bottom">
+        <div class="flex" id="gui-bottom">
             <!-- Left -->
             <button class="ui button inverted transparent interactable" onclick="Database.openGui();" id="view-database">View Database</button>
             <!-- Center -->
             <div class="flex" id="audio-player">  
-                <div class="flex main_controls"><i id="previous" class="fa fa-step-backward interactable"></i><i id="play" class="fa fa-pause interactable"></i><i id="next" class="fa fa-step-forward action"></i></div>
+                <div class="flex main-controls">
+                    <span id="previous" class="fa fa-step-backward interactable"></span>
+                    <span id="play" class="fa fa-pause interactable"></span>
+                    <span id="next" class="fa fa-step-forward action"></span>
+                </div>
                 <span id="time" class="time">00:00</span>
                 <progress id="progressbar" class="flex-auto interactable" value="0" max="100"></progress>
-                <i id="mute" class="fa fa-volume-up interactable"></i><progress id="volume" class="flex-auto interactable" value="100" max="100"></progress>
+                <span id="mute" class="fa fa-volume-up interactable"></span>
+                <progress id="volume" class="flex-auto interactable" value="100" max="100"></progress>
             </div>
             <!-- Fix Me Plz -->
             <audio autoplay id="audio"></audio>
             <!-- Right -->
-            <div id="elmCredit">
-                <p class="love">
+            <div id="elm-credit">
+                <p id="love">
                     Made with &#128153;
                     <br>
                     by <a href="//caseif.net" target="_blank"rel="noopener noreferrer">caseif</a> & <a href="//incept.online" target="_blank" rel="noopener noreferrer">Incept</a>

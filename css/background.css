@@ -2,8 +2,6 @@
 /* Background Styles */
 /* ----------------- */
 
-/* TODO: same deal here with a separate file */
-
 #background {
 	overflow: hidden;
 	position: absolute;
@@ -31,9 +29,6 @@
 	opacity: 0;
 	transition: opacity 0.3s linear;
 	transition: filter 1s linear;
-}
-
-#limg1, #limg2 {
 }
 
 #bgimg2, #limg2 {

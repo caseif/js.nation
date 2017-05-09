@@ -28,8 +28,8 @@ let Database = new function() {
         elmView = document.getElementById("viewDB");
         elmDeldb = document.getElementById("delDB");
 
-        elmTitle = document.getElementById("title");
-        elmArtist = document.getElementById("artist");
+        elmTitle = document.getElementById("field-title");
+        elmArtist = document.getElementById("field-artist");
         elmImage1 = document.getElementById("bgimg1");
         elmImage2 = document.getElementById("bgimg2");
         elmAudio = document.getElementById("audio");
@@ -133,12 +133,12 @@ let Database = new function() {
     }
 
     this.openGui = function() {
-        $('#gui_full').fadeIn(Config.guiFadeTime);
+        $('#gui-full').fadeIn(Config.guiFadeTime);
         keepGui = true;
     }
 
     this.closeGui = function() {
-        $('#gui_full').fadeOut(Config.guiFadeTime);
+        $('#gui-full').fadeOut(Config.guiFadeTime);
         keepGui = false;
     }
     
