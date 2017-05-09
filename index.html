@@ -88,8 +88,12 @@
                         </div>
                     </div>
                     <table class="ui selectable inverted table" id="db-view" border="1"></table>
-                    <div class="ui input"><input type="text" id="field-artist" placeholder="Artist"></div>
-                    <div class="ui input"><input type="text" id="field-title" placeholder="Title"></div>
+                    <div class="ui input">
+                        <input type="text" id="field-artist" placeholder="Artist" disabled>
+                    </div>
+                    <div class="ui input">
+                        <input type="text" id="field-title" placeholder="Title" disabled>
+                    </div>
                     <button class="ui button interactable" id="add2DB" disabled>Add To Database</button>
                     <button class="ui button interactable" id="viewDB">Refresh Datbase</button>
                     <button class="ui button interactable" id="delDB">Delete Datbase</button>
@@ -98,7 +102,10 @@
         </div>
         
         <div class="flex" id="gui-top">
-            <div id="elm-title"></div>
+            <div id="song-info">
+                <div id="gui-artist"></div>
+                <div id="gui-title"></div>
+            </div>
         </div>
 
         <div class="flex" id="gui-bottom">
@@ -116,7 +123,7 @@
                 <span id="mute" class="fa fa-volume-up interactable"></span>
                 <progress id="volume" class="flex-auto interactable" value="100" max="100"></progress>
             </div>
-            <!-- Fix Me Plz -->
+            <!-- TODO: Fix Me Plz -->
             <audio autoplay id="audio"></audio>
             <!-- Right -->
             <div id="elm-credit">

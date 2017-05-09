@@ -52,6 +52,7 @@ let Nodes = new function() {
             GuiWrapper.setTitle(song.getArtist(), song.getTitle());
         }
         $("#audio").attr("src", song != null ? "./songs/" + song.getFileId() : url);
+        GuiWrapper.updatePlayBtn();
     }
 
     let handleAudio = function() {

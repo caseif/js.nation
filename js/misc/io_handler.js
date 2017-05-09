@@ -10,8 +10,18 @@ let IoHandler = new function() {
 
         $(document).keypress(event => {
             if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
-                Background.flipImage();
+                if (!GuiWrapper.isOpen) {
+                    Background.flipImage();
+                }
             }
+        });
+
+        $("#field-artist").on("input", function () {
+            $("#gui-artist").html($(this).val());
+        });
+
+        $("#field-title").on("input", function () {
+            $("#gui-title").html($(this).val());
         });
     }
 

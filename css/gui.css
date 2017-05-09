@@ -89,19 +89,26 @@ audio::-webkit-media-controls-panel {
     display: none;
 }
 
-#elm-title {
+#song-info {
     color: white;
     text-transform: uppercase;
-    line-height: 90%;
+    /*line-height: 90%;*/
     text-align: center;
 }
 
-#gui-song {
-    font-size: 20px;
+#song-info > div {
+    margin-top: 12px;
+    margin-bottom: 12px;
 }
 
 #gui-artist {
-    font-size: 30px;
+    font-size: 24pt;
+    margin-bottom: 12px;
+}
+
+#gui-title {
+    font-size: 15pt;
+    margin-top: 12px;
 }
 
 #view-database {

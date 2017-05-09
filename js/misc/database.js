@@ -41,13 +41,13 @@ let Database = new function() {
         elmView.addEventListener("click", handleView, false);
         elmDeldb.addEventListener("click", handleDeleteDB, false);
         
-        handleView();
+        handleView(false);
     }
 
     // Delete Database
     let handleDeleteDB = function() {
         db.delete();
-        handleView();
+        handleView(false);
         alert("You'll need to refresh");
     }
 
@@ -68,6 +68,7 @@ let Database = new function() {
         } catch (error) {
             return;
         }
+
         ID3.loadTags(url, () => {
             let tags = ID3.getAllTags(url);
             if (tags.picture !== undefined) {
@@ -99,7 +100,7 @@ let Database = new function() {
         });
         
         Nodes.playSongFromUrl(url);
-        handleView();
+        handleView(true);
     }
 
     let addSong = function() {
@@ -108,14 +109,17 @@ let Database = new function() {
         let title = elmTitle.value;
         let duration = Util.secondsToHms(elmAudio.duration);
         db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
-        handleView();
+        handleView(false);
     }
 
     //TODO: this function needs to get merged into Gui and made less ugly
-    let handleView = function() {
+    let handleView = function(enableFields) {
         db.id3.toArray()
                 .then(arr => $("#db-view").html($.templates("#table-row-template").render(arr)))
                 .catch(console.err);
+        $("#add2DB").attr("disabled", !enableFields);
+        $("#field-artist").attr("disabled", !enableFields);
+        $("#field-title").attr("disabled", !enableFields);
     }
 
     this.handlePlay = function(i) {
@@ -129,7 +133,7 @@ let Database = new function() {
 
     this.handleRemove = function(i) {
         db.id3.where("id").equals(i).delete();
-        handleView();
+        handleView(false);
     }
 
     this.openGui = function() {
