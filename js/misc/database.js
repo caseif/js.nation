@@ -38,7 +38,7 @@ let Database = new function() {
         // button Listeners
         elmFile.addEventListener("change", handleFileSelection, false);
         elmAdd.addEventListener("click", addSong, false);
-        elmView.addEventListener("click", handleView, false);
+        elmView.addEventListener("click", handleRefresh, false);
         elmDeldb.addEventListener("click", handleDeleteDB, false);
         
         handleView(false);
@@ -46,9 +46,12 @@ let Database = new function() {
 
     // Delete Database
     let handleDeleteDB = function() {
+        if (!confirm("Are you sure you wish to delete the database? This action cannot be undone!")) {
+            return;
+        }
         db.delete();
         handleView(false);
-        alert("You'll need to refresh");
+        alert("Database deleted. (You'll need to refresh the page.)");
     }
 
     // Create Database
@@ -112,14 +115,21 @@ let Database = new function() {
         handleView(false);
     }
 
+    let handleRefresh = function() {
+        handleView();
+    }
+
     //TODO: this function needs to get merged into Gui and made less ugly
-    let handleView = function(enableFields) {
+    let handleView = function(enableFields = undefined) {
         db.id3.toArray()
                 .then(arr => $("#db-view").html($.templates("#table-row-template").render(arr)))
                 .catch(console.err);
-        $("#add2DB").attr("disabled", !enableFields);
-        $("#field-artist").attr("disabled", !enableFields);
-        $("#field-title").attr("disabled", !enableFields);
+        if (enableFields !== undefined) {
+            console.log(enableFields);
+            $("#add2DB").attr("disabled", !enableFields);
+            $("#field-artist").attr("disabled", !enableFields);
+            $("#field-title").attr("disabled", !enableFields);
+        }
     }
 
     this.handlePlay = function(i) {
