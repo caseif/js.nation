@@ -11,7 +11,7 @@
         <!-- jQuery UI -->
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <!-- Datbase Wrapper -->
-        <script src="https://unpkg.com/dexie@1.5.1/dist/dexie.min.js"></script>
+        <script src="https://unpkg.com/dexie@1.5.1/dist/dexie.js"></script>
         <!-- Semantic OwO -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
@@ -110,7 +110,7 @@
 
         <div class="flex" id="gui-bottom">
             <!-- Left -->
-            <button class="ui button inverted transparent interactable" onclick="Database.openGui();" id="view-database">View Database</button>
+            <button class="ui button inverted transparent interactable" onclick="GuiWrapper.openGui();" id="view-database">View Database</button>
             <!-- Center -->
             <div class="flex" id="audio-player">  
                 <div class="flex main-controls">

@@ -8,16 +8,15 @@ let GuiWrapper = new function() {
 
     this.setUp = function() {
         $(document).mousemove(() => {
-            this.isOpen = true;
             clearInterval(timer);
             $("#gui-top").fadeIn(Config.guiFadeTime);
             $("#gui-bottom").fadeIn(Config.guiFadeTime);
-            $("*").css("cursor", "auto");
+            $("body").css("cursor", "auto");
             if (!keepGui && !Config.keepGui) {
                 timer = setTimeout(() => {
                     $("#gui-top").fadeOut(Config.guiFadeTime);   
                     $("#gui-bottom").fadeOut(Config.guiFadeTime);
-                    $("*").css("cursor", "none");
+                    $("body").css("cursor", "none");
                     this.isOpen = false;
                 }, Config.guiTimeout);
             }
@@ -32,6 +31,16 @@ let GuiWrapper = new function() {
             $('input:text', $(e.target).parent()).val(name);
         });
     }
+
+    this.openGui = function() {
+        $('#gui-full').fadeIn(Config.guiFadeTime);
+        keepGui = true;
+    }
+
+    this.closeGui = function() {
+        $('#gui-full').fadeOut(Config.guiFadeTime);
+        keepGui = false;
+    }
     
     this.setTitle  = function(artist, title) {
         $("#gui-artist").html(artist);
@@ -41,6 +50,31 @@ let GuiWrapper = new function() {
     this.updatePlayBtn = function() {
         $("#play").toggleClass("fa-play", $("audio").paused);
         $("#play").toggleClass("fa-pause", !$("audio").paused);
+    }
+
+    this.toggleTextField = function(element) {
+        let input = element.find("input")[0];
+        if (input !== undefined) {
+            // finished editing
+            let id = element.parent().attr("data-songid");
+            let newVal = input.value;
+            if (newVal.length == 0) {
+                element.html($(input).attr("data-oldval"));
+                return;
+            }
+            if (element.hasClass("row-title")) {
+                Database.updateTitle(id, newVal);
+            } else {
+                Database.updateArtist(id, newVal);
+            }
+            element.html(newVal);
+        } else {
+            // start editing
+            element.html("<input type='text' class='db-edit-input' value='" + element.html()
+                    + "' onfocus='this.value = this.value' data-oldval='" + element.html()
+                    + "' style='min-width:" + element.width() + "px'>");
+            element.find("input").focus();
+        }
     }
 
 };

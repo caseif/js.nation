@@ -121,11 +121,24 @@ audio::-webkit-media-controls-panel {
     color: white;
     text-align: center;
     margin-right: 10px;
-    
 }
 
 input[type="file"] {
     display: none;
+}
+
+.db-edit-input {
+    color: black;
+    display: inline;
+    min-width: 90%;
+}
+
+#db-view tr {
+    height: 60px;
+}
+
+.row-title, .row-artist {
+    min-width: 200px;
 }
 
 /* ------------- */

@@ -96,7 +96,6 @@ let Database = new function() {
             Background.resetBG();
             Background.loadRedditBackground();
             GuiWrapper.setTitle(tags.artist, tags.title);
-            
         }, {
             dataReader: ID3.FileAPIReader(fileStore),
             tags: ["artist", "title", "picture"]
@@ -123,7 +122,7 @@ let Database = new function() {
     let handleView = function(enableFields = undefined) {
         db.id3.toArray()
                 .then(arr => $("#db-view").html($.templates("#table-row-template").render(arr)))
-                .catch(console.err);
+                .catch(console.error);
         if (enableFields !== undefined) {
             $("#add2DB").attr("disabled", !enableFields);
             $("#field-artist").attr("disabled", !enableFields);
@@ -145,14 +144,16 @@ let Database = new function() {
         handleView(false);
     }
 
-    this.openGui = function() {
-        $('#gui-full').fadeIn(Config.guiFadeTime);
-        keepGui = true;
+    this.updateTitle = function(id, title) {
+        id = parseInt(id);
+        db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({title: title}))
+                .catch(e => console.log(e));
     }
 
-    this.closeGui = function() {
-        $('#gui-full').fadeOut(Config.guiFadeTime);
-        keepGui = false;
+    this.updateArtist = function(id, artist) {
+        id = parseInt(id);
+        db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({artist: artist}))
+                .catch(e => console.log(e));
     }
     
 }
