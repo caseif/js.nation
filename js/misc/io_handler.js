@@ -32,8 +32,7 @@ let IoHandler = new function() {
                 let focused = $(document.activeElement);
                 if (focused.hasClass("db-edit-input")) {
                     GuiWrapper.toggleTextField(focused.parent());
-                }
-                else if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
+                } else if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
                     if (!GuiWrapper.isOpen) {
                         Background.flipImage();
                     }

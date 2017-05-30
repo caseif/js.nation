@@ -15,9 +15,11 @@ let AudioWrap = new function() {
     let mute_button;
     let volume_bar;
     let player;
+
+    let lastVolume;
     
     this.getTime = function(t) {
-        let m = ~~(t / 60), s = ~~(t % 60); // boi I know you didn't write this shit yourself
+        let m = ~~(t / 60), s = ~~(t % 60);
         return (m < 10 ? ("0" + m) : m) + ":" + (s < 10 ? ("0" + s) : s);
     }
 
@@ -31,26 +33,29 @@ let AudioWrap = new function() {
         volume_bar = $("#volume");
         player = document.getElementById("audio");
 
+        this.lastVolume = Util.getCookie("lastVol");
+        if (this.lastVolume !== undefined) {
+            this.setVolume(0, true);
+            mute_button.toggleClass("fa-volume-off", true);
+        } else {
+            let vol = Util.getCookie("volume");
+            if (vol !== undefined) {
+                this.setVolume(vol);
+            }
+        }
+
         play_button.click(this.togglePlaying);
 
         IoHandler.addDragListener(progress_bar, val => player.currentTime = val * player.duration);
         
         IoHandler.addDragListener(volume_bar, val => {
-            let res = Util.clamp(val, 0, 1);
-            volume_bar.val(res * 100);
-            player.volume = res;
+            let res = this.setVolume(val);
+            Util.setCookie("volume", res);
+            Util.setCookie("lastVol", res);
         });
 
         mute_button.click(function() {
-            if (player.volume == 0) {
-                player.volume = volume;
-            } else {
-                volume = player.volume;
-                player.volume = 0;
-            }
-            volume_bar.val(player.volume * 100);
-            $(this).toggleClass("fa-volume-up", player.volume != 0);
-            $(this).toggleClass("fa-volume-off", player.volume == 0);
+            AudioWrap.setVolume(AudioWrap.lastVolume !== undefined ? AudioWrap.lastVolume : 0);
         });
 
         player.onended = () => {
@@ -72,6 +77,25 @@ let AudioWrap = new function() {
         player[player.paused ? "play" : "pause"]();
         play_button.toggleClass("fa-play", player.paused);
         play_button.toggleClass("fa-pause", !player.paused);
+    }
+
+    this.setVolume = function(val, skipCookies = false) {
+        let res = Util.clamp(val, 0, 1);
+        volume_bar.val(res * 100);
+        let prev = player.volume;
+        player.volume = res;
+        mute_button.toggleClass("fa-volume-up", res != 0);
+        mute_button.toggleClass("fa-volume-off", res == 0);
+        if (res == 0) {
+            if (!skipCookies) {
+                this.lastVolume = prev;
+                Util.setCookie("lastVol", this.lastVolume);
+            }
+        } else {
+            this.lastVolume = undefined;
+            Util.deleteCookie("lastVol");
+        }
+        return res;
     }
     
 }

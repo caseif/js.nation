@@ -52,4 +52,20 @@ let Util = new function() {
         return Math.min(Math.max(val, min), max);
     }
 
+    this.getCookie = function(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) {
+            return parts.pop().split(";").shift();
+        }
+    }
+
+    this.setCookie = function(name, value) {
+        document.cookie = name + "=" + value + "; expires=Fri, 01 Jan 2038 00:00:00 UTC";
+    }
+
+    this.deleteCookie = function(name) {
+        document.cookie = name + "=undefined" + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    }
+
 }
