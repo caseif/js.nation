@@ -21,22 +21,25 @@ let Emblem = new function() {
             return;
         }
 
-        let minSize = Config.minEmblemSize;
-        let maxSize = Config.maxEmblemSize;
-        let scalar = multiplier * (maxSize - minSize) + minSize
-
-        let dimension = Util.getResolutionMultiplier() * scalar;
-        currentRadius = dimension / 2;
+        currentRadius = Emblem.calcRadius(multiplier);
         let xOffset = $(window).width() / 2 - currentRadius;
         let yOffset = $(window).height() / 2 - currentRadius;
         Canvas.context.save();
         Canvas.context.fillStyle = "#000000";
+        let dimension = currentRadius * 2;
         Canvas.context.drawImage(image, xOffset, yOffset, dimension, dimension);
         Canvas.context.restore();
     }
 
     this.getRadius = function() {
         return currentRadius;
+    }
+
+    this.calcRadius = function(multiplier) {
+        let minSize = Config.minEmblemSize;
+        let maxSize = Config.maxEmblemSize;
+        let scalar = multiplier * (maxSize - minSize) + minSize;
+        return Util.getResolutionMultiplier() * scalar / 2;
     }
 
 }

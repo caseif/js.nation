@@ -14,7 +14,7 @@ let Spectrum = new function() {
         Callbacks.addCallback(drawCallback, Priority.EARLY);
     }
 
-    let drawCallback = function(spectrum) {
+    let drawCallback = function(spectrum, multiplier) {
         if (!Config.drawSpectrum) {
             return;
         }
@@ -24,7 +24,7 @@ let Spectrum = new function() {
         }
         spectrumCache.push(spectrum);
 
-        let baseRad = Emblem.getRadius();
+        let curRad = Emblem.calcRadius(multiplier);
 
         for (let s = spectrumCount - 1; s >= 0; s--) {
             let curSpectrum = smooth(spectrumCache[Math.max(spectrumCache.length - delays[s] - 1, 0)], smoothMargins[s]);
@@ -37,7 +37,7 @@ let Spectrum = new function() {
             let len = curSpectrum.length;
             for (let i = 0; i < len; i++) {
                 t = Math.PI * (i / (len - 1)) - (Math.PI / 2);
-                r = baseRad + Math.pow(curSpectrum[i] * Config.spectrumHeightScalar * Util.getResolutionMultiplier(), exponents[s]);
+                r = curRad + Math.pow(curSpectrum[i] * Config.spectrumHeightScalar * Util.getResolutionMultiplier(), exponents[s]);
                 x = r * Math.cos(t);
                 y = r * Math.sin(t);
                 points.push({x: x, y: y});
@@ -60,7 +60,8 @@ let Spectrum = new function() {
 
         let xMult = neg ? -1 : 1;
 
-        Canvas.context.moveTo(xMult * points[0].x + halfWidth, points[0].y + halfHeight);
+        // the "+neg" is kind of a band-aid because the positioning is imperfect and I don't feel like fixing the underlying issue
+        Canvas.context.moveTo(halfWidth + neg, points[0].y + halfHeight);
 
         let len = points.length;
         for (let i = 1; i < len - 2; i++) {
@@ -68,7 +69,7 @@ let Spectrum = new function() {
             let d = (points[i].y + points[i + 1].y) / 2 + halfHeight;
             Canvas.context.quadraticCurveTo(xMult * points[i].x + halfWidth, points[i].y + halfHeight, c, d);
         }
-        Canvas.context.quadraticCurveTo(xMult * points[len - 2].x + halfWidth, points[len - 2].y + halfHeight,
+        Canvas.context.quadraticCurveTo(xMult * points[len - 2].x + halfWidth + neg * 2, points[len - 2].y + halfHeight,
                 xMult * points[len - 1].x + halfWidth, points[len - 1].y + halfHeight);
         Canvas.context.fill();
         Canvas.context.closePath();
