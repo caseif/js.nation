@@ -17,6 +17,7 @@ let Transform = new function() {
         return (1 / (transformer - 1)) * (-Math.pow(intermediate, transformer) + transformer * intermediate);
     }
 
+    // I'm not convinced this is a Savitsky-Golay smooth. I'm not sure what it is actually.
     let savitskyGolaySmooth = function(array) {
         let lastArray = array;
         let newArr = [];

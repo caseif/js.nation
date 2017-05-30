@@ -21,6 +21,7 @@ let Config = new function() {
     this.smoothingPasses = 1;
     this.smoothingPoints = 3;
     this.spectrumHeightScalar = 0.5;
+    this.glowRadius = 20;
 
     // particle config
     this.maxParticleCount = 1600; // particle count at 1080p
