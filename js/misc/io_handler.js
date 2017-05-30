@@ -1,14 +1,11 @@
 let IoHandler = new function() {
 
     const KEY_ENTER = 13;
+    const KEY_ESC = 27;
     const KEY_F_UPPER = 70;
     const KEY_F_LOWER = 102;
 
     this.setUp = function() {
-        $("#canvas").click(() => {
-            GuiWrapper.closeGui();
-        });
-
         $("#db-view").on("click", ".row-title", function() {
             if ($(this).find("input").length == 0) {
                 GuiWrapper.toggleTextField($(this));
@@ -35,6 +32,12 @@ let IoHandler = new function() {
                 if (focused.hasClass("db-edit-input")) {
                     GuiWrapper.toggleTextField(focused.parent());
                 }
+            }
+        });
+
+        $(document).keydown(event => {
+            if (event.which == KEY_ESC) {
+                GuiWrapper.closeGui();
             }
         });
 

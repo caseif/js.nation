@@ -80,6 +80,7 @@
         <div id="gui-full">
             <div class="vert-cen" id="gui-full-holder">
                 <div class="absolute-center" id="controls">
+                    <a onClick="javascript:GuiWrapper.closeGui();" class="boxclose fa fa-times-circle"></a>
                     <div class="ui fluid action input inverted">
                         <input type="text" readonly Value="Select Audio File">
                         <input accept="audio/*" type="file" id="fileSelector">
@@ -100,7 +101,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="flex" id="gui-top">
             <div id="song-info">
                 <div id="gui-artist"></div>
@@ -133,9 +134,8 @@
                     by <a href="//caseif.net" target="_blank"rel="noopener noreferrer">caseif</a> & <a href="//incept.online" target="_blank" rel="noopener noreferrer">Incept</a>
                 </p>
             </div>
-
         </div>
-    
+
         <div id="content">
             <canvas id="canvas" style="display: block;"></canvas>
         </div>

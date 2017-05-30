@@ -141,6 +141,24 @@ input[type="file"] {
     min-width: 200px;
 }
 
+a.boxclose {
+    float: right;
+    margin-top:-26px;
+    margin-right:-30px;
+    cursor:pointer;
+    color: #E0E1E2 !important;
+    font-size: 26px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 3px;       
+}
+
+a.boxclose:hover {
+    color: #BABBBC !important;
+    transition: 0.1s;
+}
+
 /* ------------- */
 /* Audio Wrapper */
 /* ------------- */
@@ -220,6 +238,7 @@ progress::-moz-progress-bar {
 progress::-webkit-progress-value {
     background: #3498db;
 }
+
 progress::-webkit-progress-bar {
     background-color: #fff;
 }
