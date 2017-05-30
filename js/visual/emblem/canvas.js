@@ -28,6 +28,7 @@ let Canvas = new function() {
         $("#canvas").attr("width", $(window).width());
         $("#canvas").attr("height", $(window).height());
         Canvas.context.fillStyle = "#FFFFFF";
+        Canvas.context.shadowBlur = Config.glowRadius;
     }
 
     let clearCallback = function() {

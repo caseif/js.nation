@@ -2,6 +2,7 @@ let IoHandler = new function() {
 
     const KEY_ENTER = 13;
     const KEY_ESC = 27;
+    const KEY_SPACE = 32;
     const KEY_F_UPPER = 70;
     const KEY_F_LOWER = 102;
 
@@ -27,21 +28,28 @@ let IoHandler = new function() {
         });
 
         $(document).keypress(event => {
-            if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
-                if (!GuiWrapper.isOpen) {
-                    Background.flipImage();
-                }
-            } else if (event.which == KEY_ENTER) {
+            if (event.which == KEY_ENTER) {
                 let focused = $(document.activeElement);
                 if (focused.hasClass("db-edit-input")) {
                     GuiWrapper.toggleTextField(focused.parent());
+                }
+                else if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
+                    if (!GuiWrapper.isOpen) {
+                        Background.flipImage();
+                    }
                 }
             }
         });
 
         $(document).keydown(event => {
             if (event.which == KEY_ESC) {
-                GuiWrapper.closeGui();
+                if (GuiWrapper.isOpen) {
+                    GuiWrapper.closeGui();
+                }
+            } else if (event.which == KEY_SPACE) {
+                if (!$(document.activeElement).hasClass("db-edit-input")) {
+                    AudioWrap.togglePlaying();
+                }
             }
         });
 

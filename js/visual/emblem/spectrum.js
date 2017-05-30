@@ -11,8 +11,6 @@ let Spectrum = new function() {
 
     this.setUp = function() {
         Callbacks.addCallback(drawCallback, Priority.EARLY);
-
-        Canvas.context.shadowBlur = Config.glowRadius;
     }
 
     let drawCallback = function(spectrum) {

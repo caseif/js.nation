@@ -31,11 +31,7 @@ let AudioWrap = new function() {
         volume_bar = $("#volume");
         player = document.getElementById("audio");
 
-        play_button.click(function() {
-            player[player.paused ? "play" : "pause"]();
-            $(this).toggleClass("fa-play", player.paused);
-            $(this).toggleClass("fa-pause", !player.paused);
-        });
+        play_button.click(this.togglePlaying);
 
         IoHandler.addDragListener(progress_bar, val => player.currentTime = val * player.duration);
         
@@ -70,6 +66,12 @@ let AudioWrap = new function() {
             let progression = (currentTime + .25) / duration * 100;
             progress_bar.val(progression);
             time.text(AudioWrap.getTime(player.currentTime));
+    }
+
+    this.togglePlaying = function() {
+        player[player.paused ? "play" : "pause"]();
+        play_button.toggleClass("fa-play", player.paused);
+        play_button.toggleClass("fa-pause", !player.paused);
     }
     
 }
