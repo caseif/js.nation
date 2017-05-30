@@ -30,7 +30,7 @@ let Callbacks = new function() {
     }
 
     this.addCallback = function(callback, priority) {
-        if (priority == undefined) {
+        if (priority === undefined) {
             priority = 2;
         }
         if (priority < 0 || priority >= PRIORITY_LEVELS || !Number.isInteger(priority)) {

@@ -28,14 +28,12 @@ let IoHandler = new function() {
         });
 
         $(document).keypress(event => {
-            if (event.which == KEY_ENTER) {
-                let focused = $(document.activeElement);
-                if (focused.hasClass("db-edit-input")) {
-                    GuiWrapper.toggleTextField(focused.parent());
-                } else if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
-                    if (!GuiWrapper.isOpen) {
-                        Background.flipImage();
-                    }
+            let focused = $(document.activeElement);
+            if (focused.hasClass("db-edit-input")) {
+                GuiWrapper.toggleTextField(focused.parent());
+            } else if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
+                if (!GuiWrapper.isOpen) {
+                    Background.flipImage();
                 }
             }
         });
