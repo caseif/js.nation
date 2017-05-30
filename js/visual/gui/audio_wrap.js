@@ -7,6 +7,7 @@
 // Shit like this is the reason JS gets such a bad rap, and rightfully so.
 let AudioWrap = new function() {
 
+    let body;
     let audio_player;
     let play_button;
     let progress_bar;
@@ -21,6 +22,7 @@ let AudioWrap = new function() {
     }
 
     this.setUp = function() {
+        body = $("body");
         audio_player = $("#audio-player");
         play_button = $("#play");
         progress_bar = $("#progressbar");
@@ -28,18 +30,19 @@ let AudioWrap = new function() {
         mute_button = $("#mute");
         volume_bar = $("#volume");
         player = document.getElementById("audio");
-        
-        volume_bar.click(function(e) {
-            let perc = e.offsetX / $(this).width() * 100;
-            let result = perc / 100;
-            volume_bar.val(perc);
-            player.volume = result;
-        });
 
         play_button.click(function() {
             player[player.paused ? "play" : "pause"]();
             $(this).toggleClass("fa-play", player.paused);
             $(this).toggleClass("fa-pause", !player.paused);
+        });
+
+        IoHandler.addDragListener(progress_bar, val => player.currentTime = val * player.duration);
+        
+        IoHandler.addDragListener(volume_bar, val => {
+            let res = Util.clamp(val, 0, 1);
+            volume_bar.val(res * 100);
+            player.volume = res;
         });
 
         mute_button.click(function() {
@@ -52,10 +55,6 @@ let AudioWrap = new function() {
             volume_bar.val(player.volume * 100);
             $(this).toggleClass("fa-volume-up", player.volume != 0);
             $(this).toggleClass("fa-volume-off", player.volume == 0);
-        });
-
-        progress_bar.click(function(e) {
-            player.currentTime = e.offsetX / $(this).width() * player.duration;
         });
 
         player.onended = () => {
