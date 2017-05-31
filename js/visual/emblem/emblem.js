@@ -4,7 +4,11 @@ let Emblem = new function() {
     let loaded = false;
     let currentRadius;
 
+    let jqWindow;
+
     this.setUp = function() {
+        jqWindow = $(window);
+
         image = new Image();
         image.onload = () => loaded = true;
         image.src = "./img/emblem.svg";
@@ -22,8 +26,8 @@ let Emblem = new function() {
         }
 
         currentRadius = Emblem.calcRadius(multiplier);
-        let xOffset = $(window).width() / 2 - currentRadius;
-        let yOffset = $(window).height() / 2 - currentRadius;
+        let xOffset = jqWindow.width() / 2 - currentRadius;
+        let yOffset = jqWindow.height() / 2 - currentRadius;
         Canvas.context.save();
         Canvas.context.fillStyle = "#000000";
         let dimension = currentRadius * 2;

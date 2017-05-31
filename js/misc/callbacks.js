@@ -2,15 +2,11 @@ let Callbacks = new function() {
 
     const PRIORITY_LEVELS = 5;
 
-    let callbacks = [];
+    let callbacks = Array();
 
     let player;
 
     this.setUp = function() {
-        for (let i = 0; i < PRIORITY_LEVELS; i++) {
-            callbacks[i] = [];
-        }
-
         player = document.getElementById("audio");
     }
 
@@ -23,6 +19,10 @@ let Callbacks = new function() {
     }
 
     let handleCallbackArray = function(callbacks, spectrum, multiplier) {
+        if (callbacks === undefined) {
+            return;
+        }
+
         let len = callbacks.length;
         for (let i = 0; i < len; i++) {
             callbacks[i](spectrum, multiplier);
@@ -35,6 +35,9 @@ let Callbacks = new function() {
         }
         if (priority < 0 || priority >= PRIORITY_LEVELS || !Number.isInteger(priority)) {
             throw "Invalid priority [0-" + (PRIORITY_LEVELS - 1) + "]";
+        }
+        if (callbacks[priority] === undefined) {
+            callbacks[priority] = Array();
         }
         callbacks[priority].push(callback);
     }

@@ -37,9 +37,9 @@ let Nodes = new function() {
             analyzer.fftSize = Config.fftSize; // ideal bin count
             console.log("Using fftSize of " + analyzer.fftSize + " (woot!)");
         } catch (ex) {
-            analyzer.fftSize = 2048; // this will work for most if not all systems
-            console.log("Using fftSize of " + analyzer.fftSize);
-            alert("Failed to set optimal fftSize! This may look a bit weird...");
+            let msg = "Failed to set fftSize - try updating your browser.";
+            alert(msg);
+            throw new Error(msg);
         }
 
         mediaSource.connect(analyzer);

@@ -10,8 +10,11 @@ let Spectrum = new function() {
 
     let spectrumCache = Array();
 
+    let jqWindow;
+
     this.setUp = function() {
         Callbacks.addCallback(drawCallback, Priority.EARLY);
+        jqWindow = $(window);
     }
 
     let drawCallback = function(spectrum, multiplier) {
@@ -36,7 +39,7 @@ let Spectrum = new function() {
 
             let len = curSpectrum.length;
             for (let i = 0; i < len; i++) {
-                t = Math.PI * (i / (len - 1)) - (Math.PI / 2);
+                t = Math.PI * (i / (len - 1)) - MathConstants.HALF_PI;
                 r = curRad + Math.pow(curSpectrum[i] * Config.spectrumHeightScalar * Util.getResolutionMultiplier(), exponents[s]);
                 x = r * Math.cos(t);
                 y = r * Math.sin(t);
@@ -55,8 +58,8 @@ let Spectrum = new function() {
 
         Canvas.context.beginPath();
 
-        let halfWidth = $(window).width() / 2;
-        let halfHeight = $(window).height() / 2;
+        let halfWidth = jqWindow.width() / 2;
+        let halfHeight = jqWindow.height() / 2;
 
         let xMult = neg ? -1 : 1;
 
@@ -81,7 +84,7 @@ let Spectrum = new function() {
             return points;
         }
 
-        let newArr = Array();
+        let newArr = new Float32Array();
         for (let i = 0; i < points.length; i++) {
             let sum = 0;
             let denom = 0;
