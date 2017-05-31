@@ -84,7 +84,7 @@ let Spectrum = new function() {
             return points;
         }
 
-        let newArr = new Float32Array();
+        let newArr = Array();
         for (let i = 0; i < points.length; i++) {
             let sum = 0;
             let denom = 0;
