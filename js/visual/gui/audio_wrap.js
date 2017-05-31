@@ -51,7 +51,6 @@ let AudioWrap = new function() {
         IoHandler.addDragListener(volume_bar, val => {
             let res = this.setVolume(val);
             Util.setCookie("volume", res);
-            Util.setCookie("lastVol", res);
         });
 
         mute_button.click(function() {
