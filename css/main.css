@@ -2,10 +2,10 @@
 /* Main Page Styling */
 /* ----------------- */
 
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito|Open+Sans:300");
 
 html {
-    font-family: 'Nunito', sans-serif;
+    font-family: "Nunito", sans-serif;
 }
 
 body {

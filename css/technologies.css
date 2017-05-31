@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300");
+
+html {
+    font-family: Open Sans;
+    font-weight: 300;
+    text-align: center;
+}
+
+a {
+    color: #77a7ff;
+    text-decoration: none;
+}
+
+header {
+    font-size: 28pt;
+}
+
+.subheader {
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.section {
+    font-size: 16pt;
+    margin-top: 44px;
+}
+
+.subheader {
+    margin-bottom: 12px;
+}
+
+.item {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

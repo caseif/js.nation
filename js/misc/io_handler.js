@@ -32,7 +32,7 @@ let IoHandler = new function() {
             if (focused.hasClass("db-edit-input")) {
                 GuiWrapper.toggleTextField(focused.parent());
             } else if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
-                if (!GuiWrapper.isOpen) {
+                if (!GuiWrapper.keepGui) {
                     Background.flipImage();
                 }
             }
@@ -40,8 +40,11 @@ let IoHandler = new function() {
 
         $(document).keydown(event => {
             if (event.which == KEY_ESC) {
-                if (GuiWrapper.isOpen) {
+                console.log(GuiWrapper.keepGui);
+                if (GuiWrapper.keepGui) {
                     GuiWrapper.closeGui();
+                } else if (GuiWrapper.aboutOpen) {
+                    GuiWrapper.closeAbout();
                 }
             } else if (event.which == KEY_SPACE) {
                 if (!$(document.activeElement).hasClass("db-edit-input")) {

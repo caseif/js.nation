@@ -6,10 +6,10 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- jQuery -->
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <!-- jQuery UI -->
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>-->
         <!-- Datbase Wrapper -->
         <script src="https://unpkg.com/dexie@1.5.1/dist/dexie.js"></script>
         <!-- Semantic OwO -->
@@ -77,9 +77,9 @@
         <script src="./js/main.js"></script>
     </head>
     <body>
-        <div id="gui-full">
-            <div class="vert-cen" id="gui-full-holder">
-                <div class="absolute-center" id="controls">
+        <div id="gui-full" class="overlay-container">
+            <div class="vert-cen overlay-window" id="gui-full-holder">
+                <div class="absolute-center overlay-pane" id="controls">
                     <a onClick="javascript:GuiWrapper.closeGui();" class="boxclose fa fa-times-circle"></a>
                     <div class="ui fluid action input inverted">
                         <input type="text" readonly Value="Select Audio File">
@@ -102,6 +102,36 @@
             </div>
         </div>
 
+        
+        <div id="about-full" class="overlay-container">
+            <div class="vert-cen overlay-window" id="about-full-holder">
+                <div class="absolute-center overlay-pane" id="about-pane">
+                    <a onClick="javascript:GuiWrapper.closeAbout();"
+                            class="boxclose fa fa-times-circle"></a>
+                    <div id="about-header">
+                        js.nation
+                    </div>
+                    <div id="about-content">
+                        <div id="about-credit">
+                            made with &#128153; by 
+                            <a href="//caseif.net" target="_blank" rel="noopener noreferrer">caseif</a> & 
+                            <a href="//incept.online" target="_blank" rel="noopener noreferrer">incept</a>
+                        </div>
+                        <div id="about-source">
+                            source available on
+                            <a href="//github.com/caseif/js.nation" target="_blank" rel="noopener noreferrer">github</a>
+                        </div>
+                        <div id="about-technologies">
+                            <a href="technologies.html" target="_blank" rel="noopener noreferrer">technologies used</a>
+                        </div>
+                        <div id="about-inspiration">
+                            inspired by <a href="//nations.io/">the nations</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="flex" id="gui-top">
             <div id="song-info">
                 <div id="gui-artist"></div>
@@ -111,7 +141,8 @@
 
         <div class="flex" id="gui-bottom">
             <!-- Left -->
-            <button class="ui button inverted transparent interactable" onclick="GuiWrapper.openGui();" id="view-database">View Database</button>
+            <button class="ui button inverted transparent interactable" onclick="GuiWrapper.openGui();"
+                    id="view-database">View Database</button>
             <!-- Center -->
             <div class="flex" id="audio-player">  
                 <div class="flex main-controls">
@@ -127,12 +158,8 @@
             <!-- TODO: Fix Me Plz -->
             <audio autoplay id="audio"></audio>
             <!-- Right -->
-            <div id="elm-credit">
-                <p id="love">
-                    Made with &#128153;
-                    <br>
-                    by <a href="//caseif.net" target="_blank"rel="noopener noreferrer">caseif</a> & <a href="//incept.online" target="_blank" rel="noopener noreferrer">Incept</a>
-                </p>
+            <div id="elm-about">
+                <a href="javascript:GuiWrapper.openAbout();">About</a>
             </div>
         </div>
 
@@ -144,8 +171,10 @@
             <img src="" class="bgright" id="limg2" onerror="this.style.display='none'">
         </div>
         <div id="background" class="realbg">
-            <img src="" class="bgleft" id="bgimg1" onload="javascript:Background.fadeFullRes(this)" onerror="this.style.display='none'">
-            <img src="" class="bgright" id="bgimg2" onload="javascript:Background.fadeFullRes(this)" onerror="this.style.display='none'">
+            <img src="" class="bgleft" id="bgimg1" onload="javascript:Background.fadeFullRes(this)"
+                    onerror="this.style.display='none'">
+            <img src="" class="bgright" id="bgimg2" onload="javascript:Background.fadeFullRes(this)"
+                    onerror="this.style.display='none'">
         </div>
     </body>
     <!-- dat.GUI -->

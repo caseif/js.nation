@@ -6,6 +6,10 @@
     -ms-user-select: none;
 }
 
+a {
+    color: #77a7ff
+}
+
 .dg.ac {
     z-index: 999 !important;
 }
@@ -14,23 +18,10 @@
 /* Temporary Control Styling */
 /* ------------------------- */
 
-#controls {
-    z-index: 4;
-    position: fixed;
-    padding: 15px;
-    background-color: rgba(34, 34, 34, 0.65);
-    color: #DBDBDB;
-    max-width: 100%;
-    line-height: 0.8em;
-    font-size: 10pt;
-    pointer-events: auto;
-}
-
 #controls td {
     padding: 5px 15px;
 }
 #controls a {
-    color: rgba(66, 133, 244, 1);
     font-weight: bold;
 }
 #controls > .header {
@@ -63,22 +54,60 @@ audio::-webkit-media-controls-panel {
     background: rgba(0, 0, 0, 0);
 }
 
-#gui-full {
+.overlay-container {
     position: fixed;
     width: 100%;
     height: 100%;
-    display: none;
     z-index: 4;
     background: rgba(0, 0, 0, 0.75);
     pointer-events: none;
-    
+    display: none;
+}
+
+.overlay-window {
+    height: calc(100% - 300px);
+    padding: 0px 50px;
+    pointer-events: none;
 }
 
 #gui-full-holder {
     height: calc(100% - 300px);
-    padding: 0px 50px;
-    pointer-events: none;
-    
+}
+
+#controls {
+    line-height: 0.8em;
+    font-size: 10pt;
+}
+
+.overlay-pane {
+    z-index: 4;
+    position: fixed;
+    padding: 15px;
+    background-color: rgba(34, 34, 34, 0.65);
+    color: #DBDBDB;
+    max-width: 100%;
+    pointer-events: auto;
+    border-radius: 15px;
+}
+
+/* ---------- */
+/* About pane */
+/* ---------- */
+
+#about-pane {
+    line-height: 4em;
+    text-align: center;
+    font-family: Open Sans;
+    font-weight: 300;
+}
+
+#about-header {
+    font-size: 32pt;
+    margin-bottom: 24px;
+}
+
+#about-content {
+    font-size: 16pt;
 }
 
 /* ------------ */
@@ -116,8 +145,8 @@ audio::-webkit-media-controls-panel {
     margin-left: 15px;
 }
 
-#elm-credit {
-    min-width: 150px;
+#elm-about {
+    min-width: 60px;
     color: white;
     text-align: center;
     margin-right: 10px;

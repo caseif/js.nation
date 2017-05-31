@@ -2,7 +2,9 @@ let GuiWrapper = new function() {
 
     this.isOpen = false;
 
-    let keepGui = false;
+    this.aboutOpen = false;
+
+    this.keepGui = false;
 
     let timer;
 
@@ -12,12 +14,11 @@ let GuiWrapper = new function() {
             $("#gui-top").fadeIn(Config.guiFadeTime);
             $("#gui-bottom").fadeIn(Config.guiFadeTime);
             $("body").css("cursor", "auto");
-            if (!keepGui && !Config.keepGui) {
+            if (!this.keepGui && !Config.keepGui) {
                 timer = setTimeout(() => {
                     $("#gui-top").fadeOut(Config.guiFadeTime);   
                     $("#gui-bottom").fadeOut(Config.guiFadeTime);
                     $("body").css("cursor", "none");
-                    this.isOpen = false;
                 }, Config.guiTimeout);
             }
         });
@@ -33,13 +34,17 @@ let GuiWrapper = new function() {
     }
 
     this.openGui = function() {
+        if (this.aboutOpen) {
+            this.closeAbout();
+        }
         $('#gui-full').fadeIn(Config.guiFadeTime);
-        keepGui = true;
+        this.keepGui = true;
+        console.log(this.keepGui);
     }
 
     this.closeGui = function() {
         $('#gui-full').fadeOut(Config.guiFadeTime);
-        keepGui = false;
+        this.keepGui = false;
     }
     
     this.setTitle  = function(artist, title) {
@@ -74,6 +79,24 @@ let GuiWrapper = new function() {
                     + "' onfocus='this.value = this.value' data-oldval='" + element.html()
                     + "' style='min-width:" + element.width() + "px'>");
             element.find("input").focus();
+        }
+    }
+
+    this.openAbout = function() {
+        if (!this.aboutOpen) {
+            console.log(this.keepGui);
+            if (this.keepGui) {
+                this.closeGui();
+            }
+            $("#about-full").fadeIn(Config.guiFadeTime);
+            this.aboutOpen = true;
+        }
+    }
+
+    this.closeAbout = function() {
+        if (this.aboutOpen) {
+            $("#about-full").fadeOut(Config.guiFadeTime);
+            this.aboutOpen = false;
         }
     }
 
