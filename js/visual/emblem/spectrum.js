@@ -2,7 +2,7 @@ let Spectrum = new function() {
 
     const spectrumCount = 8;
     const exponents = [1, 1.02, 1.04, 1.06, 1.08, 1.10, 1.12, 1.14];
-    const smoothMargins = [0, 2, 2, 3, 4, 4, 5, 5];
+    const smoothMargins = [0, 1, 1, 2, 2, 3, 3, 4];
     //               white      yellow      red        pink      indigo    blue        lightblue  green
     const colors = ["#FFFFFF", "#FFFF00", "#FF0000", "#FF66FF", "#333399", "#0000FF", "#33CCFF", "#00FF00"];
     const delays = [0, 1, 2, 3, 4, 5, 6, 7];

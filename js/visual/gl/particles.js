@@ -57,8 +57,10 @@ let Particles = new function() {
         let speed = ignoreSpeed ? 1 : data.getSpeed();
         adjustedSpeed = Math.max(speed * multiplier, Config.particleBaseSpeed);
 
-        let phaseX = Math.sin(MathConstants.TWO_PI * data.getPhase().x) * data.getPhaseAmplitude().x * multiplier;
-        let phaseY = Math.sin(MathConstants.TWO_PI * data.getPhase().y) * data.getPhaseAmplitude().y * multiplier;
+        let ampMult = (Config.particlePhaseAmplitudeMultMax - Config.particlePhaseAmplitudeMultMin) * multiplier
+                + Config.particlePhaseAmplitudeMultMin;
+        let phaseX = Math.sin(MathConstants.TWO_PI * data.getPhase().x) * data.getPhaseAmplitude().x * ampMult;
+        let phaseY = Math.sin(MathConstants.TWO_PI * data.getPhase().y) * data.getPhaseAmplitude().y * ampMult;
 
         let baseIndex = VERTEX_SIZE * i;
         let x = Particles.particlesGeom.attributes.position.array[baseIndex + 0]
@@ -75,9 +77,11 @@ let Particles = new function() {
             applyPosition(i, x, y, z);
         }
 
+        let speedMult = (Config.particlePhaseSpeedMultMax - Config.particlePhaseSpeedMultMin) * multiplier
+                + Config.particlePhaseSpeedMultMin;
         data.augmentPhase(
-            data.getPhaseSpeed().x * multiplier,
-            data.getPhaseSpeed().y * multiplier
+            data.getPhaseSpeed().x * speedMult,
+            data.getPhaseSpeed().y * speedMult
         );
     }
 
