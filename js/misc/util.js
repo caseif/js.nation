@@ -2,11 +2,16 @@ let Util = new function() {
 
     let resMult = 1;
 
+    let jqWindow;
+
     this.setUp = function() {
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
             return target.replace(new RegExp(search, "g"), replacement);
         };
+
+        jqWindow = $(window);
+
         Callbacks.addCallback(updateResolutionMultiplier);
     }
 
@@ -39,8 +44,8 @@ let Util = new function() {
     }
 
     let updateResolutionMultiplier = function() {
-        let width = $(window).width();
-        let height = $(window).height();
+        let width = jqWindow.width();
+        let height = jqWindow.height();
         if (width >= height) {
             resMult = width / 1920;
         } else {

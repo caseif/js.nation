@@ -39,7 +39,6 @@ let GuiWrapper = new function() {
         }
         $('#gui-full').fadeIn(Config.guiFadeTime);
         this.keepGui = true;
-        console.log(this.keepGui);
     }
 
     this.closeGui = function() {
@@ -84,7 +83,6 @@ let GuiWrapper = new function() {
 
     this.openAbout = function() {
         if (!this.aboutOpen) {
-            console.log(this.keepGui);
             if (this.keepGui) {
                 this.closeGui();
             }

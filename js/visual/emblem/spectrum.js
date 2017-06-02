@@ -46,12 +46,11 @@ let Spectrum = new function() {
                 points.push({x: x, y: y});
             }
 
-            drawPoints(points, false);
-            drawPoints(points, true);
+            drawPoints(points);
         }
     }
 
-    let drawPoints = function(points, neg) {
+    let drawPoints = function(points) {
         if (points.length == 0) {
             return;
         }
@@ -61,24 +60,26 @@ let Spectrum = new function() {
         let halfWidth = jqWindow.width() / 2;
         let halfHeight = jqWindow.height() / 2;
 
-        let xMult = neg ? -1 : 1;
+        for (let neg = 0; neg <= 1; neg++) {
+            let xMult = neg ? -1 : 1;
 
-        // the "+neg" is kind of a band-aid because the positioning is imperfect and I don't feel like fixing the underlying issue
-        Canvas.context.moveTo(halfWidth + neg, points[0].y + halfHeight);
+            // the "+neg" is kind of a band-aid because the positioning is
+            // imperfect and I don't feel like fixing the underlying issue
+            Canvas.context.moveTo(halfWidth + neg, points[0].y + halfHeight);
 
-        let len = points.length;
-        for (let i = 1; i < len - 2; i++) {
-            let c = xMult * (points[i].x + points[i + 1].x) / 2 + halfWidth;
-            let d = (points[i].y + points[i + 1].y) / 2 + halfHeight;
-            Canvas.context.quadraticCurveTo(xMult * points[i].x + halfWidth, points[i].y + halfHeight, c, d);
+            let len = points.length;
+            for (let i = 1; i < len - 2; i++) {
+                let c = xMult * (points[i].x + points[i + 1].x) / 2 + halfWidth;
+                let d = (points[i].y + points[i + 1].y) / 2 + halfHeight;
+                Canvas.context.quadraticCurveTo(xMult * points[i].x + halfWidth, points[i].y + halfHeight, c, d);
+            }
+            Canvas.context.quadraticCurveTo(xMult * points[len - 2].x + halfWidth + neg * 2,
+                    points[len - 2].y + halfHeight, xMult * points[len - 1].x + halfWidth,
+                    points[len - 1].y + halfHeight);
         }
-        Canvas.context.quadraticCurveTo(xMult * points[len - 2].x + halfWidth + neg * 2, points[len - 2].y + halfHeight,
-                xMult * points[len - 1].x + halfWidth, points[len - 1].y + halfHeight);
         Canvas.context.fill();
-        Canvas.context.closePath();
     }
 
-    //TODO: memoize me
     let smooth = function(points, margin) {
         if (margin == 0) {
             return points;

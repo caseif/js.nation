@@ -40,7 +40,6 @@ let IoHandler = new function() {
 
         $(document).keydown(event => {
             if (event.which == KEY_ESC) {
-                console.log(GuiWrapper.keepGui);
                 if (GuiWrapper.keepGui) {
                     GuiWrapper.closeGui();
                 } else if (GuiWrapper.aboutOpen) {

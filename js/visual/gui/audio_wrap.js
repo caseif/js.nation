@@ -10,7 +10,7 @@ let AudioWrap = new function() {
     let body;
     let audio_player;
     let play_button;
-    let progress_bar;
+    let progressBar;
     let time;
     let mute_button;
     let volume_bar;
@@ -27,8 +27,8 @@ let AudioWrap = new function() {
         body = $("body");
         audio_player = $("#audio-player");
         play_button = $("#play");
-        progress_bar = $("#progressbar");
-        time = $("#time");
+        progressBar = document.getElementById("progressbar");
+        time = document.getElementById("time");
         mute_button = $("#mute");
         volume_bar = $("#volume");
         player = document.getElementById("audio");
@@ -46,7 +46,7 @@ let AudioWrap = new function() {
 
         play_button.click(this.togglePlaying);
 
-        IoHandler.addDragListener(progress_bar, val => player.currentTime = val * player.duration);
+        IoHandler.addDragListener($("#progressbar"), val => player.currentTime = val * player.duration);
         
         IoHandler.addDragListener(volume_bar, val => {
             let res = this.setVolume(val);
@@ -66,10 +66,10 @@ let AudioWrap = new function() {
 
     this.updateProgress = function() {
         let currentTime = player.currentTime;
-            let duration = player.duration;
-            let progression = (currentTime + .25) / duration * 100;
-            progress_bar.val(progression);
-            time.text(AudioWrap.getTime(player.currentTime));
+        let duration = player.duration;
+        let progression = (currentTime + .25) / duration * 100;
+        progressBar.value = progression;
+        time.innerHTML = AudioWrap.getTime(player.currentTime);
     }
 
     this.togglePlaying = function() {
