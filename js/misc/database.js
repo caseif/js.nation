@@ -22,10 +22,12 @@ let Database = new function() {
     let elmAudio;
     let elmTable;
 
+    let dbTemplate;
+
     let db;
     
     let page = 0;
-    let totalPages;
+    let totalCount;
 
     this.setUp = function() {
         elmFile = document.getElementById("fileSelector")
@@ -46,12 +48,14 @@ let Database = new function() {
         elmView.addEventListener("click", handleRefresh, false);
         elmDeldb.addEventListener("click", handleDeleteDB, false);
 
+        dbTemplate = $.templates("#table-row-template");
+
         // Create Database
         db = new Dexie("visDB");
         db.version(1).stores({id3: "++id, artist, title, duration, img, audio"});
         db.open().catch(e => alert("Open failed: " + e));
 
-        db.id3.count().then(c => totalPages = Math.ceil(c / PER_PAGE)).finally(() => handleView(false));
+        db.id3.count().then(c => totalCount = c).finally(() => handleView(false));
     }
 
     // Delete Database
@@ -116,6 +120,7 @@ let Database = new function() {
         let title = elmTitle.value;
         let duration = Util.secondsToHms(elmAudio.duration);
         db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
+        totalCount++;
         handleView(false);
     }
 
@@ -127,7 +132,7 @@ let Database = new function() {
         let i = 0;
         let skip = page * PER_PAGE;
         db.id3.filter(row => i++ >= skip).limit(PER_PAGE).toArray()
-                .then(arr => $("#db-view").html($.templates("#table-row-template").render(arr)))
+                .then(arr => $("#db-view").html(dbTemplate.render(arr)))
                 .catch(console.error);
         if (enableFields !== undefined) {
             $("#add2DB").attr("disabled", !enableFields);
@@ -143,6 +148,7 @@ let Database = new function() {
             $("#db-prev").addClass("interactable");
         }
 
+        let totalPages = Math.ceil(totalCount / PER_PAGE);
         if (page >= totalPages - 1) {
             $("#db-next").css("color", "#555");
             $("#db-next").removeClass("interactable");
@@ -165,6 +171,10 @@ let Database = new function() {
 
     this.handleRemove = function(i) {
         db.id3.where("id").equals(i).delete();
+        totalCount--;
+        if (totalCount % PER_PAGE == 0) {
+            page--;
+        }
         handleView(false);
     }
 
@@ -188,7 +198,7 @@ let Database = new function() {
     }
 
     this.nextPage = function() {
-        if (page < totalPages - 1) {
+        if (page < Math.ceil(totalCount / PER_PAGE) - 1) {
             page++;
             handleView();
         }
