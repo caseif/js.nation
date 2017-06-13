@@ -57,10 +57,6 @@ let AudioWrap = new function() {
             AudioWrap.setVolume(AudioWrap.lastVolume !== undefined ? AudioWrap.lastVolume : 0);
         });
 
-        player.onended = () => {
-            $("#play").attr("class", "fa fa-play");
-        };
-
         Callbacks.addCallback(this.updateProgress);    
     }
 

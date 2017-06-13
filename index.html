@@ -159,8 +159,7 @@
                 <span id="mute" class="fa fa-volume-up interactable"></span>
                 <progress id="volume" class="flex-auto interactable" value="100" max="100"></progress>
             </div>
-            <!-- TODO: Fix Me Plz -->
-            <audio autoplay id="audio"></audio>
+            <audio autoplay id="audio" onended="Database.playNextSong()"></audio>
             <!-- Right -->
             <div id="elm-about">
                 <a href="javascript:GuiWrapper.openAbout();">About</a>
