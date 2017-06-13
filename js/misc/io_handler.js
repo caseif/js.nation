@@ -46,7 +46,8 @@ let IoHandler = new function() {
                     GuiWrapper.closeAbout();
                 }
             } else if (event.which == KEY_SPACE) {
-                if (!$(document.activeElement).hasClass("db-edit-input")) {
+                console.log($(document.activeElement));
+                if ($(document.activeElement).prop("tagName") != "INPUT") {
                     AudioWrap.togglePlaying();
                 }
             }
