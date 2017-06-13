@@ -10,6 +10,7 @@ let Nodes = new function() {
     let mediaSource;
     let analyzer;
     let scriptProcessor;
+    let gainNode;
 
     this.setUp = function() {
         if (initialized) {
@@ -22,6 +23,10 @@ let Nodes = new function() {
             mediaSource = context.createMediaElementSource(document.getElementsByTagName("audio")[0]);
         }
         mediaSource.connect(context.destination);
+
+        gainNode = context.createGain();
+        mediaSource.connect(gainNode);
+        gainNode.connect(context.destination);
 
         scriptProcessor = context.createScriptProcessor(BUFFER_INTERVAL, 1, 1);
         scriptProcessor.onaudioprocess = handleAudio;
@@ -66,6 +71,14 @@ let Nodes = new function() {
 
     this.playSongFromUrl = function(url) {
         this.playSong(null, url);
+    }
+
+    this.getVolume = function() {
+        return Math.log((gainNode.gain.value + 1) * (Math.E + 1)) + 1;
+    }
+
+    this.setVolume = function(volume) {
+        gainNode.gain.value = (Math.exp(volume) - 1) / (Math.E - 1) - 1;
     }
 
 }
