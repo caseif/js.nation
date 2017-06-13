@@ -19,9 +19,7 @@ let Main = new function() {
         Particles.setUp();
         Lighting.setUp();
         Renderer.setUp();
-    }
 
-    this.postInit = function() {
         AudioWrap.setUp();
     }
 
@@ -32,6 +30,5 @@ let Main = new function() {
     }
 
     window.onload = this.init;
-    $(document).ready(this.postInit);
     window.onresize = this.resizeCallback;
 }
