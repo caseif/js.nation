@@ -2,7 +2,7 @@
 
 let Database = new function() {
 
-    const PER_PAGE = 8;
+    let perPage = Math.floor(($(window).height() - 200) / 750 * 8);
 
     // Listen Elements
     let elmFile;
@@ -163,7 +163,11 @@ let Database = new function() {
         let title = elmTitle.value;
         let duration = Util.secondsToHms(elmAudio.duration);
         db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
+        
+        order[totalCount] = totalCount;
+        index = totalCount;
         totalCount++;
+
         handleView(false);
     }
 
@@ -173,8 +177,8 @@ let Database = new function() {
 
     let handleView = function(enableFields = undefined) {
         let i = 0;
-        let skip = page * PER_PAGE;
-        db.id3.filter(row => i++ >= skip).limit(PER_PAGE).toArray()
+        let skip = page * perPage;
+        db.id3.filter(row => i++ >= skip).limit(perPage).toArray()
                 .then(arr => $("#db-view").html(dbTemplate.render(arr)))
                 .catch(console.error);
         if (enableFields !== undefined) {
@@ -191,7 +195,7 @@ let Database = new function() {
             $("#db-prev").addClass("interactable");
         }
 
-        let totalPages = Math.ceil(totalCount / PER_PAGE);
+        let totalPages = Math.ceil(totalCount / perPage);
         if (page >= totalPages - 1) {
             $("#db-next").css("color", "#555");
             $("#db-next").removeClass("interactable");
@@ -215,9 +219,12 @@ let Database = new function() {
     this.handleRemove = function(i) {
         db.id3.where("id").equals(i).delete();
         totalCount--;
-        if (totalCount % PER_PAGE == 0) {
+        if (totalCount % perPage == 0) {
             page--;
         }
+
+        applyShuffle();
+
         handleView(false);
     }
 
@@ -241,7 +248,7 @@ let Database = new function() {
     }
 
     this.nextPage = function() {
-        if (page < Math.ceil(totalCount / PER_PAGE) - 1) {
+        if (page < Math.ceil(totalCount / perPage) - 1) {
             page++;
             handleView();
         }
@@ -257,8 +264,10 @@ let Database = new function() {
     }
 
     this.playPrevSong = function() {
-        index = --index >= 0 ? index : (index = totalCount);
-        db.id3.toArray().then(arr => this.handlePlay(arr[order[index]].id));
+        index = --index >= 0 ? index : (index = totalCount - 1);
+        console.log(index);
+        console.log(order);
+        db.id3.toArray().then(arr => { console.log(arr); this.handlePlay(arr[order[index]].id) });
     }
     
 }
