@@ -79,7 +79,8 @@ let AudioWrap = new function() {
         volume_bar.val(res * 100);
         let prev = Nodes.getVolume();
         Nodes.setVolume(res);
-        mute_button.toggleClass("fa-volume-up", res != 0);
+        mute_button.toggleClass("fa-volume-up", res >= 0.5);
+        mute_button.toggleClass("fa-volume-down", res > 0 && res < 0.5);
         mute_button.toggleClass("fa-volume-off", res == 0);
         if (res == 0) {
             if (!skipCookies) {
