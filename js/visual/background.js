@@ -12,7 +12,7 @@ let Background = new function() {
 
     let redditData;
     
-    this.setUp = function() {
+    this.loadBackground = function() {
         if (!Config.drawBackground) {
             return;
         }

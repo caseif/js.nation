@@ -73,4 +73,15 @@ let Util = new function() {
         document.cookie = name + "=undefined" + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
     }
 
+    this.shuffle = function(arr) {
+        for (let i = arr.length; i; i--) {
+            let j = Math.floor(Math.random() * i);
+            [arr[i - 1], arr[j]] = [arr[j], arr[i - 1]];
+        }
+    }
+
+    this.range = function(len) {
+        return [...Array(len).keys()];
+    }
+
 }

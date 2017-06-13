@@ -68,8 +68,4 @@ let Nodes = new function() {
         this.playSong(null, url);
     }
 
-    this.playRandomSong = function() {
-        Nodes.playSong(SongLoader.randomSong());
-    }
-
 }

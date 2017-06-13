@@ -6,9 +6,6 @@ let Main = new function() {
 
         IoHandler.setUp();
 
-        SongLoader.loadSongs();
-        Background.setUp();
-
         Nodes.setUp();
 
         Database.setUp();
@@ -22,8 +19,6 @@ let Main = new function() {
         Particles.setUp();
         Lighting.setUp();
         Renderer.setUp();
-
-        Nodes.playSong(SongLoader.randomSong());
     }
 
     this.postInit = function() {

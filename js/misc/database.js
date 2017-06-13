@@ -29,6 +29,9 @@ let Database = new function() {
     let page = 0;
     let totalCount;
 
+    let order;
+    let index;
+
     this.setUp = function() {
         elmFile = document.getElementById("fileSelector")
         elmAdd = document.getElementById("add2DB");
@@ -55,7 +58,47 @@ let Database = new function() {
         db.version(1).stores({id3: "++id, artist, title, duration, img, audio"});
         db.open().catch(e => alert("Open failed: " + e));
 
-        db.id3.count().then(c => totalCount = c).finally(() => handleView(false));
+        db.id3.count().then(c => totalCount = c).finally(() => {
+            applyShuffle();
+            handleView(false);
+            Database.playCurrent();
+        });
+    }
+
+    this.toggleShuffle = function() {
+        let shuffle = true;
+        if (Util.getCookie("shuffle") !== undefined) {
+            shuffle = Util.getCookie("shuffle") == "false";
+        }
+        Util.setCookie("shuffle", shuffle);
+
+        applyShuffle();
+    }
+
+    let applyShuffle = function() {
+        let shuffle = Util.getCookie("shuffle") == "true";
+
+        if (index === undefined) {
+            index = Math.floor(Math.random() * totalCount);
+        }
+
+        let prev = order !== undefined ? order[index] : NaN;
+
+        order = Util.range(totalCount);
+        if (shuffle) {
+            Util.shuffle(order);
+        }
+
+        if (prev != NaN) {
+            for (let i = 0; i < order.length; i++) {
+                if (order[i] == prev) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+
+        $("#shuffle").css("color", shuffle ? "#3498DB" : "#FFFFFF");
     }
 
     // Delete Database
@@ -202,6 +245,20 @@ let Database = new function() {
             page++;
             handleView();
         }
+    }
+
+    this.playCurrent = function() {
+        db.id3.toArray().then(arr => { this.handlePlay(arr[order[index]].id); });
+    }
+
+    this.playNextSong = function() {
+        index = ++index < totalCount ? index : (index = 0);
+        db.id3.toArray().then(arr => this.handlePlay(arr[order[index]].id));
+    }
+
+    this.playPrevSong = function() {
+        index = --index >= 0 ? index : (index = totalCount);
+        db.id3.toArray().then(arr => this.handlePlay(arr[order[index]].id));
     }
     
 }

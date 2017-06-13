@@ -27,10 +27,10 @@
                 {{else}}
                     <td></td>
                 {{/if}}
-                <td><a onclick="javascript:Database.handlePlay({{:id}})" class="interactable">Play</a></td>
+                <td><a onclick="Database.handlePlay({{:id}})" class="interactable">Play</a></td>
                 <td class="row-title">{{:title}}</td>
                 <td class="row-artist">{{:artist}}</td>
-                <td><a onclick="javascript:Database.handleRemove({{:id}})" class="interactable">Remove</a></td>
+                <td><a onclick="Database.handleRemove({{:id}})" class="interactable">Remove</a></td>
                 <td>{{:duration}}</td>
             </tr>
         </script>
@@ -80,10 +80,10 @@
             <div class="vert-cen overlay-window" id="gui-full-holder">
                 <div class="absolute-center overlay-pane" id="controls">
                     <div id="db-prev" class="page-control interactable fa fa-chevron-circle-left"
-                            onClick="javascript:Database.prevPage()" title="Previous page"></div>
+                            onClick="Database.prevPage()" title="Previous page"></div>
                     <div id="db-next" class="page-control interactable fa fa-chevron-circle-right"
-                            onClick="javascript:Database.nextPage()" title="Next page"></div>
-                    <a onClick="javascript:GuiWrapper.closeGui();" class="boxclose fa fa-times-circle"></a>
+                            onClick="Database.nextPage()" title="Next page"></div>
+                    <a onClick="GuiWrapper.closeGui();" class="boxclose fa fa-times-circle"></a>
                     <div class="ui fluid action input inverted">
                         <input type="text" readonly Value="Select Audio File">
                         <input accept="audio/*" type="file" id="fileSelector">
@@ -150,9 +150,10 @@
             <!-- Center -->
             <div class="flex" id="audio-player">  
                 <div class="flex main-controls">
-                    <span id="previous" class="fa fa-step-backward interactable"></span>
-                    <span id="play" class="fa fa-pause interactable"></span>
-                    <span id="next" class="fa fa-step-forward action"></span>
+                    <span id="previous" class="fa fa-step-backward interactable" onClick="Database.playPrevSong()"></span>
+                    <span id="play" class="fa fa-pause action interactable"></span>
+                    <span id="next" class="fa fa-step-forward action interactable" onClick="Database.playNextSong()"></span>
+                    <span id="shuffle" class="fa fa-random action interactable" onClick="Database.toggleShuffle()"></span>
                 </div>
                 <span id="time" class="time">00:00</span>
                 <progress id="progressbar" class="flex-auto interactable" value="0" max="100"></progress>
@@ -175,9 +176,9 @@
             <img src="" class="bgright" id="limg2" onerror="this.style.display='none'">
         </div>
         <div id="background" class="realbg">
-            <img src="" class="bgleft" id="bgimg1" onload="javascript:Background.fadeFullRes(this)"
+            <img src="" class="bgleft" id="bgimg1" onload="Background.fadeFullRes(this)"
                     onerror="this.style.display='none'">
-            <img src="" class="bgright" id="bgimg2" onload="javascript:Background.fadeFullRes(this)"
+            <img src="" class="bgright" id="bgimg2" onload="Background.fadeFullRes(this)"
                     onerror="this.style.display='none'">
         </div>
     </body>

@@ -298,6 +298,10 @@ progress::-webkit-progress-bar {
     cursor: pointer !important;
 }
 
+#next {
+    margin-right: 15px;
+}
+
 @media screen and (max-width: 550px) {
     #volume {
         display: none !important;
@@ -311,7 +315,7 @@ progress::-webkit-progress-bar {
     #time {
         display: none !important;
     }
-    #next {
+    #next, #shuffle {
         margin-right: 15px;
     }
 }
@@ -321,6 +325,6 @@ progress::-webkit-progress-bar {
         display: none !important;
     }
     #play {
-      margin-left: 25px;
+        margin-left: 25px;
     }
 }
