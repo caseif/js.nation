@@ -1,12 +1,6 @@
 let Spectrum = new function() {
 
-    const spectrumCount = 8;
-    const exponents = [1, 1.04, 1.06, 1.08, 1.10, 1.12, 1.14, 1.16];
-    const smoothMargins = [0, 1, 1, 2, 2, 2, 3, 3];
-    //               white      yellow      red        pink      indigo    blue        lightblue  green
-    const colors = ["#FFFFFF", "#FFFF00", "#FF0000", "#FF66FF", "#333399", "#0000FF", "#33CCFF", "#00FF00"];
-    const delays = [0, 1, 2, 3, 4, 5, 6, 7];
-    const maxBufferSize = Math.max.apply(null, delays);
+    const maxBufferSize = Math.max.apply(null, Config.delays);
 
     let spectrumCache = Array();
 
@@ -29,18 +23,20 @@ let Spectrum = new function() {
 
         let curRad = Emblem.calcRadius(multiplier);
 
-        for (let s = spectrumCount - 1; s >= 0; s--) {
-            let curSpectrum = smooth(spectrumCache[Math.max(spectrumCache.length - delays[s] - 1, 0)], smoothMargins[s]);
+        for (let s = Config.spectrumCount - 1; s >= 0; s--) {
+            let curSpectrum = smooth(spectrumCache[Math.max(spectrumCache.length - Config.delays[s] - 1, 0)],
+                    Config.smoothMargins[s]);
 
             let points = [];
 
-            Canvas.context.fillStyle = colors[s];
-            Canvas.context.shadowColor = colors[s];
+            Canvas.context.fillStyle = Config.colors[s];
+            Canvas.context.shadowColor = Config.colors[s];
 
             let len = curSpectrum.length;
             for (let i = 0; i < len; i++) {
                 t = Math.PI * (i / (len - 1)) - MathConstants.HALF_PI;
-                r = curRad + Math.pow(curSpectrum[i] * Config.spectrumHeightScalar * Util.getResolutionMultiplier(), exponents[s]);
+                r = curRad + Math.pow(curSpectrum[i] * Config.spectrumHeightScalar * Util.getResolutionMultiplier(),
+                        Config.exponents[s]);
                 x = r * Math.cos(t);
                 y = r * Math.sin(t);
                 points.push({x: x, y: y});

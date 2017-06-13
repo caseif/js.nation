@@ -23,6 +23,13 @@ let Config = new function() {
     this.spectrumHeightScalar = 0.4;
     this.glowRadius = 20;
 
+    this.spectrumCount = 8;
+    this.exponents = [1, 1.12, 1.14, 1.30, 1.33, 1.36, 1.50, 1.52];
+    this.smoothMargins = [0, 2, 2, 3, 3, 3, 5, 5];
+    //              white      yellow      red        pink      indigo    blue        lightblue  green
+    this.colors = ["#FFFFFF", "#FFFF00", "#FF0000", "#FF66FF", "#333399", "#0000FF", "#33CCFF", "#00FF00"];
+    this.delays = [0, 1, 2, 3, 4, 5, 6, 7];
+
     // particle config
     this.maxParticleCount = 2400; // particle count at 1080p
     this.particleMaxSpawnRate = 8; // max particles to spawn each frame. this takes effect during particle initlzn.
