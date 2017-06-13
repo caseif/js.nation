@@ -90,6 +90,28 @@ audio::-webkit-media-controls-panel {
     border-radius: 15px;
 }
 
+.page-control {
+    font-size: 24pt;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+}
+
+#db-prev {
+    left: -38px;
+}
+
+#db-next {
+    right: -38px;
+}
+
+#db-page-info {
+    font-size: 12pt;
+    text-align: center;
+    padding-bottom: 16px;
+}
+
 /* ---------- */
 /* About pane */
 /* ---------- */

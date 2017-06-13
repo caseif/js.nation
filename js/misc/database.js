@@ -2,6 +2,8 @@
 
 let Database = new function() {
 
+    const PER_PAGE = 8;
+
     // Listen Elements
     let elmFile;
     let elmAdd = document.getElementById("add2DB");
@@ -20,7 +22,10 @@ let Database = new function() {
     let elmAudio;
     let elmTable;
 
-    this.id3;
+    let db;
+    
+    let page = 0;
+    let totalPages;
 
     this.setUp = function() {
         elmFile = document.getElementById("fileSelector")
@@ -40,8 +45,13 @@ let Database = new function() {
         elmAdd.addEventListener("click", addSong, false);
         elmView.addEventListener("click", handleRefresh, false);
         elmDeldb.addEventListener("click", handleDeleteDB, false);
-        
-        handleView(false);
+
+        // Create Database
+        db = new Dexie("visDB");
+        db.version(1).stores({id3: "++id, artist, title, duration, img, audio"});
+        db.open().catch(e => alert("Open failed: " + e));
+
+        db.id3.count().then(c => totalPages = Math.ceil(c / PER_PAGE)).finally(() => handleView(false));
     }
 
     // Delete Database
@@ -53,11 +63,6 @@ let Database = new function() {
         handleView(false);
         alert("Database deleted. (You'll need to refresh the page.)");
     }
-
-    // Create Database
-    let db = new Dexie("visDB");
-    db.version(1).stores({id3: "++id, artist, title, duration, img, audio"});
-    db.open().catch(e => alert("Open failed: " + e));
 
 
     let handleFileSelection = function(e) {
@@ -118,9 +123,10 @@ let Database = new function() {
         handleView();
     }
 
-    //TODO: this function needs to get merged into Gui and made less ugly
     let handleView = function(enableFields = undefined) {
-        db.id3.toArray()
+        let i = 0;
+        let skip = page * PER_PAGE;
+        db.id3.filter(row => i++ >= skip).limit(PER_PAGE).toArray()
                 .then(arr => $("#db-view").html($.templates("#table-row-template").render(arr)))
                 .catch(console.error);
         if (enableFields !== undefined) {
@@ -128,6 +134,24 @@ let Database = new function() {
             $("#field-artist").attr("disabled", !enableFields);
             $("#field-title").attr("disabled", !enableFields);
         }
+
+        if (page <= 0) {
+            $("#db-prev").css("color", "#555");
+            $("#db-prev").removeClass("interactable");
+        } else {
+            $("#db-prev").css("color", "#DBDBDB");
+            $("#db-prev").addClass("interactable");
+        }
+
+        if (page >= totalPages - 1) {
+            $("#db-next").css("color", "#555");
+            $("#db-next").removeClass("interactable");
+        } else {
+            $("#db-next").css("color", "#DBDBDB");
+            $("#db-next").addClass("interactable");
+        }
+
+        $("#db-page-info").html("Page " + (page + 1) + "/" + totalPages);
     }
 
     this.handlePlay = function(i) {
@@ -154,6 +178,20 @@ let Database = new function() {
         id = parseInt(id);
         db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({artist: artist}))
                 .catch(e => console.log(e));
+    }
+
+    this.prevPage = function() {
+        if (page > 0) {
+            page--;
+            handleView();
+        }
+    }
+
+    this.nextPage = function() {
+        if (page < totalPages - 1) {
+            page++;
+            handleView();
+        }
     }
     
 }

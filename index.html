@@ -6,10 +6,9 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- jQuery -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
         <!-- jQuery UI -->
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-        <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>-->
         <!-- Datbase Wrapper -->
         <script src="https://unpkg.com/dexie@1.5.1/dist/dexie.js"></script>
         <!-- Semantic OwO -->
@@ -18,7 +17,7 @@
         <!-- three.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
         <!-- JsRender -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.84/jsrender.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.84/jsrender.js"></script>
 
         <!-- templates -->
         <script id="table-row-template" type="text/html">
@@ -80,6 +79,10 @@
         <div id="gui-full" class="overlay-container">
             <div class="vert-cen overlay-window" id="gui-full-holder">
                 <div class="absolute-center overlay-pane" id="controls">
+                    <div id="db-prev" class="page-control interactable fa fa-chevron-circle-left"
+                            onClick="javascript:Database.prevPage()" title="Previous page"></div>
+                    <div id="db-next" class="page-control interactable fa fa-chevron-circle-right"
+                            onClick="javascript:Database.nextPage()" title="Next page"></div>
                     <a onClick="javascript:GuiWrapper.closeGui();" class="boxclose fa fa-times-circle"></a>
                     <div class="ui fluid action input inverted">
                         <input type="text" readonly Value="Select Audio File">
@@ -89,6 +92,7 @@
                         </div>
                     </div>
                     <table class="ui selectable inverted table" id="db-view" border="1"></table>
+                    <div id="db-page-info">Page ??/??</div>
                     <div class="ui input">
                         <input type="text" id="field-artist" placeholder="Artist" disabled>
                     </div>
