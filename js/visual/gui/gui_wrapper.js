@@ -37,6 +37,9 @@ let GuiWrapper = new function() {
         if (this.aboutOpen) {
             this.closeAbout();
         }
+        if (this.welcomeOpen) {
+            this.closeWelcome();
+        }
         $('#gui-full').fadeIn(Config.guiFadeTime);
         this.keepGui = true;
     }
@@ -86,6 +89,9 @@ let GuiWrapper = new function() {
             if (this.keepGui) {
                 this.closeGui();
             }
+            if (this.welcomeOpen) {
+                this.closeWelcome();
+            }
             $("#about-full").fadeIn(Config.guiFadeTime);
             this.aboutOpen = true;
         }
@@ -95,6 +101,13 @@ let GuiWrapper = new function() {
         if (this.aboutOpen) {
             $("#about-full").fadeOut(Config.guiFadeTime);
             this.aboutOpen = false;
+        }
+    }
+
+    this.closeWelcome = function() {
+        if (this.welcomeOpen) {
+            $("#welcome-full").fadeOut(Config.guiFadeTime);
+            this.welcomeOpen = false;
         }
     }
 

@@ -61,7 +61,15 @@ let Database = new function() {
         db.id3.count().then(c => totalCount = c).finally(() => {
             applyShuffle();
             handleView(false);
-            Database.playCurrent();
+            if (totalCount == 0) {
+                $("#welcome-full").css("display", "block");
+                GuiWrapper.welcomeOpen = true;
+                Background.resetBG();
+                Background.loadRedditBackground();
+            } else {
+                Database.playCurrent();
+            }
+
         });
     }
 
@@ -204,7 +212,7 @@ let Database = new function() {
             $("#db-next").addClass("interactable");
         }
 
-        $("#db-page-info").html("Page " + (page + 1) + "/" + totalPages);
+        $("#db-page-info").html("Page " + (totalCount > 0 ? page + 1 : 0) + "/" + totalPages);
     }
 
     this.handlePlay = function(i) {

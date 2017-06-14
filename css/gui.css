@@ -116,11 +116,18 @@ audio::-webkit-media-controls-panel {
 /* About pane */
 /* ---------- */
 
-#about-pane {
-    line-height: 3em;
+#about-pane, #welcome-pane {
     text-align: center;
     font-family: Open Sans;
     font-weight: 300;
+}
+
+#about-pane {
+    line-height: 3em;
+}
+
+#welcome-pane {
+    max-width: 400px;
 }
 
 #about-header {
@@ -128,12 +135,16 @@ audio::-webkit-media-controls-panel {
     margin-bottom: 24px;
 }
 
-#about-content {
+#about-content, #welcome-content {
     font-size: 16pt;
 }
 
 #about-hotkeys {
     line-height: 1.3em;
+}
+
+#welcome-content {
+    line-height: 1.5em;
 }
 
 /* ------------ */
