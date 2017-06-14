@@ -4,7 +4,9 @@ let IoHandler = new function() {
     const KEY_ESC = 27;
     const KEY_SPACE = 32;
     const KEY_F_UPPER = 70;
+    const KEY_G_UPPER = 71;
     const KEY_F_LOWER = 102;
+    const KEY_G_LOWER = 103;
 
     let dragging = Array();
     let dragElements = Array();
@@ -35,6 +37,10 @@ let IoHandler = new function() {
                 if (!GuiWrapper.keepGui) {
                     Background.flipImage();
                 }
+            } else if (event.which == KEY_G_UPPER || event.which == KEY_G_LOWER) {
+                if (!GuiWrapper.keepGui) {
+                    Canvas.toggleGlow();
+                }
             }
         });
 
@@ -46,7 +52,6 @@ let IoHandler = new function() {
                     GuiWrapper.closeAbout();
                 }
             } else if (event.which == KEY_SPACE) {
-                console.log($(document.activeElement));
                 if ($(document.activeElement).prop("tagName") != "INPUT") {
                     AudioWrap.togglePlaying();
                 }

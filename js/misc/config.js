@@ -21,7 +21,7 @@ let Config = new function() {
     this.smoothingPasses = 1;
     this.smoothingPoints = 3;
     this.spectrumHeightScalar = 0.4;
-    this.glowRadius = 20;
+    this.glowRadius = 25;
 
     this.spectrumCount = 8;
     this.exponents = [1, 1.12, 1.14, 1.30, 1.33, 1.36, 1.50, 1.52];

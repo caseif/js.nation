@@ -7,7 +7,7 @@
 }
 
 a {
-    color: #77a7ff
+    color: #3498DB;
 }
 
 .dg.ac {
@@ -117,7 +117,7 @@ audio::-webkit-media-controls-panel {
 /* ---------- */
 
 #about-pane {
-    line-height: 4em;
+    line-height: 3em;
     text-align: center;
     font-family: Open Sans;
     font-weight: 300;
@@ -130,6 +130,10 @@ audio::-webkit-media-controls-panel {
 
 #about-content {
     font-size: 16pt;
+}
+
+#about-hotkeys {
+    line-height: 1.3em;
 }
 
 /* ------------ */
@@ -169,13 +173,17 @@ audio::-webkit-media-controls-panel {
 
 #elm-about {
     min-width: 60px;
-    color: white;
     text-align: center;
     margin-right: 10px;
+    font-size: 12pt;
 }
 
 input[type="file"] {
     display: none;
+}
+
+#db-input {
+    margin-bottom: 8px;
 }
 
 .db-edit-input {
@@ -186,13 +194,23 @@ input[type="file"] {
 
 #db-view tr {
     height: 60px;
+    line-height: 1.5em;
 }
 
 .row-title, .row-artist {
     min-width: 200px;
 }
 
-a.boxclose {
+.db-song-control {
+    white-space: nowrap;
+    font-size: 14pt;
+}
+
+.db-song-control > a {
+    color: #E0E1E2 !important;
+}
+
+.boxclose {
     float: right;
     margin-top:-26px;
     margin-right:-30px;
@@ -203,11 +221,6 @@ a.boxclose {
     display: inline-block;
     line-height: 0px;
     padding: 11px 3px;       
-}
-
-a.boxclose:hover {
-    color: #BABBBC !important;
-    transition: 0.1s;
 }
 
 /* ------------- */
@@ -252,16 +265,29 @@ a.boxclose:hover {
 #play, #mute {
     font-size: 20px;
     width: 17px;
+}
+
+#mute {
     margin-left: 10px;
     margin-right: 10px;
 }
 
 #next, #previous {
-    font-size: 13px;
+    font-size: 14px;
+}
+
+#play, #next, #previous, #shuffle {
+    padding: 5px;
+    width: auto;
+}
+
+#shuffle {
+    margin-left: 10px;
+    font-size: 12pt;
 }
 
 #previous {
-    margin-left: 25px;
+    margin-left: 15px;
 }
 
 #mute {
@@ -275,7 +301,7 @@ a.boxclose:hover {
 
 progress {
     -webkit-appearance: none;
-    color: #3498db;
+    color: #3498DB;
 }
 
 progress::-ms-fill {
@@ -283,23 +309,36 @@ progress::-ms-fill {
 }
 
 progress::-moz-progress-bar {
-    background: #3498db;
+    background: #3498DB;
 }
 
 progress::-webkit-progress-value {
-    background: #3498db;
+    background: #3498DB;
 }
 
 progress::-webkit-progress-bar {
-    background-color: #fff;
+    background-color: #FFFFFF;
 }
 
 .interactable {
     cursor: pointer !important;
 }
 
-#next {
-    margin-right: 15px;
+.interactable:hover {
+    color: #BABBBC !important;
+    transition: 0.1s;
+}
+
+.interactable.on {
+    color: #3498DB;
+}
+
+.interactable.on:hover, a.interactable:hover {
+    color: #2979AF !important;
+}
+
+button.interactable:hover {
+    color: rgba(0,0,0,.87) !important;
 }
 
 @media screen and (max-width: 550px) {

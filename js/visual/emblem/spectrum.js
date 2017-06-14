@@ -59,9 +59,7 @@ let Spectrum = new function() {
         for (let neg = 0; neg <= 1; neg++) {
             let xMult = neg ? -1 : 1;
 
-            // the "+neg" is kind of a band-aid because the positioning is
-            // imperfect and I don't feel like fixing the underlying issue
-            Canvas.context.moveTo(halfWidth + neg, points[0].y + halfHeight);
+            Canvas.context.moveTo(halfWidth, points[0].y + halfHeight);
 
             let len = points.length;
             for (let i = 1; i < len - 2; i++) {

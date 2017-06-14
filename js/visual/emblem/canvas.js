@@ -13,6 +13,8 @@ let Canvas = new function() {
     let trigX = Math.round(Math.random());
     let trigY = Math.round(Math.random());
 
+    let glow = Util.getCookie("glow") !== "false";
+
     this.setUp = function() {
         this.canvas = $("#canvas").get()[0]
         this.context = canvas.getContext("2d");
@@ -28,7 +30,13 @@ let Canvas = new function() {
         $("#canvas").attr("width", $(window).width());
         $("#canvas").attr("height", $(window).height());
         Canvas.context.fillStyle = "#FFFFFF";
-        Canvas.context.shadowBlur = Config.glowRadius;
+        Canvas.context.shadowBlur = glow ? Config.glowRadius : 0;
+    }
+
+    this.toggleGlow = function() {
+        glow = !glow;
+        Util.setCookie("glow", glow);
+        this.setStyling();
     }
 
     let clearCallback = function() {

@@ -46,13 +46,18 @@ let AudioWrap = new function() {
 
         play_button.click(this.togglePlaying);
 
-        IoHandler.addDragListener($("#progressbar"), val => player.currentTime = val * player.duration);
-        
+        IoHandler.addDragListener($("#progressbar"), val => {
+            player.currentTime = val * player.duration;
+            if (!isPlaying()) {
+                this.updateProgress();
+            }
+        });
+
         IoHandler.addDragListener(volume_bar, val => {
             let res = this.setVolume(val);
             Util.setCookie("volume", res);
         });
-
+ 
         mute_button.click(function() {
             AudioWrap.setVolume(AudioWrap.lastVolume !== undefined ? AudioWrap.lastVolume : 0);
         });
@@ -69,7 +74,7 @@ let AudioWrap = new function() {
     }
 
     this.togglePlaying = function() {
-        player[player.paused ? "play" : "pause"]();
+        player[this.isPlaying() ? "play" : "pause"]();
         play_button.toggleClass("fa-play", player.paused);
         play_button.toggleClass("fa-pause", !player.paused);
     }
@@ -92,6 +97,10 @@ let AudioWrap = new function() {
             Util.deleteCookie("lastVol");
         }
         return res;
+    }
+
+    this.isPlaying = function() {
+        return player !== undefined ? player.paused : false;
     }
     
 }

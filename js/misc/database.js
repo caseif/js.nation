@@ -98,7 +98,7 @@ let Database = new function() {
             }
         }
 
-        $("#shuffle").css("color", shuffle ? "#3498DB" : "#FFFFFF");
+        $("#shuffle").toggleClass("on", shuffle);
     }
 
     // Delete Database

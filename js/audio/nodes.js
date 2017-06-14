@@ -65,7 +65,7 @@ let Nodes = new function() {
         analyzer.getByteFrequencyData(array);
 
         let spectrum = Transform.transform(array);
-        let multiplier = Transform.multiplier(spectrum);
+        let multiplier = Math.pow(Transform.multiplier(spectrum), 0.8);
         Callbacks.invokeCallbacks(spectrum, multiplier);
     }
 

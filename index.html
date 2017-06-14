@@ -22,16 +22,20 @@
         <!-- templates -->
         <script id="table-row-template" type="text/html">
             <tr class="song-row" data-songid="{{:id}}">
+                <td class="db-song-control">
+                    <a onclick="Database.handlePlay({{:id}})" class="fa fa-play interactable"></a>
+                </td>
                 {{if img !== undefined}}
                     <td><img width="50px" src="{{:img}}"></td>
                 {{else}}
                     <td></td>
                 {{/if}}
-                <td><a onclick="Database.handlePlay({{:id}})" class="interactable">Play</a></td>
                 <td class="row-title">{{:title}}</td>
                 <td class="row-artist">{{:artist}}</td>
-                <td><a onclick="Database.handleRemove({{:id}})" class="interactable">Remove</a></td>
                 <td>{{:duration}}</td>
+                <td class="db-song-control">
+                    <a onclick="Database.handleRemove({{:id}})" class="fa fa-trash interactable"></a>
+                </td>
             </tr>
         </script>
 
@@ -82,7 +86,7 @@
                             onClick="Database.prevPage()" title="Previous page"></div>
                     <div id="db-next" class="page-control interactable fa fa-chevron-circle-right"
                             onClick="Database.nextPage()" title="Next page"></div>
-                    <a onClick="GuiWrapper.closeGui();" class="boxclose fa fa-times-circle"></a>
+                    <div onClick="GuiWrapper.closeGui();" class="boxclose fa fa-times-circle interactable"></div>
                     <div class="ui fluid action input inverted">
                         <input type="text" readonly Value="Select Audio File">
                         <input accept="audio/*" type="file" id="fileSelector">
@@ -92,15 +96,19 @@
                     </div>
                     <table class="ui selectable inverted table" id="db-view" border="1"></table>
                     <div id="db-page-info">Page ??/??</div>
-                    <div class="ui input">
-                        <input type="text" id="field-artist" placeholder="Artist" disabled>
+                    <div id="db-input">
+                        <div class="ui input">
+                            <input type="text" id="field-artist" placeholder="Artist" disabled>
+                        </div>
+                        <div class="ui input">
+                            <input type="text" id="field-title" placeholder="Title" disabled>
+                        </div>
                     </div>
-                    <div class="ui input">
-                        <input type="text" id="field-title" placeholder="Title" disabled>
+                    <div id="db-controls">
+                        <button class="ui button interactable" id="add2DB" disabled>Add To Database</button>
+                        <button class="ui button interactable" id="viewDB">Refresh Datbase</button>
+                        <button class="ui button interactable" id="delDB">Delete Datbase</button>
                     </div>
-                    <button class="ui button interactable" id="add2DB" disabled>Add To Database</button>
-                    <button class="ui button interactable" id="viewDB">Refresh Datbase</button>
-                    <button class="ui button interactable" id="delDB">Delete Datbase</button>
                 </div>
             </div>
         </div>
@@ -115,20 +123,31 @@
                         js.nation
                     </div>
                     <div id="about-content">
-                        <div id="about-credit">
-                            made with &#128153; by 
+                        <div>
+                            made with <span class="fa fa-heart"></span> by 
                             <a href="//caseif.net" target="_blank" rel="noopener noreferrer">caseif</a> & 
                             <a href="//incept.online" target="_blank" rel="noopener noreferrer">incept</a>
                         </div>
-                        <div id="about-source">
+                        <div>
                             source available on
                             <a href="//github.com/caseif/js.nation" target="_blank" rel="noopener noreferrer">github</a>
                         </div>
-                        <div id="about-technologies">
+                        <div>
                             <a href="technologies.html" target="_blank" rel="noopener noreferrer">technologies used</a>
                         </div>
-                        <div id="about-inspiration">
+                        <div>
                             inspired by <a href="//nations.io/">the nations</a>
+                        </div>
+                        <hr>
+                        <div>
+                            hotkeys
+                        </div>
+                        <div id="about-hotkeys">
+                            f: flip background
+                            <br>
+                            space: play/pause
+                            <br>
+                            escape: close overlay
                         </div>
                     </div>
                 </div>
