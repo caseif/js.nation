@@ -182,6 +182,10 @@ input[type="file"] {
     display: none;
 }
 
+#upload-button:hover {
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+
 #db-input {
     margin-bottom: 8px;
 }

@@ -265,8 +265,6 @@ let Database = new function() {
 
     this.playPrevSong = function() {
         index = --index >= 0 ? index : (index = totalCount - 1);
-        console.log(index);
-        console.log(order);
         db.id3.toArray().then(arr => { console.log(arr); this.handlePlay(arr[order[index]].id) });
     }
     
