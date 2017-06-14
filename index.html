@@ -117,8 +117,7 @@
         <div id="about-full" class="overlay-container">
             <div class="vert-cen overlay-window" id="about-full-holder">
                 <div class="absolute-center overlay-pane" id="about-pane">
-                    <a onClick="GuiWrapper.closeAbout();"
-                            class="boxclose fa fa-times-circle"></a>
+                    <div onClick="GuiWrapper.closeAbout();" class="boxclose fa fa-times-circle interactable"></div>
                     <div id="about-header">
                         js.nation
                     </div>
@@ -143,11 +142,13 @@
                             hotkeys
                         </div>
                         <div id="about-hotkeys">
-                            f: flip background
+                            f &mdash; flip background
                             <br>
-                            space: play/pause
+                            g &mdash; toggle spectrum glow
                             <br>
-                            escape: close overlay
+                            space &mdash; play/pause
+                            <br>
+                            escape &mdash; close overlay
                         </div>
                     </div>
                 </div>
