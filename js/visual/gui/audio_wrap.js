@@ -48,7 +48,7 @@ let AudioWrap = new function() {
 
         IoHandler.addDragListener($("#progressbar"), val => {
             player.currentTime = val * player.duration;
-            if (!isPlaying()) {
+            if (!this.isPlaying()) {
                 this.updateProgress();
             }
         });
@@ -74,7 +74,7 @@ let AudioWrap = new function() {
     }
 
     this.togglePlaying = function() {
-        player[this.isPlaying() ? "play" : "pause"]();
+        player[AudioWrap.isPlaying() ? "play" : "pause"]();
         play_button.toggleClass("fa-play", player.paused);
         play_button.toggleClass("fa-pause", !player.paused);
     }
