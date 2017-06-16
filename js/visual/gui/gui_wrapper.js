@@ -14,7 +14,8 @@ let GuiWrapper = new function() {
             $("#gui-top").fadeIn(Config.guiFadeTime);
             $("#gui-bottom").fadeIn(Config.guiFadeTime);
             $("body").css("cursor", "auto");
-            if (!this.keepGui && !Config.keepGui) {
+
+            if (!this.keepGui && !Config.keepGui && $('.gui-part:hover').length == 0) {
                 timer = setTimeout(() => {
                     $("#gui-top").fadeOut(Config.guiFadeTime);   
                     $("#gui-bottom").fadeOut(Config.guiFadeTime);
@@ -23,13 +24,13 @@ let GuiWrapper = new function() {
             }
         });
 
-        $('input:text, .ui.button', '.ui.action.input').on('click', function(e) {
-            $('input:file', $(e.target).parents()).click();
+        $("input:text, .ui.button", ".ui.action.input").on("click", function(e) {
+            $("input:file", $(e.target).parents()).click();
         });
 
-        $('input:file', '.ui.action.input').on('change', function(e) {
+        $("input:file", ".ui.action.input").on("change", function(e) {
             var name = e.target.files[0].name;
-            $('input:text', $(e.target).parent()).val(name);
+            $("input:text", $(e.target).parent()).val(name);
         });
     }
 
@@ -40,12 +41,12 @@ let GuiWrapper = new function() {
         if (this.welcomeOpen) {
             this.closeWelcome();
         }
-        $('#gui-full').fadeIn(Config.guiFadeTime);
+        $("#gui-full").fadeIn(Config.guiFadeTime);
         this.keepGui = true;
     }
 
     this.closeGui = function() {
-        $('#gui-full').fadeOut(Config.guiFadeTime);
+        $("#gui-full").fadeOut(Config.guiFadeTime);
         this.keepGui = false;
     }
     

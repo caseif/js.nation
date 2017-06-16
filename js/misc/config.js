@@ -61,6 +61,9 @@ let Config = new function() {
     this.guiTimeout = 2000;
     this.guiFadeTime = 350;
 
+    // background config
+    this.backgroundSubreddit = "EarthPorn";
+
     // debug settings
     this.drawEmblem = true;
     this.drawSpectrum = true;

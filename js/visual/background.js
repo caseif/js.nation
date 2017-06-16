@@ -1,6 +1,4 @@
 let Background = new function() {
-
-    const SUBREDDIT = "EarthPorn";
     const WHITELISTED_DOMAINS = ["i.imgur.com", "i.redd.it", "i.reddituploads.com"];
 
     let staticUrls = [
@@ -31,7 +29,7 @@ let Background = new function() {
 
     this.loadRedditBackground = function(allowFallback = true) {
         $.ajax({
-            url: "https://www.reddit.com/r/" + SUBREDDIT + "/.json",
+            url: "https://www.reddit.com/r/" + Config.backgroundSubreddit + "/.json",
             method: "GET",
             success: handleRedditData,
             error: allowFallback ? handleRedditFail : null
@@ -69,7 +67,7 @@ let Background = new function() {
 
     let loadImgurBackground = function(allowFallback = true) {
         $.ajax({
-            url: "https://api.imgur.com/3/gallery/r/earthporn/0",
+            url: "https://api.imgur.com/3/gallery/r/" + backgroundSubreddit.toLowerCase() + "/0",
             method: "GET",
             headers: {
                 Authorization: "Client-ID 0428dcb72fbc5da",
