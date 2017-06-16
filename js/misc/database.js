@@ -2,7 +2,7 @@
 
 let Database = new function() {
 
-    let perPage = Math.floor(($(window).height() - 200) / 750 * 8);
+    let perPage = Math.floor(($(window).height() - 400) / 550 * 8);
 
     // Listen Elements
     let elmFile;
