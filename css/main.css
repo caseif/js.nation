@@ -2,13 +2,11 @@
 /* Main Page Styling */
 /* ----------------- */
 
-@import url("https://fonts.googleapis.com/css?family=Nunito|Open+Sans:300");
-
-html {
-    font-family: "Nunito", sans-serif;
-}
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,700|Open+Sans:300,700");
 
 body {
+    font-family: "Open Sans", Helvetica, Verdana, sans-serif !important;
+    font-weight: 300 !important;
     margin: 0;
     background-color: #222 !important;
 }

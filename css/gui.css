@@ -118,7 +118,7 @@ audio::-webkit-media-controls-panel {
 
 #about-pane, #welcome-pane {
     text-align: center;
-    font-family: Open Sans;
+    font-family: "Open Sans", Helvetica, Verdana, sans-serif !important;
     font-weight: 300;
 }
 
@@ -165,11 +165,13 @@ audio::-webkit-media-controls-panel {
 #song-info > div {
     margin-top: 12px;
     margin-bottom: 12px;
+    letter-spacing: -1px;
 }
 
 #gui-artist {
     font-size: 24pt;
     margin-bottom: 12px;
+    font-weight: 700 !important;
 }
 
 #gui-title {
