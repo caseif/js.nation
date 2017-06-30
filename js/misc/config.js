@@ -8,8 +8,8 @@ let Config = new function() {
     // emblem config
     this.minEmblemSize = 480;
     this.maxEmblemSize = 600;
-    this.maxShakeIntensity = Math.PI / 2;
-    this.maxShakeDisplacement = 16;
+    this.maxShakeIntensity = Math.PI / 3;
+    this.maxShakeDisplacement = 8;
     this.minShakeScalar = 0.9;
     this.maxShakeScalar = 1.6;
 
@@ -42,17 +42,17 @@ let Config = new function() {
     this.particleRadiusMin = 10; // the minimum radius of the particle cone at the z-plane intersecting the camera
     this.particleRadiusMax = 120; // the maximum radius of the particle cone at the z-plane intersecting the camera
     this.particleBaseSpeed = 0.15;
-    this.particleSpeedMultMin = 1.4;
-    this.particleSpeedMultMax = 2;
+    this.particleSpeedMultMin = 1.1;
+    this.particleSpeedMultMax = 1.4;
     // The min/max phase speed a particle may be assigned. This is a property of each particle and does not change.
     this.particlePhaseSpeedMin = 0.1;
-    this.particlePhaseSpeedMax = 0.2;
+    this.particlePhaseSpeedMax = 0.25;
     // The min/max phase amplitude a particle may be assigned. This is a property of each particle and does not change.
     this.particlePhaseAmplitudeMin = 0.05;
-    this.particlePhaseAmplitudeMax = 0.75;
+    this.particlePhaseAmplitudeMax = 0.4;
     // The min/max to normalize the particle phase speed multiplier to.
     this.particlePhaseSpeedMultMin = 0.025;
-    this.particlePhaseSpeedMultMax = 1;
+    this.particlePhaseSpeedMultMax = 0.4;
     // The min/max to normalize the particle phase amplitude multiplier to.
     this.particlePhaseAmplitudeMultMin = 0.1;
     this.particlePhaseAmplitudeMultMax = 1;
