@@ -165,20 +165,56 @@ let Database = new function() {
         handleView(true);
     }
 
-    let addSong = function() {
+	let addSong = function() {
+	
         let image = imgStore;
-        let artist = elmArtist.value;
+	
+		let artist = elmArtist.value;
         let title = elmTitle.value;
         let duration = Util.secondsToHms(elmAudio.duration);
-        db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
-        
-        order[totalCount] = totalCount;
-        index = totalCount;
-        totalCount++;
+				
+		if(image == undefined) {
+			
+			$.ajax({
 
-        handleView(false);
-    }
+			url: "http://itunes.apple.com/search?term=" + artist + " " + title,
+			dataType: 'JSONP'
+			
+			}).done(function(data) {
+				
+				console.log("No id3 artwork found, attempting itunes search:");
+				
+				if (data.results[0] == undefined) {
+					itunesstring = "./img/art_ph.png";
+				}else{
+					itunesstring = JSON.stringify(data.results[0].artworkUrl100);
+					itunesstring = itunesstring.replace(/\"/g, "");
+				}
+				
+				db.id3.add({artist: artist, title: title, duration: duration, img: itunesstring, audio: fileStore});
+			
+				order[totalCount] = totalCount;
+				index = totalCount;
+				totalCount++;
 
+				handleView(false);
+				
+			})
+			
+		}else{
+			
+			db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
+			
+			order[totalCount] = totalCount;
+			index = totalCount;
+			totalCount++;
+
+			handleView(false);
+		
+		}     
+	
+	}
+	
     let handleRefresh = function() {
         handleView();
     }
