@@ -165,56 +165,50 @@ let Database = new function() {
         handleView(true);
     }
 
-	let addSong = function() {
-	
+    let addSong = function() {
         let image = imgStore;
-	
-		let artist = elmArtist.value;
+    
+        let artist = elmArtist.value;
         let title = elmTitle.value;
         let duration = Util.secondsToHms(elmAudio.duration);
-				
-		if(image == undefined) {
-			
-			$.ajax({
+                
+        if (image === undefined) {
+            $.ajax({
+                url: "//itunes.apple.com/search?term=" + artist + " " + title,
+                dataType: 'jsonp'
+            }).done(function(data) {
+                console.log("No ID3 artwork found; attempting iTunes search.");
+                
+                let itunesStr;
 
-			url: "http://itunes.apple.com/search?term=" + artist + " " + title,
-			dataType: 'JSONP'
-			
-			}).done(function(data) {
-				
-				console.log("No id3 artwork found, attempting itunes search:");
-				
-				if (data.results[0] == undefined) {
-					itunesstring = "./img/art_ph.png";
-				}else{
-					itunesstring = JSON.stringify(data.results[0].artworkUrl100);
-					itunesstring = itunesstring.replace(/\"/g, "");
-				}
-				
-				db.id3.add({artist: artist, title: title, duration: duration, img: itunesstring, audio: fileStore});
-			
-				order[totalCount] = totalCount;
-				index = totalCount;
-				totalCount++;
+                if (data.results[0] == undefined) {
+                    itunesStr = "./img/art_ph.png";
+                } else {
+                    itunesStr = JSON.stringify(data.results[0].artworkUrl100);
+                    itunesStr = itunesStr.replace(/\"/g, "");
+                }
+                
+                db.id3.add({artist: artist, title: title, duration: duration, img: itunesStr, audio: fileStore});
+            
+                order[totalCount] = totalCount;
+                index = totalCount;
+                totalCount++;
 
-				handleView(false);
-				
-			})
-			
-		}else{
-			
-			db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
-			
-			order[totalCount] = totalCount;
-			index = totalCount;
-			totalCount++;
+                handleView(false);
+            })
+        } else {
+            
+            db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
+            
+            order[totalCount] = totalCount;
+            index = totalCount;
+            totalCount++;
 
-			handleView(false);
-		
-		}     
-	
-	}
-	
+            handleView(false);
+        }     
+    
+    }
+    
     let handleRefresh = function() {
         handleView();
     }
