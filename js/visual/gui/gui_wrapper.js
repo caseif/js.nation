@@ -68,13 +68,13 @@ let GuiWrapper = new function() {
         let input = element.find("input")[0];
         if (input !== undefined) {
             // finished editing
-            let id = element.parent().attr("data-songid");
+            let id = element.parent().parent().attr("data-songid");
             let newVal = input.value;
             if (newVal.length == 0) {
                 element.html($(input).attr("data-oldval"));
                 return;
             }
-            if (element.hasClass("row-title")) {
+            if (element.parent().hasClass("row-title")) {
                 Database.updateTitle(id, newVal);
             } else {
                 Database.updateArtist(id, newVal);

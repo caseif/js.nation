@@ -283,6 +283,7 @@ let Database = new function() {
 
     this.updateArtist = function(id, artist) {
         id = parseInt(id);
+        console.log(id);
         db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({artist: artist}))
                 .catch(e => console.log(e));
     }
