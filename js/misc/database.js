@@ -2,7 +2,7 @@
 
 let Database = new function() {
 
-    let perPage = Math.floor(($(window).height() - 400) / 550 * 7.5);
+    let perPage = Math.floor(($(window).height() - 400) / 550 * 8);
 
     // Listen Elements
     let elmFile;
@@ -134,25 +134,31 @@ let Database = new function() {
 
         ID3.loadTags(url, () => {
             let tags = ID3.getAllTags(url);
+
             if (tags.picture !== undefined) {
                 // Convert picture to base64
-                let image = tags.picture; let base64String = "";
+                let image = tags.picture;
+                let base64String = "";
+
                 for (let i = 0; i < image.data.length; i++) {
                     base64String += String.fromCharCode(image.data[i]);
                 }
-                imgurl = "data:" + image.format + ";base64," + window.btoa(base64String);
-                imgStore = imgurl;
+
+                imgStore = "data:" + image.format + ";base64," + window.btoa(base64String);
             }
+
             if (tags.title !== undefined) {
                 elmTitle.value = tags.title;
             } else {
                 elmTitle.value = "";
             }
+
             if (tags.artist !== undefined) {
                 elmArtist.value = tags.artist;
             } else {
                 elmArtist.value = "";
             }
+
             Background.resetBG();
             Background.loadRedditBackground();
             GuiWrapper.setTitle(tags.artist, tags.title);
@@ -216,9 +222,11 @@ let Database = new function() {
     let handleView = function(enableFields = undefined) {
         let i = 0;
         let skip = page * perPage;
+
         db.id3.filter(row => i++ >= skip).limit(perPage).toArray()
                 .then(arr => $("#db-view").html(dbTemplate.render(arr)))
                 .catch(console.error);
+
         if (enableFields !== undefined) {
             $("#add2DB").attr("disabled", !enableFields);
             $("#field-artist").attr("disabled", !enableFields);
@@ -234,6 +242,7 @@ let Database = new function() {
         }
 
         let totalPages = Math.ceil(totalCount / perPage);
+
         if (page >= totalPages - 1) {
             $("#db-next").css("color", "#555");
             $("#db-next").removeClass("interactable");

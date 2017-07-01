@@ -18,16 +18,15 @@ a {
 /* Temporary Control Styling */
 /* ------------------------- */
 
-#controls td {
-    padding: 5px 15px;
-}
 #controls a {
     font-weight: bold;
 }
+
 #controls > .header {
     font-size: 14pt;
     text-align: center;
 }
+
 #img {
     max-width: 300px;
 }
@@ -209,9 +208,19 @@ input[type="file"] {
     min-width: 90%;
 }
 
-#db-view tr {
-    height: 60px;
+#db-view td {
     line-height: 1.5em;
+    padding: 0px 15px;
+}
+
+#db-view td > div {
+    max-height: 50px;
+    overflow: hidden;
+}
+
+.row-art {
+    padding: 0 0 !important;
+    line-height: 0em !important;
 }
 
 .row-title, .row-artist {
@@ -223,7 +232,7 @@ input[type="file"] {
     font-size: 14pt;
 }
 
-.db-song-control > a {
+.db-song-control a {
     color: #E0E1E2 !important;
 }
 

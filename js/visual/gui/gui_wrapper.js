@@ -61,6 +61,10 @@ let GuiWrapper = new function() {
     }
 
     this.toggleTextField = function(element) {
+        if (!element.is("div")) {
+            element = element.find("div");
+        }
+        
         let input = element.find("input")[0];
         if (input !== undefined) {
             // finished editing
