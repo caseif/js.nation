@@ -6,6 +6,8 @@ let GuiWrapper = new function() {
 
     this.keepGui = false;
 
+    let outsideWindow = false;
+
     let timer;
 
     this.setUp = function() {
@@ -15,13 +17,20 @@ let GuiWrapper = new function() {
             $("#gui-bottom").fadeIn(Config.guiFadeTime);
             $("body").css("cursor", "auto");
 
-            if (!this.keepGui && !Config.keepGui && $('.gui-part:hover').length == 0) {
+            if (!this.keepGui && !Config.keepGui && ($('.gui-part:hover').length == 0 || outsideWindow)) {
                 timer = setTimeout(() => {
-                    $("#gui-top").fadeOut(Config.guiFadeTime);   
-                    $("#gui-bottom").fadeOut(Config.guiFadeTime);
-                    $("body").css("cursor", "none");
+                    hideOverlay();
                 }, Config.guiTimeout);
             }
+        });
+
+        $(document).mouseleave(() => {
+            outsideWindow = true;
+            hideOverlay();
+        });
+
+        $(document).mouseenter(() => {
+            outsideWindow = false;
         });
 
         $("input:text, .ui.button", ".ui.action.input").on("click", function(e) {
@@ -32,6 +41,12 @@ let GuiWrapper = new function() {
             var name = e.target.files[0].name;
             $("input:text", $(e.target).parent()).val(name);
         });
+    }
+
+    let hideOverlay = function() {
+        $("#gui-top").fadeOut(Config.guiFadeTime);   
+        $("#gui-bottom").fadeOut(Config.guiFadeTime);
+        $("body").css("cursor", "none");
     }
 
     this.openGui = function() {
