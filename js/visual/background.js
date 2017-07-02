@@ -67,7 +67,7 @@ let Background = new function() {
 
     let loadImgurBackground = function(allowFallback = true) {
         $.ajax({
-            url: "https://api.imgur.com/3/gallery/r/" + backgroundSubreddit.toLowerCase() + "/0",
+            url: "https://api.imgur.com/3/gallery/r/" + Config.backgroundSubreddit.toLowerCase() + "/0",
             method: "GET",
             headers: {
                 Authorization: "Client-ID 0428dcb72fbc5da",
