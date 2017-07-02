@@ -2,7 +2,7 @@
 
 js.nation is a music visualizer inspired by [Trap Nation](https://www.youtube.com/user/AllTrapNation).
 
-[View the live demo here!](//jsn.caseif.net)
+[View the live demo here!](http://jsn.caseif.net)
 
 ## Requirements
 
