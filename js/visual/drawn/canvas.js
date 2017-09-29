@@ -32,7 +32,7 @@ let Canvas = new function() {
         $("#canvas").attr("width", $(window).width());
         $("#canvas").attr("height", $(window).height());
         Canvas.context.fillStyle = "#FFFFFF";
-        Canvas.context.shadowBlur = glow && !edge ? Config.glowRadius : 0;
+        Canvas.context.shadowBlur = glow && !edge ? Config.glowRadius * Util.getResolutionMultiplier() : 0;
     }
 
     this.toggleGlow = function() {
