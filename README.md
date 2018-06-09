@@ -29,6 +29,9 @@ The following browsers are **not** supported:
 - Safari (limited AudioNode support)
 - Internet Explorer (no AudioNode support)
 
+Note that running from a local filesystem (via `file://`) is **not officially supported** and may break things badly.
+For best results, a local webserver should be used if possible.
+
 ## Licensing
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
