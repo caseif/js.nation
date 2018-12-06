@@ -47,22 +47,42 @@ let AudioWrap = new function() {
         play_button.click(this.togglePlaying);
 
         IoHandler.addDragListener($("#progressbar"), val => {
-            player.currentTime = val * player.duration;
-            if (!this.isPlaying()) {
-                this.updateProgress();
-            }
+            this.setProgress(val);
         });
 
         IoHandler.addDragListener(volume_bar, val => {
             let res = this.setVolume(val);
-            Util.setCookie("volume", res);
         });
  
         mute_button.click(function() {
             AudioWrap.setVolume(AudioWrap.lastVolume !== undefined ? AudioWrap.lastVolume : 0);
         });
 
-        Callbacks.addCallback(this.updateProgress);    
+        Callbacks.addCallback(this.updateProgress);
+    }
+
+    // returns a positive value representing the absolute progress in seconds
+    this.getProgressSeconds = function() {
+        return player.currentTime;
+    }
+
+    // accepts a positive value representing the absolute progress in seconds
+    this.setProgressSeconds = function(progress) {
+        player.currentTime = Util.clamp(progress, 0, player.duration);
+
+        if (!this.isPlaying()) {
+            this.updateProgress();
+        }
+    }
+
+    // returns a floating-point value between 0 and 1
+    this.getProgress = function() {
+        return this.getProgressSeconds() / player.duration;
+    }
+
+    // accepts a floating-point value between 0 and 1
+    this.setProgress = function(progress) {
+        this.setProgressSeconds(progress * player.duration);
     }
 
     this.updateProgress = function() {
@@ -79,14 +99,22 @@ let AudioWrap = new function() {
         play_button.toggleClass("fa-pause", !player.paused);
     }
 
+    this.getVolume = function() {
+        return Nodes.getVolume();
+    }
+
     this.setVolume = function(val, skipCookies = false) {
         let res = Util.clamp(val, 0, 1);
-        volume_bar.val(res * 100);
         let prev = Nodes.getVolume();
+
+        volume_bar.val(res * 100);
+
         Nodes.setVolume(res);
+
         mute_button.toggleClass("fa-volume-up", res >= 0.5);
         mute_button.toggleClass("fa-volume-down", res > 0 && res < 0.5);
         mute_button.toggleClass("fa-volume-off", res == 0);
+
         if (res == 0) {
             if (!skipCookies) {
                 this.lastVolume = prev;
@@ -96,6 +124,9 @@ let AudioWrap = new function() {
             this.lastVolume = undefined;
             Util.deleteCookie("lastVol");
         }
+
+        Util.setCookie("volume", res);
+
         return res;
     }
 

@@ -74,7 +74,7 @@ let Nodes = new function() {
     }
 
     this.getVolume = function() {
-        return Math.log((gainNode.gain.value + 1) * (Math.E + 1)) + 1;
+        return Math.log((gainNode.gain.value + 1) * (Math.E - 1) + 1);
     }
 
     this.setVolume = function(volume) {

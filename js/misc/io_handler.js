@@ -3,6 +3,10 @@ let IoHandler = new function() {
     const KEY_ENTER = 13;
     const KEY_ESC = 27;
     const KEY_SPACE = 32;
+    const KEY_ARROW_LEFT = 37;
+    const KEY_ARROW_UP = 38;
+    const KEY_ARROW_RIGHT = 39;
+    const KEY_ARROW_DOWN = 40;
     const KEY_F_UPPER = 70;
     const KEY_G_UPPER = 71;
     const KEY_F_LOWER = 102;
@@ -35,27 +39,68 @@ let IoHandler = new function() {
                 if (event.which == KEY_ENTER) {
                     GuiWrapper.toggleTextField(focused.parent());
                 }
-            } else if (event.which == KEY_F_UPPER || event.which == KEY_F_LOWER) {
-                if (!GuiWrapper.keepGui) {
-                    Background.flipImage();
-                }
-            } else if (event.which == KEY_G_UPPER || event.which == KEY_G_LOWER) {
-                if (!GuiWrapper.keepGui) {
-                    Canvas.toggleGlow();
+            } else {
+                switch (event.which) {
+                    case KEY_F_UPPER:
+                    case KEY_F_LOWER: {
+                        if (!GuiWrapper.keepGui) {
+                            Background.flipImage();
+                        }
+
+                        break;
+                    }
+                    case KEY_G_UPPER:
+                    case KEY_G_LOWER: {
+                        if (!GuiWrapper.keepGui) {
+                            Canvas.toggleGlow();
+                        }
+
+                        break;
+                    }
                 }
             }
         });
 
         $(document).keydown(event => {
-            if (event.which == KEY_ESC) {
-                if (GuiWrapper.keepGui) {
-                    GuiWrapper.closeGui();
-                } else if (GuiWrapper.aboutOpen) {
-                    GuiWrapper.closeAbout();
+            switch (event.which) {
+                case KEY_ESC: {
+                    if (GuiWrapper.keepGui) {
+                        GuiWrapper.closeGui();
+                    } else if (GuiWrapper.aboutOpen) {
+                        GuiWrapper.closeAbout();
+                    }
+
+                    break;
                 }
-            } else if (event.which == KEY_SPACE) {
-                if ($(document.activeElement).prop("tagName") != "INPUT") {
-                    AudioWrap.togglePlaying();
+                case KEY_SPACE: {
+                    if ($(document.activeElement).prop("tagName") != "INPUT") {
+                        AudioWrap.togglePlaying();
+                    }
+
+                    break;
+                }
+                case KEY_ARROW_LEFT: {
+                    AudioWrap.setProgressSeconds(AudioWrap.getProgressSeconds() - 5);
+
+                    break;
+                }
+                case KEY_ARROW_RIGHT: {
+                    AudioWrap.setProgressSeconds(AudioWrap.getProgressSeconds() + 5);
+
+                    break;
+                }
+                case KEY_ARROW_UP: {
+                    AudioWrap.setVolume(AudioWrap.getVolume() + 0.05);
+
+                    break;
+                }
+                case KEY_ARROW_DOWN: {
+                    AudioWrap.setVolume(AudioWrap.getVolume() - 0.05);
+
+                    break;
+                }
+                default: {
+                    break; // just ignore
                 }
             }
         });
