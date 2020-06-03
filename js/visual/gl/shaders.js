@@ -1,26 +1,32 @@
 let Shaders = new function() {
 
-    this.vertShader =
-        "attribute float size; \
-        attribute float alpha; \
-        uniform vec3 color; \
-        varying float vAlpha; \
-        varying vec3 vColor; \
-        void main() { \
-            vColor = color; \
-            vAlpha = alpha; \
-            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0); \
-            gl_PointSize = 100.0 * size / length(mvPosition.xyz); \
-            gl_Position = projectionMatrix * mvPosition; \
-        }";
+    function loadExternal(path) {
+        let ajaxRes = null;
+        let ajaxErr = null;
 
-    this.fragShader =
-        "uniform sampler2D texture; \
-        varying float vAlpha; \
-        varying vec3 vColor; \
-        void main() { \
-            gl_FragColor = vec4(vColor, vAlpha); \
-            gl_FragColor = gl_FragColor * texture2D(texture, gl_PointCoord); \
-        }";
+        $.ajax({
+            method: "GET",
+            contentType: "text/plain",
+            dataType: "text",
+            async: false,
+            url: path,
+            success: response => {
+                ajaxRes = response;
+            },
+            error: (jqxhr, status) => {
+                ajaxErr = status;
+            }
+        });
+
+        if (ajaxErr) {
+            throw ajaxErr;
+        }
+
+        return ajaxRes;
+    }
+
+    this.particlesVertShader = loadExternal("./shaders/particles.vert");
+
+    this.particlesFragShader = loadExternal("./shaders/particles.frag");
 
 }

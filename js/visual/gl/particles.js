@@ -34,8 +34,8 @@ let Particles = new function() {
 
         let pMaterial = new THREE.ShaderMaterial({
             uniforms: uniforms,
-            vertexShader: Shaders.vertShader,
-            fragmentShader: Shaders.fragShader,
+            vertexShader: Shaders.particlesVertShader,
+            fragmentShader: Shaders.particlesFragShader,
             blending: THREE.NormalBlending,
             transparent: true
         });
