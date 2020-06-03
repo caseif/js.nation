@@ -36,7 +36,7 @@ let Particles = new function() {
             uniforms: uniforms,
             vertexShader: Shaders.vertShader,
             fragmentShader: Shaders.fragShader,
-            blending: THREE.AdditiveBlending,
+            blending: THREE.NormalBlending,
             transparent: true
         });
 
