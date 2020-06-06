@@ -189,7 +189,7 @@ let Database = new function () {
 
         if (image === undefined) {
             $.ajax({
-                url: "//itunes.apple.com/search?term=" + artist + " " + title,
+                url: "https://itunes.apple.com/search?term=" + artist + " " + title,
                 dataType: 'jsonp'
             }).done(function (data) {
                 console.log("No ID3 artwork found; attempting iTunes search.");

@@ -17,7 +17,7 @@ let Particles = new function() {
         let texLoc;
         // Chrome is fussy about CORS in this case, so we have to access a
         // remotely hosted version if we're running from the local filesystem
-        if (location.protocol == "file:" && !!window.chrome) {
+        if (location.protocol == "file:" && /Chrome/.test(navigator.userAgent)) {
             texLoc = "https://i.imgur.com/Qz4ftah.png";
             console.log("Using Chrome particle hack");
         } else {
