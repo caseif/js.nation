@@ -127,6 +127,7 @@ let GuiWrapper = new function() {
     this.closeWelcome = function() {
         if (this.welcomeOpen) {
             $("#welcome-full").fadeOut(Config.guiFadeTime);
+            $("#welcome-noauto-container").fadeOut(Config.guiFadeTime);
             this.welcomeOpen = false;
         }
     }

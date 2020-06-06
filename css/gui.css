@@ -115,17 +115,18 @@ audio::-webkit-media-controls-panel {
 /* About pane */
 /* ---------- */
 
-#about-pane, #welcome-pane {
+.overlay-pane {
     text-align: center;
     font-family: "Open Sans", Helvetica, Verdana, sans-serif !important;
     font-weight: 300;
+    font-size: 16pt;
 }
 
 #about-pane {
     line-height: 3em;
 }
 
-#welcome-pane {
+#welcome-pane, #welcome-noauto-pane {
     max-width: 400px;
 }
 
@@ -134,15 +135,11 @@ audio::-webkit-media-controls-panel {
     margin-bottom: 24px;
 }
 
-#about-content, #welcome-content {
-    font-size: 16pt;
-}
-
 #about-hotkeys {
     line-height: 1.3em;
 }
 
-#welcome-content {
+#welcome-content, #welcome-noauto-content {
     line-height: 1.5em;
 }
 

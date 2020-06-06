@@ -66,11 +66,11 @@ let Util = new function() {
     }
 
     this.setCookie = function(name, value) {
-        document.cookie = name + "=" + value + "; expires=Fri, 01 Jan 2038 00:00:00 UTC";
+        document.cookie = name + "=" + value + "; expires=Fri, 01 Jan 2038 00:00:00 UTC; SameSite=Strict";
     }
 
     this.deleteCookie = function(name) {
-        document.cookie = name + "=undefined" + "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        document.cookie = name + "=undefined" + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict";
     }
 
     this.shuffle = function(arr) {

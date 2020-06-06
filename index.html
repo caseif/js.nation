@@ -160,7 +160,7 @@
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
 
         <div id="welcome-full" class="overlay-container">
             <div class="vert-cen overlay-window" id="welcome-full-holder">
@@ -168,7 +168,19 @@
                     <div id="welcome-content">
                         welcome to js.nation!
                         <br><br>
-                        to get started, click "View Library" in the bottom-left corner and add a song.
+                        to get started, click "view library" in the bottom-left corner and add a song.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="welcome-noauto-container" class="overlay-container">
+            <div class="vert-cen overlay-window" id="welcome-noauto-holder">
+                <div class="absolute-center overlay-pane" id="welcome-noauto-pane">
+                    <div id="welcome-noauto-content">
+                        welcome to js.nation!
+                        <br><br>
+                        autoplay is disabled in your browser! click "view library" and select a song to begin.
                     </div>
                 </div>
             </div>
@@ -198,7 +210,7 @@
                 <span id="mute" class="fa fa-volume-up interactable"></span>
                 <progress id="volume" class="flex-auto interactable" value="100" max="100"></progress>
             </div>
-            <audio autoplay id="audio" onended="Database.playNextSong()"></audio>
+            <audio id="audio" onended="Database.playNextSong()"></audio>
             <!-- Right -->
             <div id="elm-about">
                 <a href="javascript:GuiWrapper.openAbout();">About</a>

@@ -1,6 +1,6 @@
 //TODO: some serious organization/structure improvement
 
-let Database = new function() {
+let Database = new function () {
 
     let perPage = Math.floor(($(window).height() - 400) / 550 * 8);
 
@@ -25,14 +25,14 @@ let Database = new function() {
     let dbTemplate;
 
     let db;
-    
+
     let page = 0;
     let totalCount;
 
     let order;
     let index;
 
-    this.setUp = function() {
+    this.setUp = function () {
         elmFile = document.getElementById("fileSelector")
         elmAdd = document.getElementById("add2DB");
         elmView = document.getElementById("viewDB");
@@ -55,25 +55,31 @@ let Database = new function() {
 
         // Create Database
         db = new Dexie("visDB");
-        db.version(1).stores({id3: "++id, artist, title, duration, img, audio"});
+        db.version(1).stores({ id3: "++id, artist, title, duration, img, audio" });
         db.open().catch(e => alert("Open failed: " + e));
 
         db.id3.count().then(c => totalCount = c).finally(() => {
             applyShuffle();
             handleView(false);
-            if (totalCount == 0) {
+            if (totalCount > 0) {
+                Database.playCurrent().catch(ex => {
+                    console.error(ex);
+                    $("#welcome-noauto-container").css("display", "block");
+                    $("#audio")[0].src = "";
+                    AudioWrap.togglePlaying();
+                    GuiWrapper.welcomeOpen = true;
+                });
+            } else {
                 $("#welcome-full").css("display", "block");
                 GuiWrapper.welcomeOpen = true;
                 Background.resetBG();
                 Background.loadRedditBackground();
-            } else {
-                Database.playCurrent();
             }
 
         });
     }
 
-    this.toggleShuffle = function() {
+    this.toggleShuffle = function () {
         let shuffle = true;
         if (Util.getCookie("shuffle") !== undefined) {
             shuffle = Util.getCookie("shuffle") == "false";
@@ -83,7 +89,7 @@ let Database = new function() {
         applyShuffle();
     }
 
-    let applyShuffle = function() {
+    let applyShuffle = function () {
         let shuffle = Util.getCookie("shuffle") == "true";
 
         if (index === undefined) {
@@ -110,7 +116,7 @@ let Database = new function() {
     }
 
     // Delete Database
-    let handleDeleteDB = function() {
+    let handleDeleteDB = function () {
         if (!confirm("Are you sure you wish to delete the database? This action cannot be undone!")) {
             return;
         }
@@ -120,7 +126,7 @@ let Database = new function() {
     }
 
 
-    let handleFileSelection = function(e) {
+    let handleFileSelection = function (e) {
         //reset globals
         imgStore = undefined;
         fileStore = e.target.files[0];
@@ -166,25 +172,28 @@ let Database = new function() {
             dataReader: ID3.FileAPIReader(fileStore),
             tags: ["artist", "title", "picture"]
         });
-        
-        Nodes.playSongFromUrl(url);
+
+        let promise = Nodes.playSongFromUrl(url);
+
         handleView(true);
+
+        return promise;
     }
 
-    let addSong = function() {
+    let addSong = function () {
         let image = imgStore;
-    
+
         let artist = elmArtist.value;
         let title = elmTitle.value;
         let duration = Util.secondsToHms(elmAudio.duration);
-                
+
         if (image === undefined) {
             $.ajax({
                 url: "//itunes.apple.com/search?term=" + artist + " " + title,
                 dataType: 'jsonp'
-            }).done(function(data) {
+            }).done(function (data) {
                 console.log("No ID3 artwork found; attempting iTunes search.");
-                
+
                 let itunesStr;
 
                 if (data.results[0] == undefined) {
@@ -193,9 +202,9 @@ let Database = new function() {
                     itunesStr = JSON.stringify(data.results[0].artworkUrl100);
                     itunesStr = itunesStr.replace(/\"/g, "");
                 }
-                
-                db.id3.add({artist: artist, title: title, duration: duration, img: itunesStr, audio: fileStore});
-            
+
+                db.id3.add({ artist: artist, title: title, duration: duration, img: itunesStr, audio: fileStore });
+
                 order[totalCount] = totalCount;
                 index = totalCount;
                 totalCount++;
@@ -203,29 +212,29 @@ let Database = new function() {
                 handleView(false);
             })
         } else {
-            
-            db.id3.add({artist: artist, title: title, duration: duration, img: image, audio: fileStore});
-            
+
+            db.id3.add({ artist: artist, title: title, duration: duration, img: image, audio: fileStore });
+
             order[totalCount] = totalCount;
             index = totalCount;
             totalCount++;
 
             handleView(false);
-        }     
-    
+        }
+
     }
-    
-    let handleRefresh = function() {
+
+    let handleRefresh = function () {
         handleView();
     }
 
-    let handleView = function(enableFields = undefined) {
+    let handleView = function (enableFields = undefined) {
         let i = 0;
         let skip = page * perPage;
 
         db.id3.filter(row => i++ >= skip).limit(perPage).toArray()
-                .then(arr => $("#db-view").html(dbTemplate.render(arr)))
-                .catch(console.error);
+            .then(arr => $("#db-view").html(dbTemplate.render(arr)))
+            .catch(console.error);
 
         if (enableFields !== undefined) {
             $("#add2DB").attr("disabled", !enableFields);
@@ -254,16 +263,24 @@ let Database = new function() {
         $("#db-page-info").html("Page " + (totalCount > 0 ? page + 1 : 0) + "/" + totalPages);
     }
 
-    this.handlePlay = function(i) {
+    this.handlePlay = function (i) {
+        let promiseArr = [];
+        let promise = new Promise((resolve, reject) => {
+            promiseArr.push({ resolve: resolve, reject: reject });
+        });
+
         db.id3.where("id").equals(i).each(result => {
-            GuiWrapper.setTitle(result.artist, result.title);
-            Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
+            let subPromise = Nodes.playSongFromUrl(URL.createObjectURL(result.audio));
             Background.resetBG();
             Background.loadRedditBackground();
+
+            promiseArr[0].resolve(subPromise);
         });
+
+        return promise;
     }
 
-    this.handleRemove = function(i) {
+    this.handleRemove = function (i) {
         db.id3.where("id").equals(i).delete();
         totalCount--;
         if (totalCount % perPage == 0) {
@@ -275,45 +292,56 @@ let Database = new function() {
         handleView(false);
     }
 
-    this.updateTitle = function(id, title) {
+    this.updateTitle = function (id, title) {
         id = parseInt(id);
-        db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({title: title}))
-                .catch(e => console.log(e));
+        db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({ title: title }))
+            .catch(e => console.log(e));
     }
 
-    this.updateArtist = function(id, artist) {
+    this.updateArtist = function (id, artist) {
         id = parseInt(id);
         console.log(id);
-        db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({artist: artist}))
-                .catch(e => console.log(e));
+        db.transaction("rw", db.id3, () => db.id3.where("id").equals(id).modify({ artist: artist }))
+            .catch(e => console.log(e));
     }
 
-    this.prevPage = function() {
+    this.prevPage = function () {
         if (page > 0) {
             page--;
             handleView();
         }
     }
 
-    this.nextPage = function() {
+    this.nextPage = function () {
         if (page < Math.ceil(totalCount / perPage) - 1) {
             page++;
             handleView();
         }
     }
 
-    this.playCurrent = function() {
-        db.id3.toArray().then(arr => { this.handlePlay(arr[order[index]].id); });
+    this.playSongAtIndex = function (index) {
+        let promiseArr = [];
+        let promise = new Promise((resolve, reject) => {
+            promiseArr.push({ resolve: resolve, reject: reject });
+        });
+
+        db.id3.toArray().then(arr => {
+            promiseArr[0].resolve(this.handlePlay(arr[order[index]].id));
+        });
+
+        return promise;
     }
 
-    this.playNextSong = function() {
-        index = ++index < totalCount ? index : (index = 0);
-        db.id3.toArray().then(arr => this.handlePlay(arr[order[index]].id));
+    this.playCurrent = function () {
+        return this.playSongAtIndex(index);
     }
 
-    this.playPrevSong = function() {
-        index = --index >= 0 ? index : (index = totalCount - 1);
-        db.id3.toArray().then(arr => { console.log(arr); this.handlePlay(arr[order[index]].id) });
+    this.playNextSong = function () {
+        return this.playSongAtIndex(++index < totalCount ? index : (index = 0));
     }
-    
+
+    this.playPrevSong = function () {
+        return this.playSongAtIndex(--index >= 0 ? index : (index = totalCount - 1));
+    }
+
 }

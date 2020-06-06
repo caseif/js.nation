@@ -88,13 +88,14 @@ let AudioWrap = new function() {
     this.updateProgress = function() {
         let currentTime = player.currentTime;
         let duration = player.duration;
-        let progression = (currentTime + .25) / duration * 100;
+        let progression = !isNaN(duration) ? (currentTime + .25) / duration * 100 : 0;
         progressBar.value = progression;
         time.innerHTML = AudioWrap.getTime(player.currentTime);
     }
 
     this.togglePlaying = function() {
-        player[AudioWrap.isPlaying() ? "play" : "pause"]();
+        let action = $("#audio")[0].src === "" || AudioWrap.isPlaying() ? "pause" : "play";
+        player[action]();
         play_button.toggleClass("fa-play", player.paused);
         play_button.toggleClass("fa-pause", !player.paused);
     }

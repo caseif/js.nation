@@ -17,12 +17,11 @@ All officially supported browsers are listed below (along with respective minimu
 
 - Firefox 44
 - Chrome 49
-- Opera 36
 
 The follow browsers are *partially* supported:
 
 - Edge 13
-    - `shadowBlur` renders incorrectly and thus is disabled automatically
+  - `shadowBlur` renders incorrectly and thus is disabled automatically
 
 The following browsers are **not** supported:
 

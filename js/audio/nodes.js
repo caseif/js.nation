@@ -1,6 +1,6 @@
 // Yes, I realize this script's name is kinda funny. I got nothing better to call it.
 
-let Nodes = new function() {
+let Nodes = new function () {
 
     const BUFFER_INTERVAL = 1024;
 
@@ -12,7 +12,7 @@ let Nodes = new function() {
     let scriptProcessor;
     let gainNode;
 
-    this.setUp = function() {
+    this.setUp = function () {
         if (initialized) {
             throw "Already initialized (call destroyContext() first)";
         }
@@ -52,16 +52,30 @@ let Nodes = new function() {
         initialized = true;
     }
 
-    this.playSong = function(song, url) {
-        if(url == null){
-            GuiWrapper.setTitle(song.getArtist(), song.getTitle());
+    this.playSong = function (song, url) {
+        try {
+            if (context.state === "suspended") {
+                context.resume().then(() => console.log('resumed')).catch(() => console.log('cannot resume'));
+            }
+
+            $("#audio").attr("src", song != null ? "./songs/" + song.getFileId() : url);
+            let promise = $("#audio")[0].play();
+            
+            if (url == null) {
+                GuiWrapper.setTitle(song.getArtist(), song.getTitle());
+            }
+            
+            GuiWrapper.updatePlayBtn();
+
+            return promise;
+        } catch (ex) {
+            $("#audio").attr("src", null);
+            return Promise.reject(ex);
         }
-        $("#audio").attr("src", song != null ? "./songs/" + song.getFileId() : url);
-        GuiWrapper.updatePlayBtn();
     }
 
-    let handleAudio = function() {
-        let array =  new Uint8Array(analyzer.frequencyBinCount);
+    let handleAudio = function () {
+        let array = new Uint8Array(analyzer.frequencyBinCount);
         analyzer.getByteFrequencyData(array);
 
         let spectrum = Transform.transform(array);
@@ -69,15 +83,15 @@ let Nodes = new function() {
         Callbacks.invokeCallbacks(spectrum, multiplier);
     }
 
-    this.playSongFromUrl = function(url) {
-        this.playSong(null, url);
+    this.playSongFromUrl = function (url) {
+        return this.playSong(null, url);
     }
 
-    this.getVolume = function() {
+    this.getVolume = function () {
         return Math.log((gainNode.gain.value + 1) * (Math.E - 1) + 1);
     }
 
-    this.setVolume = function(volume) {
+    this.setVolume = function (volume) {
         gainNode.gain.value = (Math.exp(volume) - 1) / (Math.E - 1) - 1;
     }
 
