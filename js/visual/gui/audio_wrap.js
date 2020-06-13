@@ -94,7 +94,7 @@ let AudioWrap = new function() {
     }
 
     this.togglePlaying = function() {
-        let action = $("#audio")[0].src === "" || this.isPlaying() ? "pause" : "play";
+        let action = $("#audio")[0].src === "" || AudioWrap.isPlaying() ? "pause" : "play";
         player[action]();
         play_button.toggleClass("fa-play", player.paused);
         play_button.toggleClass("fa-pause", !player.paused);
